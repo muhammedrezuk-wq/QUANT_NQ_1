@@ -1,0 +1,63 @@
+id: 156
+name: "Candlestick Analyzer"
+version: "2.5.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "analysis.candle.state"
+  - "analysis.setting.changed"
+
+subscribes:
+  - "market_data.candle_closed"
+
+  - "market.tick.validated"
+  - "analysis.settings.command"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    doji_body_ratio:
+      type: number
+      minimum: 0
+      maximum: 1
+    marubozu_body_ratio:
+      type: number
+      minimum: 0
+      maximum: 1
+    pin_wick_ratio:
+      type: number
+      minimum: 0
+      maximum: 1
+    pin_body_ratio:
+      type: number
+      minimum: 0
+      maximum: 1
+  required:
+    - doji_body_ratio
+    - marubozu_body_ratio
+    - pin_wick_ratio
+    - pin_body_ratio
+  additionalProperties: false
+
+config:
+  doji_body_ratio: 0.1
+  marubozu_body_ratio: 0.85
+  pin_wick_ratio: 0.6
+  pin_body_ratio: 0.3
+metadata:
+  max_idle_s: 301

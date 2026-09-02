@@ -1,0 +1,71 @@
+id: 2622
+name: Binance Global Heat Bridge (Funding + OI)
+version: 1.1.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- feed.binance.oi
+- feed.binance.premium
+- feed.binance_rest.state
+subscribes:
+- crypto.universe.membership.state
+startup_mode: auto
+health:
+  interval_ms: 30000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 10
+  restart_backoff_ms: 5000
+config_schema:
+  type: object
+  properties:
+    symbols:
+      type: array
+      items:
+        type: string
+    symbol_map:
+      type: object
+    poll_s:
+      type: number
+      minimum: 2
+    max_age_s:
+      type: number
+      minimum: 1
+  required:
+  - symbols
+  additionalProperties: false
+config:
+  symbols:
+  - BTC_USDT
+  - ETH_USDT
+  - SOL_USDT
+  - XRP_USDT
+  - HYPE_USDT
+  - PEPE_USDT
+  - DOGE_USDT
+  - SUI_USDT
+  - LINK_USDT
+  - ENA_USDT
+  - WLD_USDT
+  - ADA_USDT
+  - AAVE_USDT
+  - TRUMPOFFICIAL_USDT
+  - ONDO_USDT
+  - AVAX_USDT
+  - UNI_USDT
+  - ZRO_USDT
+  symbol_map:
+    PEPE_USDT: 1000PEPEUSDT
+    TRUMPOFFICIAL_USDT: TRUMPUSDT
+  poll_s: 10
+  max_age_s: 60
+metadata:
+  max_idle_s: 120
+  market: crypto
+  namespace: crypto_full
+  source_id: 622
+  legacy_source: false
+  phase: new-build

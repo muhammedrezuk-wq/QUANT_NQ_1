@@ -1,0 +1,48 @@
+id: 719
+name: "Error Log"
+version: "1.0.2"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes: []
+
+subscribes: []
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 3000
+
+config_schema:
+  type: object
+  properties:
+    dir:
+      type: string
+    file_prefix:
+      type: string
+    min_level:
+      type: string
+      enum: [INFO, WARNING, ERROR, CRITICAL]
+    include_root:
+      type: boolean
+    max_lines_per_day:
+      type: integer
+      minimum: 100
+      maximum: 1000000
+  required: [dir, file_prefix, min_level, include_root, max_lines_per_day]
+  additionalProperties: false
+
+config:
+  dir: 'var/logs'
+  file_prefix: "errors"
+  min_level: "WARNING"
+  include_root: true
+  max_lines_per_day: 20000

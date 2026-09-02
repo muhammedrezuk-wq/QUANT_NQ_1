@@ -1,0 +1,64 @@
+id: 901
+name: "Command Gateway"
+version: "2.7.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "risk.halt.requested"
+  - "adaptation.kill_switch.command"
+  - "risk.release.requested"
+  - "perpetual.asset.activate"
+  - "perpetual.asset.deactivate"
+  - "execution.gate.command"
+  - "risk.asset.command"
+  - "dial.command"
+  - "execution.reconcile.requested"
+  - "risk.asset_budget.state"
+  - "system.commands.state"
+  - "analysis.settings.command"
+  - "decision.settings.command"
+  - "parameter.approve.command"
+  - "parameter.approved.state"
+  - "tilt.rule.command"
+
+subscribes:
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 5
+  restart_backoff_ms: 3000
+
+config_schema:
+  type: object
+  properties:
+    db_path:
+      type: string
+    max_age_s:
+      type: number
+      minimum: 5
+    batch_limit:
+      type: integer
+      minimum: 1
+      maximum: 100
+  required:
+    - db_path
+    - max_age_s
+    - batch_limit
+  additionalProperties: false
+
+config:
+  db_path: 'var\governance\commands.db'
+  max_age_s: 120
+  batch_limit: 20
+metadata:
+  max_idle_s: 60

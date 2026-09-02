@@ -1,0 +1,30 @@
+id: 664
+name: "Portfolio Loss Limits"
+version: "1.0.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+dependencies: []
+publishes:
+  - "portfolio.loss_limits.state"
+subscribes:
+  - "risk.asset_ledger.state"
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    max_loss_exposure:
+      type: number
+      minimum: 0
+  additionalProperties: false
+config:
+  max_loss_exposure: 0
+metadata:
+  max_idle_s: 3600

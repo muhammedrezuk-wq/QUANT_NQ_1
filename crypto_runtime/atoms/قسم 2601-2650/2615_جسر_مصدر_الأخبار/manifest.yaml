@@ -1,0 +1,52 @@
+id: 2615
+name: News Source Bridge
+version: 2.0.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- market.news
+subscribes:
+- SYS_SECOND
+startup_mode: auto
+health:
+  interval_ms: 60000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 5
+  restart_backoff_ms: 3000
+config_schema:
+  type: object
+  properties:
+    feeds:
+      type: array
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+          url:
+            type: string
+        required:
+        - name
+        - url
+    poll_interval_s:
+      type: number
+      minimum: 30
+  additionalProperties: false
+config:
+  feeds:
+  - name: CoinDesk
+    url: https://www.coindesk.com/arc/outboundfeeds/rss/
+  - name: CoinTelegraph
+    url: https://cointelegraph.com/rss
+  poll_interval_s: 900.0
+metadata:
+  max_idle_s: 1200
+  market: crypto
+  namespace: crypto_full
+  source_id: 615
+  legacy_source: true
+  phase: full-source

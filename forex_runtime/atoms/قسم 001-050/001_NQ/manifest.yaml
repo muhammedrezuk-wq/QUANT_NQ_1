@@ -1,0 +1,39 @@
+id: 1
+name: "NQ"
+version: "1.2.1"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "NQ"
+  - "core.integrity.alert"
+
+subscribes:
+  - "SYS_5MIN"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    core_lock_path:
+      type: string
+  required:
+    - core_lock_path
+  additionalProperties: false
+
+config:
+  core_lock_path: "core/CORE.lock"
+metadata:
+  max_idle_s: 3600

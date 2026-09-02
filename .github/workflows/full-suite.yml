@@ -1,0 +1,72 @@
+name: QUANT_NQ Full Suite (Windows)
+
+# 2026-09-01 — the one real gap behind "there is no proof the chain works".
+#
+# Fast Smoke prints, in its own words:
+#     scope: config + launchers + API exposure + secret contract
+#     runtime: NOT STARTED
+# It checks files and settings; it never boots a core, never runs the 868
+# tests under tests/, and never runs the 1321 atom tests.  So a branch could
+# merge green while `transport/ownership.py` failed at import and atom 717
+# had lost the subscription to its own input event — both measured on
+# master, both invisible to CI.
+#
+# It runs on Windows on purpose: MetaTrader5 is win32-only, and the platform
+# under test is a Windows trading platform.  Running it on ubuntu is what
+# forced the scope down to "config only" in the first place.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  full:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install pinned dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.lock.txt
+
+      - name: Set up Node for the governance UI
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: governance/ui/package-lock.json
+
+      - name: Build the governance UI
+        working-directory: governance/ui
+        run: |
+          npm ci
+          npm run build
+
+      - name: Link the unified atom trees
+        run: python scripts/prepare_unified.py
+
+      - name: Core seal must verify
+        run: python scripts/freeze_core.py verify
+
+      - name: Atom validator (Article 8)
+        run: python governance/scripts/validate_atoms.py
+
+      - name: Structural project check
+        run: python scripts/check_project.py
+
+      - name: Test suite
+        run: python -m pytest -q -p no:randomly
+
+      - name: Atom suite (233 forex atoms)
+        run: python scripts/test_atoms.py

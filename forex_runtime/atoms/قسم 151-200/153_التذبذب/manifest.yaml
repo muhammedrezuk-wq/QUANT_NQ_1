@@ -1,0 +1,70 @@
+id: 153
+name: "Volatility Analyzer"
+version: "2.5.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "analysis.volatility.state"
+  - "analysis.setting.changed"
+
+subscribes:
+  - "market_data.candle_closed"
+
+  - "market.tick.validated"
+  - "analysis.settings.command"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    atr_window:
+      type: integer
+      minimum: 1
+    baseline_window:
+      type: integer
+      minimum: 2
+    stddev_window:
+      type: integer
+      minimum: 2
+    high_mult:
+      type: number
+      minimum: 1
+    low_mult:
+      type: number
+      minimum: 0
+      maximum: 1
+    min_candles:
+      type: integer
+      minimum: 2
+  required:
+    - atr_window
+    - baseline_window
+    - stddev_window
+    - high_mult
+    - low_mult
+    - min_candles
+  additionalProperties: false
+
+config:
+  atr_window: 16
+  baseline_window: 32
+  stddev_window: 20
+  high_mult: 1.35
+  low_mult: 0.7
+  min_candles: 16
+metadata:
+  max_idle_s: 301

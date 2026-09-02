@@ -1,0 +1,48 @@
+id: 840
+name: "Drift Engine"
+version: "1.0.1"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "drift.vector.state"
+  - "recalibration.proposed"
+
+subscribes:
+  - "measurement.latency.state"
+  - "measurement.health.state"
+  - "market.regime.state"
+
+startup_mode: auto
+health:
+  interval_ms: 30000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 3000
+
+config_schema:
+  type: object
+  properties:
+    warmup_windows:
+      type: integer
+      minimum: 1
+    drift_threshold:
+      type: number
+      minimum: 0
+    proposal_cooldown_windows:
+      type: integer
+      minimum: 0
+  additionalProperties: false
+
+config:
+  warmup_windows: 5
+  drift_threshold: 0.5
+
+metadata:
+  max_idle_s: 300
+  note: "انحراف الكمون والجاهزية مقابل خط أساس أول stable — يقترح فقط (recalibration.proposed) ولا يغيّر شيئًا أبدًا."

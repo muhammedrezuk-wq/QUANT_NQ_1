@@ -1,0 +1,45 @@
+id: 2173
+name: Perp Premium (Leverage Thermometer)
+version: 1.1.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- sense.premium.state
+subscribes:
+- market.premium
+startup_mode: auto
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    premium_hot_bps:
+      type: number
+    premium_short_bps:
+      type: number
+    trend_eps_bps:
+      type: number
+      minimum: 0
+    max_age_s:
+      type: number
+      minimum: 1
+  additionalProperties: false
+config:
+  premium_hot_bps: -3
+  premium_short_bps: -7
+  trend_eps_bps: 0.1
+  max_age_s: 60
+metadata:
+  max_idle_s: 120
+  market: crypto
+  namespace: crypto_full
+  source_id: 173
+  legacy_source: true
+  phase: full-source

@@ -1,0 +1,56 @@
+id: 2800
+name: Backup Manager
+version: 2.2.2
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- tools.backup.completed
+- tools.backup.failed
+subscribes:
+- SYS_DAY
+- SYS_SECOND
+startup_mode: manual
+health:
+  interval_ms: 3600000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 5000
+config_schema:
+  type: object
+  properties:
+    backup_dir:
+      type: string
+    source_dirs:
+      type: array
+      items:
+        type: string
+    keep_last_n:
+      type: integer
+      minimum: 1
+    interval_days:
+      type: integer
+      minimum: 1
+  required:
+  - backup_dir
+  - source_dirs
+  - keep_last_n
+  - interval_days
+  additionalProperties: false
+config:
+  backup_dir: D:/النسخ احتياطي ASMAR
+  source_dirs:
+  - var/store
+  - config
+  keep_last_n: 7
+  interval_days: 1
+metadata:
+  max_idle_s: 60
+  market: crypto
+  namespace: crypto_full
+  source_id: 800
+  legacy_source: true
+  phase: full-source

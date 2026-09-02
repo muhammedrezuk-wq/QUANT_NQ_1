@@ -1,0 +1,48 @@
+id: 116
+name: "Feed Interruption Detector"
+version: "3.1.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "market_data.feed_interrupted"
+  - "market_data.feed_recovered"
+  - "market_data.feed.state"
+
+subscribes:
+  - "feed.mt5.tick"
+  - "feed.ctrader.tick"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 5000
+  timeout_ms: 2000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    max_silence_seconds:
+      type: number
+      minimum: 1
+    dead_after_seconds:
+      type: number
+      minimum: 2
+  required:
+    - max_silence_seconds
+    - dead_after_seconds
+  additionalProperties: false
+
+config:
+  max_silence_seconds: 10
+  dead_after_seconds: 30.0
+metadata:
+  max_idle_s: 60

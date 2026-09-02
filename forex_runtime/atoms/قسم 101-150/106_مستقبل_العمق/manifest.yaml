@@ -1,0 +1,44 @@
+id: 106
+name: "Market Depth Receiver"
+version: "2.0.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "market_data.depth_updated"
+
+subscribes:
+  - "market.depth"
+
+startup_mode: auto
+
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 5
+  restart_backoff_ms: 3000
+
+config_schema:
+  type: object
+  properties:
+    source_event:
+      type: string
+    max_levels:
+      type: integer
+      minimum: 1
+      maximum: 100
+  required:
+    - source_event
+    - max_levels
+  additionalProperties: false
+
+config:
+  source_event: "market.depth"
+  max_levels: 10
+metadata:
+  max_idle_s: 151

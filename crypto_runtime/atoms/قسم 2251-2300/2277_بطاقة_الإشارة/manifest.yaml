@@ -1,0 +1,57 @@
+id: 2277
+name: Signal Card v3.1 (Anchor + Ladder + Stop + Targets)
+version: 1.2.1
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- crypto.decision.signal_card.state
+subscribes:
+- crypto.decision.sized_entry.state
+- crypto.universe.snapshot.state
+- sense.walls.state
+- sense.volume_profile.state
+- sense.prior_day.state
+startup_mode: auto
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    entry_zone_bps:
+      type: number
+      minimum: 0
+    min_spread_multiple:
+      type: number
+      minimum: 1
+    stop_margin_bps:
+      type: number
+      minimum: 0
+    time_stop_class1_candles:
+      type: integer
+      minimum: 1
+    time_stop_class2_candles:
+      type: integer
+      minimum: 1
+    max_age_s:
+      type: number
+      minimum: 1
+  additionalProperties: false
+config:
+  entry_zone_bps: 6.5
+  min_spread_multiple: 2.0
+  stop_margin_bps: 29.0
+  time_stop_class1_candles: 11
+  time_stop_class2_candles: 6
+  max_age_s: 90
+metadata:
+  max_idle_s: 120
+  market: crypto
+  namespace: crypto_strategy
+  source_id: 277

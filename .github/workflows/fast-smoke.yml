@@ -1,0 +1,30 @@
+name: QUANT_NQ Fast Smoke
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install smoke dependencies
+        run: python -m pip install --upgrade pip pytest PyYAML
+
+      - name: Run scheduler isolation tests
+        run: python -m pytest -q tests/smoke/test_event_bus_scheduler_isolation.py
+
+      - name: Run fast smoke suite
+        run: python scripts/run_smoke.py

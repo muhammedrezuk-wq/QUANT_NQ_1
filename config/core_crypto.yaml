@@ -1,0 +1,29 @@
+# تشغيل الكريبتو فقط — ناقل وبيانات مستقلان عن atoms/ الخاصة بالفوركس.
+log_level: INFO
+log_json: true
+atoms_root: atoms_crypto
+snapshot_root: var/snapshots
+
+event_bus:
+  payload_mode: shared_readonly
+  worker_count: 4
+  partitioned_ownership: true
+  mailbox_max_events: 1024
+
+journal:
+  path: var/journal.jsonl
+
+discovery:
+  rescan_interval_s: 5.0
+
+api:
+  enable_api: true
+  host: 0.0.0.0
+  port: 8020
+  # External binding requires an API key from QUANT_GOV_API_KEY or
+  # QUANT_CORE_API_KEY; secrets are never committed to this file.
+
+secrets:
+  enabled: true
+  allow_prompt: false
+  dpapi_blob: runtime/crypto.key

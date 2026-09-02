@@ -1,0 +1,38 @@
+{
+  "release": "QUANT_NQ_COMPLETE_FULL",
+  "build_id": "QUANT_NQ_COMPLETE_FULL",
+  "created_at": "2026-09-01",
+  "forex_atoms": 233,
+  "phase_a_crypto_atoms": 2,
+  "full_crypto_source_atoms": 69,
+  "additional_crypto_atoms": 9,
+  "crypto_atoms_packaged": 80,
+  "crypto_startup_authority": "manifest.startup_mode",
+  "crypto_auto_start_atoms": 33,
+  "crypto_manual_atoms": 47,
+  "manual_storage_atoms": [
+    2702,
+    2707,
+    2720
+  ],
+  "official_launch_mode": "separate_market_buttons",
+  "official_launchers": {
+    "forex": "أزرار التشغيل/تشغيل الفوركس الموحد.bat",
+    "crypto": "أزرار التشغيل/تشغيل الكريبتو الموحد.bat"
+  },
+  "dashboard_mode": "separate_market_dashboards",
+  "dashboard_ports": {
+    "forex": 8090,
+    "crypto": 8091
+  },
+  "internal_governance_ports": {
+    "forex": 8092,
+    "crypto": 8093
+  },
+  "core_ports": {
+    "forex": 8010,
+    "crypto": 8020
+  },
+  "crypto_data_root": "crypto_runtime/var",
+  "core_version": "1.31.0"
+}

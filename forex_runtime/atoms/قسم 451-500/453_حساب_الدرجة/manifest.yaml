@@ -1,0 +1,65 @@
+id: 453
+name: "Score Calculator"
+version: "3.10.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "decision.scored.state"
+  - "decision.settings.state"
+
+subscribes:
+  - "decision.evaluated.state"
+  - "decision.settings.command"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    directional_weight:
+      type: number
+      minimum: 0
+    context_weight:
+      type: number
+      minimum: 0
+    min_participation:
+      type: number
+      minimum: 0
+      maximum: 1
+    directional_sources:
+      type: array
+      items:
+        type: string
+  required:
+    - directional_weight
+    - context_weight
+    - min_participation
+    - directional_sources
+  additionalProperties: false
+
+config:
+  directional_weight: 1.0
+  context_weight: 0.0556
+  min_participation: 0.20
+  directional_sources:
+    - "400:trend_continuation"
+    - "400:reversal_potential"
+    - "400:breakout_acceptance"
+    - "400:pullback_quality"
+    - "400:momentum_expansion"
+    - "400:range_rotation"
+    - "400:liquidity_raid"
+metadata:
+  max_idle_s: 301

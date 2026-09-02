@@ -1,0 +1,51 @@
+id: 458
+name: "Conflict Resolver"
+version: "3.1.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "decision.resolved.state"
+  - "decision.settings.state"
+
+subscribes:
+  - "decision.scored.state"
+  - "decision.settings.command"
+  - "decision.eligibility.buy.state"
+  - "decision.eligibility.sell.state"
+  - "decision.wait.state"
+
+startup_mode: auto
+
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    neutral_band:
+      type: number
+      minimum: 0
+      maximum: 1
+    conflict_ratio:
+      type: number
+      minimum: 0
+      maximum: 1
+  required:
+    - neutral_band
+    - conflict_ratio
+  additionalProperties: false
+
+config:
+  neutral_band: 0.05
+  conflict_ratio: 0.5
+metadata:
+  max_idle_s: 301

@@ -1,0 +1,61 @@
+id: 350
+name: Probability Manager
+version: "3.3.0"
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- probability.cycle.collected
+- probability.section.live
+- probability.units.state
+subscribes:
+- SYS_SECOND
+- probability.trend.state
+- probability.reversal.state
+- probability.breakout.state
+- probability.pullback.state
+- probability.momentum.state
+- probability.range.state
+- probability.hurst.state
+- probability.merged.state
+- probability.confidence.state
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    timeout_seconds:
+      type: number
+      minimum: 0
+    section_weight:
+      type: number
+      minimum: 0
+      maximum: 100
+    required_depth:
+      type: number
+      minimum: 0
+      maximum: 100
+    confidence_threshold:
+      type: number
+      minimum: 0
+      maximum: 100
+  required:
+  - timeout_seconds
+  - section_weight
+  - required_depth
+  - confidence_threshold
+  additionalProperties: false
+config:
+  timeout_seconds: 1.0
+  section_weight: 16.666666666666668
+  required_depth: 60.0
+  confidence_threshold: 60.0
+metadata:
+  max_idle_s: 64

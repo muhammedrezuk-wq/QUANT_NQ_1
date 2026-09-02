@@ -1,0 +1,39 @@
+id: 525
+name: "Hard Stop Price"
+version: "2.1.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "risk.hard_stop.price"
+
+subscribes:
+  - "risk.asset_ledger.state"
+  - "market.symbol_specs"
+  - "platform.account.state"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    min_abs_v_net:
+      type: number
+      exclusiveMinimum: 0
+  additionalProperties: false
+
+config:
+  min_abs_v_net: 0.000000001
+metadata:
+  max_idle_s: 3600

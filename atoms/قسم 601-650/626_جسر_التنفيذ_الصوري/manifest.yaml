@@ -1,0 +1,45 @@
+id: 626
+name: "Simulated Execution Bridge"
+version: "1.0.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "platform.trade_event.simulated"
+  - "sim.execution.state"
+
+subscribes:
+  - "trading.final_decision"
+  - "market.tick.validated"
+
+startup_mode: manual
+health:
+  interval_ms: 30000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 3000
+
+config_schema:
+  type: object
+  properties:
+    per_lot_commission:
+      type: number
+      minimum: 0
+    latency_ms:
+      type: integer
+      minimum: 0
+  required: []
+  additionalProperties: false
+
+config:
+  per_lot_commission: 0.0
+  latency_ms: 0
+
+metadata:
+  max_idle_s: 3600
+  note: "X.md Build 2 choice (a) — computed fills from the recorded spread; never opens a connection."

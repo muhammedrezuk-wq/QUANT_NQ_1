@@ -1,0 +1,42 @@
+id: 2108
+name: News Receiver
+version: 2.0.1
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- market_data.news_received
+subscribes:
+- market.news
+startup_mode: auto
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 5
+  restart_backoff_ms: 3000
+config_schema:
+  type: object
+  properties:
+    source_event:
+      type: string
+    recent_size:
+      type: integer
+      minimum: 1
+      maximum: 500
+  required:
+  - source_event
+  - recent_size
+  additionalProperties: false
+config:
+  source_event: market.news
+  recent_size: 50
+metadata:
+  max_idle_s: 172800
+  market: crypto
+  namespace: crypto_full
+  source_id: 108
+  legacy_source: true
+  phase: full-source

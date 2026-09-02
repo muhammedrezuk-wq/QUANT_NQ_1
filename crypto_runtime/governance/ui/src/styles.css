@@ -1,0 +1,355 @@
+/* ===== غرفة القيادة — شكل حديث ٢٠٢٦ (زجاج · توهّج · تدرّج · حركة) ===== */
+:root {
+  --green: #34d399; --amber: #fbbf24; --red: #fb7185; --grey: #6b7a94;
+  --radius: 14px;
+}
+
+/* ثيم: تقني غامق (افتراضي) */
+:root, [data-theme="tech"] {
+  --bg1: #0d1119; --bg2: #11161f;
+  --ink: #e9edf5; --dim: #8a97ad; --accent: #9fb8dc;
+  --glass: rgba(255,255,255,.05); --glassb: rgba(255,255,255,.1); --glassh: rgba(255,255,255,.07);
+}
+[data-theme="neon"] {
+  --bg1: #06040f; --bg2: #0e0620; --glow1: #c084fc55; --glow2: #f472b644;
+  --ink: #f2e9ff; --dim: #9a86c0; --accent: #c084fc;
+  --glass: rgba(255,255,255,.04); --glassb: rgba(192,132,252,.18); --glassh: rgba(192,132,252,.1);
+}
+[data-theme="light"] {
+  --bg1: #eef2fb; --bg2: #e3e9f6; --glow1: #3b82f622; --glow2: #6366f118;
+  --ink: #0f1b33; --dim: #5b6b8c; --accent: #2563eb;
+  --glass: rgba(255,255,255,.72); --glassb: rgba(15,27,51,.08); --glassh: rgba(15,27,51,.04);
+}
+/* داكن — أعمق من «تقني»: شبه أسود، هادي للعين بالليل */
+[data-theme="dark"] {
+  --bg1: #050608; --bg2: #0a0c10; --glow1: #1f293722; --glow2: #11182718;
+  --ink: #d7dde8; --dim: #6f7a8c; --accent: #7d8ea8;
+  --glass: rgba(255,255,255,.035); --glassb: rgba(255,255,255,.09); --glassh: rgba(255,255,255,.05);
+}
+/* بلومبيرغ — كحلي عميق + أزرق ثلجي (طلب المالك: بلا برتقالي، بيوجع العيون) */
+[data-theme="bloomberg"] {
+  --bg1: #010613; --bg2: #051129; --glow1: #1e5aff1c; --glow2: #0f3bbf12;
+  --ink: #cfe1ff; --dim: #6e86b8; --accent: #3b82f6;
+  --glass: rgba(59,130,246,.06); --glassb: rgba(59,130,246,.24); --glassh: rgba(59,130,246,.12);
+}
+
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  color: var(--ink);
+  font-family: "IBM Plex Sans Arabic", "Tajawal", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg1);
+}
+/* خلفية نظيفة فضائية — بلا توهّج زوايا */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1;
+  background: linear-gradient(165deg, var(--bg1), var(--bg2));
+}
+
+.num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+.dim { color: var(--dim); }
+
+.shell { display: grid; grid-template-rows: 0fr auto auto 1fr auto; height: 100dvh; overflow: hidden; }
+
+/* ── لافتة الصدق ──
+   حين تسقط النواة يبقى المخزن على آخر لقطة، فتعرض اللوحة أرقامًا ميتة كأنّها
+   حيّة. هذه اللافتة تُعلن ذلك بلا لبس، وتُعتّم الشاشة كي لا يُقرأ رقم مجمّد
+   على أنّه الحاضر. تختفي تمامًا (0fr) حين يكون الاتصال حيًّا. */
+.staleban { overflow: hidden; height: 0; }
+.staleban.on {
+  height: auto; padding: 9px 16px; text-align: center; font-size: 13.5px; font-weight: 600;
+  color: #ffe3e8; background: linear-gradient(90deg, rgba(190,30,55,.92), rgba(150,20,45,.92));
+  border-bottom: 1px solid rgba(255,120,140,.5); letter-spacing: .2px;
+}
+.shell.frozen { grid-template-rows: auto auto auto 1fr auto; }
+/* اللافتة الحمراء كافية — تعتيم+رمادي كان يقلب اللوحة سوداء كل إطار. */
+
+/* زجاج مشترك */
+.hdr, .nav, .status {
+  background: var(--glass); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-color: var(--glassb);
+}
+.hdr { display: flex; align-items: center; gap: 12px; padding: 5px 12px; border-bottom: 1px solid var(--glassb); }
+/* ختم المالك 2026-08-20 — سطر الهويّة: شعار NQ · اسم المشروع · اسم المالك */
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; letter-spacing: .3px; }
+.brand .nqmark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 7px; font-size: 12px; font-weight: 800;
+  letter-spacing: .5px; color: var(--accent); border: 2px solid var(--accent);
+  background: var(--glassh);
+}
+.brand .nqname { font-size: 15px; letter-spacing: .4px; }
+.brand small { color: var(--dim); font-weight: 500; font-size: 11px; }
+.conn { display: flex; align-items: center; gap: 7px; font-size: 12px; }
+.led { width: 10px; height: 10px; border-radius: 50%; background: var(--grey); transition: .3s; }
+.led.green { background: var(--green); box-shadow: 0 0 12px var(--green); }
+.led.amber { background: var(--amber); box-shadow: 0 0 12px var(--amber); }
+.led.red { background: var(--red); box-shadow: 0 0 12px var(--red); }
+/* رماديّ = لا نعرف (النواة مقطوعة) أو غير مبنيّ — لا يُدّعى أخضر ولا أحمر. */
+.led.grey { background: var(--grey); box-shadow: none; opacity: .6; }
+/* فاصل بين ليد النواة وليدات المصادر */
+.feedsep { width: 1px; height: 14px; background: var(--glassb); margin: 0 4px; display: inline-block; }
+.hdr-right { margin-inline-start: auto; display: flex; align-items: center; gap: 10px; min-width: 0; }
+.clock { font-size: 15px; letter-spacing: 1px; }
+.feedleds { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
+.feedled {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 7px; border-radius: 8px; border: 1px solid var(--glassb);
+  font-size: 10.5px; font-weight: 700; letter-spacing: .2px; white-space: nowrap;
+  background: var(--glassh);
+}
+.feedled b { font-weight: 700; }
+.feedled em { font-style: normal; font-variant-numeric: tabular-nums; }
+.feeddot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex: none; }
+.feedled.green { color: var(--green); }
+.feedled.amber { color: var(--amber); }
+.feedled.red { color: var(--red); }
+.feedled.dim { color: var(--dim); }
+
+.acctbar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.acctchip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 7px; border-radius: 8px; border: 1px solid var(--glassb);
+  font-size: 10.5px; font-weight: 700; letter-spacing: .2px; white-space: nowrap;
+  background: var(--glassh);
+}
+.acctchip b { font-weight: 800; }
+.acctchip em { font-style: normal; font-variant-numeric: tabular-nums; font-size: 12px; }
+.acctchip small { font-weight: 600; opacity: .9; }
+.acctchip.green { color: var(--green); }
+.acctchip.amber { color: var(--amber); }
+.acctchip.red { color: var(--red); }
+.acctchip.dim { color: var(--dim); }
+.acctchip.analysis { border-color: rgba(87,199,222,.45); }
+.acctchip.exec { border-color: rgba(251,191,36,.45); }
+
+.acctpair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  gap: 8px;
+}
+@media (max-width: 700px) {
+  .acctpair { grid-template-columns: 1fr; }
+}
+.acctcard.analysis { border-inline-start: 3px solid var(--cyan, #57c7de); }
+.acctcard.exec { border-inline-start: 3px solid var(--amber); }
+
+.hdr-right { flex-wrap: wrap; justify-content: flex-end; }
+.feedleds { flex-wrap: wrap; }
+
+.owner-keys-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(140px, 1fr));
+  gap: 10px;
+}
+@media (max-width: 900px) {
+  .owner-keys-grid { grid-template-columns: repeat(2, minmax(140px, 1fr)); }
+}
+.owner-key {
+  display: flex; flex-direction: column; gap: 6px;
+  border: 1px solid var(--glassb); border-radius: 10px; padding: 10px 12px;
+  background: var(--glass);
+}
+.owner-key.merged { border-color: var(--cyan, #57c7de); box-shadow: 0 0 0 1px rgba(87,199,222,.25); }
+.owner-key-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.owner-key-head b { font-size: 14px; }
+.owner-key-head em { font-style: normal; font-size: 18px; font-weight: 800; }
+.owner-key input[type='range'] { width: 100%; accent-color: var(--cyan, #57c7de); }
+.owner-key-row { display: flex; gap: 6px; }
+.owner-key-row .cfginput { margin: 0; padding: 4px 7px; font-size: 13px; width: 100%; }
+.owner-key-row .btn { padding: 4px 10px; font-size: 12px; }
+.haltbtn { background: rgba(251,113,133,.08); border: 1px solid var(--red); color: var(--red); font-family: inherit; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 7px; cursor: pointer; transition: .15s; }
+.haltbtn:hover { background: rgba(251,113,133,.2); }
+.refreshbtn { background: var(--glassh); border: 1px solid var(--glassb); color: var(--ink); font-family: inherit; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 7px; cursor: pointer; transition: .15s; }
+.refreshbtn:hover { border-color: var(--accent); color: var(--accent); }
+.market-switch { background: rgba(52,211,153,.08); border: 1px solid var(--green, #34d399); color: var(--green, #34d399); font-family: inherit; font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 7px; cursor: pointer; transition: .15s; }
+.market-switch:hover { background: rgba(52,211,153,.18); box-shadow: 0 0 10px rgba(52,211,153,.16); }
+.crypto-nav-label { justify-content: space-between; color: var(--dim); font-size: 11px; padding-inline: 14px; }
+.crypto-nav-label span:first-child { color: #72d8ff; font-weight: 800; }
+
+/* مبدّل الإطلالة (مؤقت — للاختيار) */
+.themepick { display: flex; gap: 4px; }
+.themepick button { background: var(--glassh); border: 1px solid var(--glassb); color: var(--dim); font-family: inherit; font-size: 11px; padding: 5px 10px; border-radius: 8px; cursor: pointer; }
+.themepick button.on { color: var(--accent); border-color: var(--accent); }
+
+/* ختم المالك 2026-08-20 — التبويبات بسطر واحد: بلا لفّ وبلا سكرول.
+   الأزرار تنكمش بالتساوي عند ضيق العرض بدل ما تنزل لسطر ثانٍ. */
+/* ختم المالك 2026-08-20 — التبويبات بسطر واحد: بلا لفّ وبلا سكرول.
+   ⛔ ممنوع الانكماش (flex-shrink: 0): أوّل محاولة سمحت به فصارت الأسماء
+   «الرئـ…» و«تـ…» — سطر واحد لكنّه غير مقروء. الاسم كامل هو الشرط،
+   والحجم ينزل بالخطّ والحشوة لا بقصّ الكلمة. */
+.nav { display: flex; flex-wrap: nowrap; gap: 2px; padding: 2px 6px; border-bottom: 1px solid var(--glassb); overflow: hidden; }
+.nav button { background: rgba(255,255,255,.04); border: 1px solid var(--glassb); color: #c3cde0; padding: 2px 5px; font-size: 10px; font-weight: 500; font-family: inherit; cursor: pointer; border-radius: 6px; transition: .18s; white-space: nowrap; flex: 0 0 auto; }
+.nav button:hover:not(:disabled) { color: #fff; background: var(--glassh); border-color: var(--accent); }
+.nav button.active { color: #06121c; background: var(--accent); border-color: var(--accent); font-weight: 700; }
+.nav button:disabled { color: rgba(160,172,196,.42); background: none; border-color: transparent; cursor: default; }
+
+.workspace { padding: 5px 8px; overflow-y: auto; overflow-x: hidden; min-height: 0; touch-action: pan-y; overscroll-behavior: contain; }
+/* بند ١٥ (ورقة ٩٩) — التكبير العام: --uizoom من لوحة «تخصيص الشكل» (localStorage).
+   يُطبَّق على أشرطة القشرة ومحتوى الأقسام، ويستثني «الشبكة» WebGL صراحةً
+   (⛔ ممنوع لمسها) — فتبقى بدقّتها الأصلية بأي تكبير. */
+.hdr, .nav, .staleban.on, .status { zoom: var(--uizoom, 1); }
+.workspace > *:not(.network) { zoom: var(--uizoom, 1); }
+.placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; color: var(--dim); }
+.ph-title { font-size: 21px; color: var(--ink); }
+.ph-sub { font-size: 14px; line-height: 1.8; }
+
+.status { display: flex; gap: 12px; padding: 4px 12px; border-top: 1px solid var(--glassb); color: var(--dim); font-size: 10px; }
+.status .grow { margin-inline-start: auto; }
+
+/* ── شاشة الذرات ── */
+.atoms { height: 100%; display: flex; flex-direction: column; gap: 6px; }
+.strip { display: flex; gap: 8px; flex-wrap: wrap; font-size: 12px; flex: 0 0 auto; }
+.cnt { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 20px; background: var(--glass); border: 1px solid var(--glassb); backdrop-filter: blur(8px); }
+.cnt.green { color: var(--green); } .cnt.amber { color: var(--amber); } .cnt.red { color: var(--red); } .cnt.grey { color: var(--dim); } .cnt.total { color: var(--ink); margin-inline-start: auto; }
+
+.fitgrid { flex: 1 1 auto; min-height: 0; display: grid; gap: 5px; }
+.cell {
+  position: relative; border: 1px solid var(--glassb); border-radius: 9px;
+  background: var(--glass); backdrop-filter: blur(10px); color: var(--ink);
+  padding: 4px 8px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: 1px;
+  cursor: pointer; font-family: inherit; text-align: start; min-width: 0; min-height: 0;
+  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.cell::before { content: ""; position: absolute; inset-inline-start: 0; top: 0; bottom: 0; width: 3px; background: var(--grey); }
+.cell.green::before { background: var(--green); }
+.cell.amber::before { background: var(--amber); }
+.cell.red::before { background: var(--red); }
+.cell.grey::before { background: var(--grey); }
+.cell:hover { transform: translateY(-2px); border-color: var(--accent); box-shadow: 0 6px 18px rgba(0,0,0,.3); z-index: 2; }
+.cell .cid { color: var(--dim); font-size: 9px; }
+.cell .cnm { font-size: 12px; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── الشبكة الحيّة ── */
+.network { position: relative; height: 100%; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--glassb); }
+.network canvas { display: block; width: 100%; height: 100%; }
+.netcap { position: absolute; bottom: 10px; inset-inline-start: 14px; font-size: 12px; color: var(--dim); background: var(--glass); border: 1px solid var(--glassb); backdrop-filter: blur(8px); padding: 6px 12px; border-radius: 20px; }
+
+/* ── الأقسام العامة (بطاقات · سجل) ── */
+/* الارتفاع يبقى 100% كما كان — يتغيّر سلوك الفائض وحده: كان يُقصّ فصار
+   يُمرَّر. وبهذا لا يتبدّل تخطيط أي قسم يملأ الشاشة (الشبكة · الشموع)،
+   بينما الأقسام ذات المحتوى المكدّس صار محتواها كلّه قابلًا للوصول.
+   touch-action: pan-y يجعل السحب بالإصبع تمريرًا رأسيًّا صريحًا — لأنّ
+   المالك على شاشة لمس بلا دولاب فأرة. */
+.section { height: 100%; overflow-y: auto; overflow-x: hidden; touch-action: pan-y; overscroll-behavior: contain; }
+/* البنود ٦ و٧ — قياسات قبل الضبط: بطاقة بحشوة 15/18 وقيمة 30px تُنتج
+   ارتفاعًا كبيرًا لمعلومة قصيرة؛ والعناوين 13px والملاحظات 12px صغيرة.
+   الضبط: حشوة أقلّ وفجوة أضيق (مساحة أقلّ) + عناوين وملاحظات أكبر. */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px; align-content: start; }
+.scard { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid var(--glassb); border-radius: 10px; padding: 6px 9px; }
+.scard .st { color: var(--dim); font-size: 12px; }
+.scard .sv { font-size: 19px; font-weight: 700; margin-top: 1px; }
+.scard .sv.green { color: var(--green); } .scard .sv.red { color: var(--red); } .scard .sv.grey { color: var(--dim); }
+.scard .ss { color: var(--dim); font-size: 11.5px; margin-top: 1px; }
+.loglist { display: flex; flex-direction: column; gap: 3px; height: 100%; overflow-y: auto; overflow-x: hidden; touch-action: pan-y; overscroll-behavior: contain; }
+.logrow { display: flex; gap: 8px; align-items: center; padding: 4px 8px; border-radius: 6px; background: var(--glass); border: 1px solid var(--glassb); font-size: 12px; }
+.logrow .lt { color: var(--dim); font-size: 11px; min-width: 60px; }
+.logrow .ln { color: var(--ink); font-weight: 600; }
+.logrow .la { color: var(--accent); margin-inline-start: auto; }
+.cfginput { width: 100%; margin-top: 4px; background: var(--panel2); border: 1px solid var(--glassb); color: var(--ink); border-radius: 7px; padding: 5px 8px; font-size: 14px; font-family: inherit; }
+select.search { cursor: pointer; max-width: 340px; }
+select.search option { background: var(--bg2); color: var(--ink); }
+
+/* ── الشارتات (TradingView) ── */
+/* ⛔ عطل مقيس ٢٠٢٦-٠٨-٣١ (ختم NQ) — «دولاب الماوس ما عم ينزل»:
+   `overflow: hidden` اختصارٌ يضبط المحورين معًا، وهو يأتي بعد
+   `.section { overflow-y: auto }` وبنفس قوّتها — فيدوسها. والنتيجة أنّ عشرة
+   أقسام تستعمل `chartsec` (التحليل · القرار · السيولة · الاحتمالات · الإحصاء
+   · الاستراتيجيات · البنية · المحافظ …) كانت تُقصّ بلا شريط تمرير ولا استجابة
+   للدولاب. القياس على قسم التحليل: المحتوى 5711px داخل إطار 630px و
+   `overflow-y: hidden` — أي 5081 بكسل غير قابلة للوصول إطلاقًا.
+   وهذا أيضًا ما أبطل الإصلاح السابق أدناه (`flex-shrink: 0`): جعل المحتوى
+   أطول من إطاره فعلًا، لكنّ التمرير كان مقفولًا من هنا.
+   الفصل بين المحورين: الأفقيّ يبقى مقصوصًا (الشارتات)، والرأسيّ يمرّر. */
+.chartsec { display: flex; flex-direction: column; gap: 4px; height: 100%; min-height: 0; overflow-x: hidden; overflow-y: auto; }
+/* ⛔ عطل مقيس: البطاقة كانت عنصرًا مرنًا قابلًا للانكماش داخل قسم مرن،
+   فتنكمش إلى 169px بينما محتواها 1215px، و`overflow:hidden` يقصّ الباقي
+   بلا شريط تمرير — أي أنّ ١٠٤٨ بكسل من جدول المحلّلات كانت غير قابلة
+   للوصول لا بالماوس ولا باللمس. منعُ الانكماش يجعل القسم أطول من إطاره
+   فيعمل `overflow-y:auto` القائم عليه.
+   القياس: secScroll 517=517 (لا تمرير) ⇒ 1565>517 (يمرّر). */
+.chartsec > .scard { flex-shrink: 0; }
+.chbar { display: flex; gap: 8px; align-items: center; flex-wrap: nowrap; flex: 0 0 auto; min-height: 30px; overflow-x: auto; overflow-y: hidden; padding-bottom: 2px; scrollbar-width: thin; }
+.chtfs, .chsyms { display: flex; gap: 4px; flex-wrap: nowrap; flex: 0 0 auto; }
+.chbar button { flex: 0 0 auto; white-space: nowrap; background: var(--glassh); border: 1px solid var(--glassb); color: var(--dim); font-family: inherit; font-size: 11px; padding: 3px 9px; border-radius: 7px; cursor: pointer; transition: .15s; }
+.chbar button:hover { color: var(--ink); }
+.chbar button.on { color: #06121c; background: var(--accent); border-color: var(--accent); font-weight: 700; }
+.chsyms button.on { color: var(--accent); background: var(--glass); }
+.chgrid { flex: 1 1 auto; min-height: 0; display: grid; gap: 6px; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr; }
+.chgrid[data-n="1"] { grid-template-columns: 1fr; }
+.chgrid[data-n="2"] { grid-template-columns: 1fr; }
+.chgrid[data-n="3"] { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 900px) { .chgrid, .chgrid[data-n="3"] { grid-template-columns: 1fr; } }
+.chartpanel { display: flex; flex-direction: column; min-height: 0; min-width: 0; border: 1px solid var(--glassb); border-radius: 12px; background: var(--glass); backdrop-filter: blur(10px); overflow: hidden; }
+.chhead { display: flex; align-items: center; gap: 10px; padding: 5px 10px; border-bottom: 1px solid var(--glassb); font-size: 13px; }
+.chsym { font-weight: 700; color: var(--ink); }
+.chlast { color: var(--accent); font-size: 15px; }
+.chtrade { color: var(--amber); font-size: 12px; }
+.chtf { font-size: 12px; }
+.chbox { flex: 1 1 auto; min-height: 0; }
+/* شارت جوّا الرئيسية — يتمدّد ليملأ بانله */
+.homechart { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+.homechart .chartpanel { flex: 1 1 auto; min-height: 0; border: none; border-radius: 0; background: none; backdrop-filter: none; }
+
+/* نافذة التفاصيل */
+.overlay { position: fixed; inset: 0; background: rgba(3,6,14,.55); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 9; }
+.modal { position: relative; background: var(--bg2); border: 1px solid var(--glassb); border-radius: 18px; max-width: 460px; width: 100%; max-height: 85vh; overflow: auto; padding: 20px; display: flex; flex-direction: column; gap: 11px; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+.modal h3 { margin: 0; font-size: 18px; }
+.modal .x { position: absolute; inset-inline-start: 16px; top: 12px; background: none; border: none; color: var(--dim); font-size: 24px; cursor: pointer; }
+.pill { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; padding: 2px 10px; border-radius: 20px; background: var(--glass); border: 1px solid var(--glassb); width: fit-content; }
+.pill.green { color: var(--green); } .pill.amber { color: var(--amber); } .pill.red { color: var(--red); } .pill.grey { color: var(--dim); }
+.err { color: #ffc2cb; font-size: 12px; background: rgba(251,113,133,.12); border: 1px solid rgba(251,113,133,.25); border-radius: 8px; padding: 8px 10px; word-break: break-word; }
+.actions { display: flex; gap: 8px; }
+.btn { background: var(--glassh); border: 1px solid var(--glassb); color: var(--ink); border-radius: 8px; padding: 5px 12px; font-size: 12px; font-family: inherit; cursor: pointer; transition: .2s; }
+.btn:hover { border-color: var(--accent); }
+.btn:disabled { opacity: .5; cursor: default; box-shadow: none; }
+.btn.stop { color: #ffc2cb; } .btn.start { color: var(--green); }
+.rawbtn { cursor: pointer; color: var(--dim); font-size: 12px; }
+.modal pre { margin: 0; background: rgba(0,0,0,.3); border: 1px solid var(--glassb); border-radius: 10px; padding: 12px; direction: ltr; text-align: left; color: var(--dim); font-size: 12px; overflow: auto; touch-action: pan-y; }
+
+/* ── شريط التمرير ──
+   بلا هذا يظهر شريط ويندوز الافتراضيّ الثقيل فوق الزجاج. وهو ليس زينة:
+   منطقة تُمرَّر بلا شريط ظاهر لا تخبر أنّ تحتها المزيد. رفيع وخافت،
+   ويوضح موضعك من الصفحة. */
+.section::-webkit-scrollbar, .workspace::-webkit-scrollbar,
+.loglist::-webkit-scrollbar, .modal::-webkit-scrollbar,
+.modal pre::-webkit-scrollbar { width: 9px; height: 9px; }
+.section::-webkit-scrollbar-track, .workspace::-webkit-scrollbar-track,
+.loglist::-webkit-scrollbar-track, .modal::-webkit-scrollbar-track,
+.modal pre::-webkit-scrollbar-track { background: transparent; }
+.section::-webkit-scrollbar-thumb, .workspace::-webkit-scrollbar-thumb,
+.loglist::-webkit-scrollbar-thumb, .modal::-webkit-scrollbar-thumb,
+.modal pre::-webkit-scrollbar-thumb {
+  background: var(--glassh); border: 2px solid transparent; background-clip: content-box; border-radius: 8px;
+}
+.section::-webkit-scrollbar-thumb:hover, .workspace::-webkit-scrollbar-thumb:hover,
+.loglist::-webkit-scrollbar-thumb:hover, .modal::-webkit-scrollbar-thumb:hover,
+.modal pre::-webkit-scrollbar-thumb:hover { background: var(--accent); background-clip: content-box; }
+
+/* قسم التحليل: ملخص بشري أولًا، والتفاصيل الثقيلة داخل لوحة قابلة للفتح. */
+.analysis-intro { border-inline-start: 3px solid var(--accent); }
+.analysis-settings { background: var(--glass); border: 1px solid var(--glassb); border-radius: 10px; padding: 10px 12px; }
+.analysis-settings summary { cursor: pointer; color: var(--ink); font-weight: 700; font-size: 13.5px; }
+.analysis-settings[open] summary { color: var(--accent); margin-bottom: 4px; }
+
+/* لمسات بصرية لتبويب إعدادات الفوركس فقط — لا تغيّر أي مسار أو أمر. */
+.settings-hero { display: flex; align-items: center; gap: 11px; padding: 12px 14px; border: 1px solid var(--glassb); border-inline-start: 4px solid var(--accent); border-radius: 12px; background: linear-gradient(110deg, var(--glassh), var(--glass)); }
+.settings-hero-mark { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; background: var(--accent); color: #06121c; font-size: 19px; }
+.settings-legend { display: flex; gap: 10px; margin-inline-start: auto; flex-wrap: wrap; color: var(--dim); font-size: 11.5px; }
+.settings-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-inline-end: 3px; }
+.settings-dot.green { background: var(--green); } .settings-dot.amber { background: var(--amber); } .settings-dot.red { background: var(--red); }
+@media (max-width: 700px) { .settings-legend { flex-basis: 100%; margin-inline-start: 45px; } }
+
+.network-badge, .network-legend, .network-hint { position: absolute; z-index: 5; pointer-events: none; font-size: 11.5px; color: var(--dim); background: rgba(5, 10, 20, .72); border: 1px solid var(--glassb); border-radius: 8px; backdrop-filter: blur(5px); }
+.network-badge { top: 10px; inset-inline-start: 12px; padding: 5px 9px; color: var(--green); }
+.network-legend { top: 10px; inset-inline-end: 12px; display: flex; flex-wrap: wrap; gap: 5px 10px; max-width: min(560px, 55%); padding: 7px 10px; }
+.network-legend span { white-space: nowrap; } .network-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-inline-end: 4px; }
+.network-hint { bottom: 10px; inset-inline-start: 50%; transform: translateX(-50%); padding: 5px 10px; white-space: nowrap; }
+@media (max-width: 700px) { .network-legend { max-width: 68%; font-size: 10.5px; } .network-hint { font-size: 10.5px; } }
+
+.settings-mode { font-size: 11.5px; padding: 3px 8px; border-radius: 99px; border: 1px solid var(--glassb); }
+.settings-mode.base { color: var(--green); } .settings-mode.custom { color: var(--accent); }
+
+.change-nav { display: flex; gap: 7px; flex-wrap: wrap; padding: 8px; border: 1px solid var(--glassb); border-radius: 10px; background: var(--glass); }
+.change-nav .btn.active { color: var(--accent); border-color: var(--accent); background: var(--glassh); }

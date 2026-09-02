@@ -1,0 +1,39 @@
+id: 467
+name: "Decision Dispatch"
+version: "2.2.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "decision.dispatch.state"
+  - "decision.gate.passed"
+  - "decision.gate.blocked"
+  - "decision.gate.recorded"
+
+subscribes:
+  - "decision.approved.state"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties: {}
+  additionalProperties: false
+
+config: {}
+
+metadata:
+  max_idle_s: 301
+  executable: true

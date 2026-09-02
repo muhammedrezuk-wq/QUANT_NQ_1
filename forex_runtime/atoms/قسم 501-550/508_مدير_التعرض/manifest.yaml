@@ -1,0 +1,50 @@
+id: 508
+name: "Exposure Manager"
+version: "3.1.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "risk.exposure.state"
+  - "risk.halt.requested"
+
+subscribes:
+  - "platform.positions.state"
+  - "platform.account.state"
+  - "market.symbol_specs"
+  - "execution.order.built"
+  - "execution.order.rejected"
+  - "platform.trade_event"
+
+startup_mode: auto
+
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 2000
+
+config_schema:
+  type: object
+  properties:
+    max_exposure_pct:
+      type: number
+      minimum: 0
+    specs_max_age_s:
+      type: number
+      minimum: 1
+  required:
+    - max_exposure_pct
+    - specs_max_age_s
+  additionalProperties: false
+
+config:
+  max_exposure_pct: 5000.0
+  specs_max_age_s: 600.0
+metadata:
+  max_idle_s: 3600

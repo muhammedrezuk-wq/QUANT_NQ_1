@@ -1,0 +1,37 @@
+id: 550
+name: "Truthful Execution Lifecycle"
+version: "2.1.2"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+dependencies: []
+publishes:
+- execution.unified.state
+subscribes:
+- execution.unified.state
+- execution.order.built
+- trading.final_decision
+- execution.order.rejected
+- execution.order.skipped
+- platform.brain_signal.written
+- platform.brain_signal.write_failed
+- execution.command.ack
+- execution.command.failed
+- platform.trade_event
+- execution.manage.command
+- execution.manage.written
+- market.outcome.realized
+- emergency.halt
+- risk.kill_switch.reset_requested
+startup_mode: auto
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema: {type: object, properties: {}, additionalProperties: false}
+config: {}
+metadata:
+  max_idle_s: 3600

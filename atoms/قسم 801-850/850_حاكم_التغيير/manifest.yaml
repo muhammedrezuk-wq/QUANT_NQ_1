@@ -1,0 +1,64 @@
+id: 850
+name: "Change Governor"
+version: "1.0.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "experiment.state"
+  - "adaptation.limits.state"
+
+subscribes:
+  - "recalibration.proposed"
+  - "adaptation.kill_switch.state"
+
+startup_mode: auto
+health:
+  interval_ms: 30000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 3000
+
+config_schema:
+  type: object
+  properties:
+      min_evidence_windows:
+        type: integer
+        minimum: 0
+      max_change_per_step:
+        type: number
+        minimum: 0
+      max_change_per_day:
+        type: number
+        minimum: 0
+      max_active_experiments:
+        type: integer
+        minimum: 0
+      min_dwell_s:
+        type: number
+        minimum: 0
+      cooldown_s:
+        type: number
+        minimum: 0
+      max_changes_per_window:
+        type: integer
+        minimum: 0
+  additionalProperties: false
+
+config:
+  min_evidence_windows: 10
+  max_change_per_step: 0.25
+  max_change_per_day: 0.5
+  max_active_experiments: 2
+  min_dwell_s: 300
+  cooldown_s: 120
+  max_changes_per_window: 5
+
+metadata:
+  max_idle_s: 300
+  note: "صاحب سلطة التفعيل الوحيد — وسقف سلطته APPROVED_FOR_SHADOW: بوابات الأدلة والحدود والمناوبة والحسم والحماية من churn وسماع مفتاح الإيقاف."

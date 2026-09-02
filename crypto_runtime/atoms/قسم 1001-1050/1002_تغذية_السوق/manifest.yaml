@@ -1,0 +1,33 @@
+id: 1002
+name: Crypto Market Feed
+version: 1.0.0
+core_version: ">=1.22.0,<2.0.0"
+critical: true
+entrypoint: atom:Atom
+dependencies:
+  - id: 1001
+    version: ">=1.0.0,<2.0.0"
+publishes:
+  - crypto.feed.tick
+  - crypto.feed.state
+subscribes:
+  - crypto.market.ticker.all
+startup_mode: auto
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 3
+  restart_backoff_ms: 3000
+config_schema:
+  type: object
+  properties: {}
+  required: []
+  additionalProperties: false
+config: {}
+metadata:
+  market: crypto
+  phase: A
+  role: feed
+  no_senses: true

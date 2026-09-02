@@ -1,0 +1,38 @@
+id: 650
+name: "Portfolio Manager"
+version: "2.1.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+publishes:
+  - "portfolio.components.state"
+  - "portfolio.summary"
+subscribes:
+  - "portfolio.account.tracked"
+  - "portfolio.account.state"
+  - "portfolio.balance.state"
+  - "portfolio.equity.state"
+  - "portfolio.margin.state"
+  - "portfolio.free_margin.state"
+  - "portfolio.margin_level.state"
+  - "portfolio.pnl.state"
+  - "portfolio.open_positions.state"
+  - "risk.asset_ledger.state"
+  - "SYS_SECOND"
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties: {}
+  additionalProperties: false
+config: {}
+metadata:
+  max_idle_s: 60

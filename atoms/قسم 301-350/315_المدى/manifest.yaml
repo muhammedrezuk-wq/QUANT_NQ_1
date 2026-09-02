@@ -1,0 +1,51 @@
+id: 315
+name: "Range Bundle"
+version: "1.2.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "stats.range.state"
+
+subscribes:
+  - "market.tick.validated"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    window_size:
+      type: integer
+      minimum: 2
+    high_band:
+      type: number
+      minimum: 0
+      maximum: 1
+    low_band:
+      type: number
+      minimum: 0
+      maximum: 1
+  required:
+    - window_size
+    - high_band
+    - low_band
+  additionalProperties: false
+
+config:
+  window_size: 20
+  high_band: 0.8
+  low_band: 0.2
+metadata:
+  max_idle_s: 301

@@ -1,0 +1,9 @@
+{
+  "status": "REVOKED",
+  "revoked_seal": "SYSTEM_FREEZE_20260816.json",
+  "revoked_tree_digest": "ae5969e7fddde6818216040ef8f16757799456a004956de8b181fc90ffcce9f7",
+  "revoked_seal_sha256": "0c79af3328dd36d54cd9cac740898ad75d9c2695c1685fcc0f307f977c727e76",
+  "revoked_package_sha256": "ef530bc92d3069b1b025fbfc79e2918fd56d392a616f40c62a0767089fa20728",
+  "reason": "Owner clarified that only atoms covered by the four infrastructure papers may be frozen; whole-tree freeze was overbroad and invalid.",
+  "superseded_by": "INFRASTRUCTURE_4_PAPERS_SCOPE_FREEZE_20260816.json"
+}

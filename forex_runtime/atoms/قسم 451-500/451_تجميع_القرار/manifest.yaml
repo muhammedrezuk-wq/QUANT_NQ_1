@@ -1,0 +1,54 @@
+id: 451
+name: Decision Aggregator
+version: "3.0.1"
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- decision.aggregated.state
+- decision.room.state
+subscribes:
+- market.tick.validated
+- strategy.cycle.collected
+- probability.cycle.collected
+- probability.confidence.state
+- market.structure.updated
+- market.liquidity.updated
+- stats.cycle.collected
+- structure.section.live
+- liquidity.section.live
+- stats.section.live
+- probability.section.live
+- strategy.section.live
+- analysis.section.live
+startup_mode: auto
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    expected_families:
+      type: array
+      items:
+        type: string
+    family_freshness_s:
+      type: object
+      additionalProperties:
+        type: number
+  required:
+  - expected_families
+  additionalProperties: false
+config:
+  expected_families:
+  - '150'
+  - '350'
+  - '400'
+  family_freshness_s: {}
+metadata:
+  max_idle_s: 301

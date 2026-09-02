@@ -1,0 +1,67 @@
+id: 353
+name: Tick Breakout Probability Model
+version: 2.0.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- probability.breakout.state
+subscribes:
+- market.tick.validated
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    weight:
+      type: number
+      minimum: 0
+      maximum: 100
+    required_depth:
+      type: number
+      minimum: 0
+      maximum: 100
+    confidence_threshold:
+      type: number
+      minimum: 0
+      maximum: 100
+    strength_threshold:
+      type: number
+      minimum: 0
+      maximum: 100
+    required_ticks:
+      type: integer
+      minimum: 2
+      maximum: 10000
+    tick_window:
+      type: integer
+      minimum: 5
+    breakout_buffer_pct:
+      type: number
+      minimum: 0
+  required:
+  - weight
+  - required_depth
+  - confidence_threshold
+  - strength_threshold
+  - required_ticks
+  - tick_window
+  - breakout_buffer_pct
+  additionalProperties: false
+config:
+  weight: 14.285714285714286
+  required_depth: 60.0
+  confidence_threshold: 60.0
+  strength_threshold: 0.0
+  required_ticks: 24
+  tick_window: 32
+  breakout_buffer_pct: 0.0
+metadata:
+  max_idle_s: 64

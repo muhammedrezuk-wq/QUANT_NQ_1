@@ -1,0 +1,35 @@
+venv/
+**/node_modules/
+**/__pycache__/
+.pytest_cache/
+*.pyc
+var/
+quant_nq_core.egg-info/
+governance/ui/built/
+*.db
+*.db-shm
+*.db-wal
+*.zip
+*.tar.gz
+
+# --- خزنة الأسرار: لا تُرفع أبداً (المفتاح والخزنة ونسخهما المؤرشفة) ---
+runtime/device.key
+runtime/device.key.*
+runtime/secrets.enc
+runtime/secrets.enc.*
+
+# --- بوت الأخبار: المصدر يُرفع، والسرّ والبيئة والحالة لا تُرفع أبداً ---
+# `news_bot/.env` يحمل `BOT_TOKEN` بنصّ صريح (بعكس منصّة ٦١٠ التي تأخذ توكنها
+# من الخزنة المشفّرة). و`data/` فيه قفل التشغيل ومعرّفات محادثات المستخدمين.
+news_bot/.env
+news_bot/.venv/
+news_bot/data/
+news_bot/logs/
+
+# --- بيئة المشروع المعزولة: تُشحن مع النسخة المتنقّلة، لا مع المستودع ---
+# ٢٠٢٦-٠٩-٠١: `vendor/` يحمل مفسّر بايثون الخاصّ بالمشروع (توزيعة مضمّنة)
+# ومخزن الحزم بنسخها المقفولة — 36 م.ب من الثنائيّات. تسافر داخل الزيب لأن
+# العزل هو الغاية، ولا تُرفع للمستودع لأن الشيفرة وحدها ما يُراجَع.
+# يُعاد بناؤها بأمرين موثّقين في scripts/setup_machine.py.
+vendor/python/runtime/
+vendor/wheels/

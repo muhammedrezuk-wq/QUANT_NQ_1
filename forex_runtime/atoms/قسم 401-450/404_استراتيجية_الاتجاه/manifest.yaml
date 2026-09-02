@@ -1,0 +1,67 @@
+id: 404
+name: Trend Continuation Strategy Opinion
+version: 2.0.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- strategy.trend.state
+subscribes:
+- market.tick.validated
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    weight:
+      type: number
+      minimum: 0
+      maximum: 100
+    required_depth:
+      type: number
+      minimum: 0
+      maximum: 100
+    confidence_threshold:
+      type: number
+      minimum: 0
+      maximum: 100
+    strength_threshold:
+      type: number
+      minimum: 0
+      maximum: 100
+    required_ticks:
+      type: integer
+      minimum: 2
+      maximum: 10000
+    fast_ticks:
+      type: integer
+      minimum: 2
+    slow_ticks:
+      type: integer
+      minimum: 3
+  required:
+  - weight
+  - required_depth
+  - confidence_threshold
+  - strength_threshold
+  - required_ticks
+  - fast_ticks
+  - slow_ticks
+  additionalProperties: false
+config:
+  weight: 14.285714285714286
+  required_depth: 60.0
+  confidence_threshold: 60.0
+  strength_threshold: 0.0
+  required_ticks: 24
+  fast_ticks: 12
+  slow_ticks: 36
+metadata:
+  max_idle_s: 64

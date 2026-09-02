@@ -1,0 +1,49 @@
+id: 452
+name: "Signal Evaluation"
+version: "2.4.1"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "decision.evaluated.state"
+  - "decision.settings.state"
+
+subscribes:
+  - "decision.aggregated.state"
+  - "learning.model.evidence"
+  - "decision.settings.command"
+
+startup_mode: auto
+
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    low_quality_factor:
+      type: number
+      minimum: 0
+      maximum: 1
+    min_confidence:
+      type: number
+      minimum: 0
+      maximum: 1
+  required:
+    - low_quality_factor
+    - min_confidence
+  additionalProperties: false
+
+config:
+  low_quality_factor: 0.5
+  min_confidence: 0.0
+metadata:
+  max_idle_s: 301

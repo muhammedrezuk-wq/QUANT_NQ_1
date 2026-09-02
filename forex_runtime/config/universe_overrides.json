@@ -1,0 +1,26 @@
+{
+  "BTC_USDT": {
+    "decision": "ALLOW",
+    "scope": "BOTH",
+    "reason": "core ring pin — scalping paper 06 owner 2026-08-28",
+    "operator": "owner",
+    "command_id": "",
+    "updated_at": 1787924931.5539296
+  },
+  "ETH_USDT": {
+    "decision": "ALLOW",
+    "scope": "BOTH",
+    "reason": "core ring pin — scalping paper 06 owner 2026-08-28",
+    "operator": "owner",
+    "command_id": "",
+    "updated_at": 1787924931.5539312
+  },
+  "SOL_USDT": {
+    "decision": "ALLOW",
+    "scope": "BOTH",
+    "reason": "core ring pin — scalping paper 06 owner 2026-08-28",
+    "operator": "owner",
+    "command_id": "",
+    "updated_at": 1787924931.5539317
+  }
+}

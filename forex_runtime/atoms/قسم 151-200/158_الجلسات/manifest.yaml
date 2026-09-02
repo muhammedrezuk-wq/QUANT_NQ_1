@@ -1,0 +1,81 @@
+id: 158
+name: "Session Analyzer"
+version: "2.5.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "analysis.session.state"
+  - "analysis.setting.changed"
+
+subscribes:
+  - "market_data.candle_closed"
+
+  - "market.tick.validated"
+  - "analysis.settings.command"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    utc_offset_hours:
+      type: integer
+    asia_start:
+      type: integer
+    asia_end:
+      type: integer
+    london_start:
+      type: integer
+    london_end:
+      type: integer
+    ny_start:
+      type: integer
+    ny_end:
+      type: integer
+    crypto_symbols:
+      type: array
+      items:
+        type: string
+    always_open_symbols:
+      type: array
+      items:
+        type: string
+  required:
+    - utc_offset_hours
+    - asia_start
+    - asia_end
+    - london_start
+    - london_end
+    - ny_start
+    - ny_end
+    - crypto_symbols
+    - always_open_symbols
+  additionalProperties: false
+
+config:
+  utc_offset_hours: 0
+  asia_start: 0
+  asia_end: 9
+  london_start: 7
+  london_end: 16
+  ny_start: 12
+  ny_end: 21
+  crypto_symbols:
+    - "BTCUSD"
+  always_open_symbols:
+    - "XAUUSD"
+metadata:
+  max_idle_s: 301

@@ -1,0 +1,94 @@
+id: 2714
+name: Archive
+version: 3.0.2
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- storage.archived
+subscribes:
+- SYS_DAY
+- SYS_SECOND
+startup_mode: manual
+health:
+  interval_ms: 60000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 3000
+config_schema:
+  type: object
+  properties:
+    stores:
+      type: array
+      minItems: 1
+      items:
+        type: object
+        properties:
+          db_path:
+            type: string
+          table:
+            type: string
+          time_column:
+            type: string
+        required:
+        - db_path
+        - table
+        - time_column
+        additionalProperties: false
+    archive_db_path:
+      type: string
+    archive_after_days:
+      type: integer
+      minimum: 0
+    batch_limit:
+      type: integer
+      minimum: 1
+      maximum: 1000000
+  required:
+  - stores
+  - archive_db_path
+  - archive_after_days
+  - batch_limit
+  additionalProperties: false
+config:
+  stores:
+  - db_path: var/store\market_data.db
+    table: market_data
+    time_column: occurred_at
+  - db_path: var/store\orders.db
+    table: orders
+    time_column: occurred_at
+  - db_path: var/store\timeline.db
+    table: timeline
+    time_column: occurred_at
+  - db_path: var/store\portfolio.db
+    table: portfolio
+    time_column: occurred_at
+  - db_path: var/store\analysis.db
+    table: analysis
+    time_column: occurred_at
+  - db_path: var/store\structure.db
+    table: structure
+    time_column: occurred_at
+  - db_path: var/store\liquidity.db
+    table: liquidity
+    time_column: occurred_at
+  - db_path: var/store\trades.db
+    table: trades
+    time_column: closed_at
+  - db_path: var/store\decisions.db
+    table: decisions
+    time_column: decided_at
+  archive_db_path: var/store\archive.db
+  archive_after_days: 60
+  batch_limit: 5000
+metadata:
+  max_idle_s: 60
+  market: crypto
+  namespace: crypto_full
+  source_id: 714
+  legacy_source: true
+  phase: full-source

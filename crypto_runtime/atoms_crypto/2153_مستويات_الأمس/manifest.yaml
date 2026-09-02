@@ -1,0 +1,38 @@
+id: 2153
+name: Prior Day High/Low/Close (PDH/PDL/PDC)
+version: 1.1.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- sense.prior_day.state
+subscribes:
+- market.candle
+startup_mode: auto
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    timeframe:
+      type: string
+    max_age_s:
+      type: number
+      minimum: 1
+  additionalProperties: false
+config:
+  timeframe: 5m
+  max_age_s: 600
+metadata:
+  max_idle_s: 3600
+  market: crypto
+  namespace: crypto_full
+  source_id: 153
+  legacy_source: true
+  phase: full-source

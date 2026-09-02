@@ -1,0 +1,48 @@
+id: 367
+name: Learning Model Registry
+version: 1.3.1
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- learning.model.active.state
+- learning.model.evidence
+- model.persist_requested
+- storage.persistence.load_requested
+subscribes:
+- learning.model.selected
+- model.persisted
+- storage.persistence.load_response
+- learning.model.rollback_requested
+- market.tick.validated
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    mode:
+      type: string
+      enum:
+      - disabled
+      - shadow
+      - advisory
+      - active
+    rollback_cooldown_seconds:
+      type: number
+      minimum: 0
+  additionalProperties: false
+  required:
+  - mode
+  - rollback_cooldown_seconds
+config:
+  mode: shadow
+  rollback_cooldown_seconds: 3600
+metadata:
+  max_idle_s: 301

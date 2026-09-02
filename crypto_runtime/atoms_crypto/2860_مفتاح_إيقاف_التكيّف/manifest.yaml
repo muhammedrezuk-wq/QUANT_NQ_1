@@ -1,0 +1,47 @@
+id: 2860
+name: Adaptation Kill Switch
+version: 1.0.1
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- adaptation.kill_switch.state
+subscribes:
+- drift.vector.state
+- measurement.latency.state
+- adaptation.kill_switch.command
+startup_mode: manual
+health:
+  interval_ms: 30000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 3000
+config_schema:
+  type: object
+  properties:
+    critical_drift:
+      type: number
+      minimum: 0
+    latency_budget_ms:
+      type: number
+      minimum: 0
+    hot_path_sections:
+      type: array
+      items:
+        type: string
+  additionalProperties: false
+config:
+  critical_drift: 1.0
+  latency_budget_ms: 50
+metadata:
+  max_idle_s: 300
+  note: 'مستقلّ عن الحاكم: انحراف حرج أو انحدار كمون أو أمر مالك → ADAPTATION=OFF
+    والتداول مستمر — والإعادة بأمر المالك وحده.'
+  market: crypto
+  namespace: crypto_full
+  source_id: 860
+  legacy_source: true
+  phase: full-source

@@ -1,0 +1,38 @@
+id: 560
+name: "Scoped Execution Quality"
+version: "2.0.3"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+dependencies: []
+publishes:
+- execution.quality.state
+subscribes:
+- trading.final_decision
+- platform.trade_event
+- execution.order.rejected
+- platform.brain_signal.write_failed
+- market.symbol_specs
+- platform.account.state
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    max_adverse_points: {type: number, minimum: 0}
+    max_reject_rate: {type: number, minimum: 0, maximum: 1}
+    min_samples: {type: integer, minimum: 1}
+  required: [max_adverse_points, max_reject_rate, min_samples]
+  additionalProperties: false
+config:
+  max_adverse_points: 50.0
+  max_reject_rate: 0.25
+  min_samples: 1
+metadata:
+  max_idle_s: 3600

@@ -1,0 +1,33 @@
+id: 668
+name: "Portfolio Overview"
+version: "1.2.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+dependencies: []
+publishes:
+  - "portfolio.overview.state"
+subscribes:
+  - "portfolio.components.state"
+  - "portfolio.capital_distribution.state"
+  - "portfolio.risk_distribution.state"
+  - "portfolio.loss_limits.state"
+  - "portfolio.profit_limits.state"
+  - "portfolio.performance.state"
+  - "portfolio.comparison.state"
+  - "SYS_SECOND"
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties: {}
+  additionalProperties: false
+config: {}
+metadata:
+  max_idle_s: 60

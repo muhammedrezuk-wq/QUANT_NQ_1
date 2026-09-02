@@ -1,0 +1,55 @@
+id: 413
+name: Weighted Strategy Aggregator
+version: "2.2.0"
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- strategy.aggregate.state
+subscribes:
+- strategy.trend.state
+- strategy.reversal.state
+- strategy.breakout.state
+- strategy.pullback.state
+- strategy.momentum.state
+- strategy.range.state
+- strategy.liquidity.state
+- strategy.entry_quality.state
+- strategy.invalidation_quality.state
+- strategy.news.state
+- strategy.session.state
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    required_depth:
+      type: number
+      minimum: 0
+      maximum: 100
+    confidence_threshold:
+      type: number
+      minimum: 0
+      maximum: 100
+    min_active_weight:
+      type: number
+      minimum: 0
+      maximum: 100
+  required:
+  - required_depth
+  - confidence_threshold
+  - min_active_weight
+  additionalProperties: false
+config:
+  required_depth: 60.0
+  confidence_threshold: 60.0
+  min_active_weight: 40.0
+metadata:
+  max_idle_s: 64

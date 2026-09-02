@@ -1,0 +1,51 @@
+id: 6
+name: "Storage Monitor"
+version: "2.1.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "tools.storage.low"
+  - "tools.storage.recovered"
+
+subscribes:
+  - "SYS_5MIN"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    path:
+      type: string
+    warn_threshold_pct:
+      type: number
+      minimum: 0
+      maximum: 100
+    critical_threshold_pct:
+      type: number
+      minimum: 0
+      maximum: 100
+  required:
+    - path
+    - warn_threshold_pct
+    - critical_threshold_pct
+  additionalProperties: false
+
+config:
+  path: "."
+  warn_threshold_pct: 80
+  critical_threshold_pct: 90
+metadata:
+  max_idle_s: 3600

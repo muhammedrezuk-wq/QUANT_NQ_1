@@ -1,0 +1,34 @@
+id: 586
+name: "Durable Symbol Resolution Gate"
+version: "2.0.2"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+dependencies: []
+publishes:
+- symbol.resolve.requested
+- storage.symbol.resolve_requested
+- execution.order.resolved
+- execution.order.rejected
+- symbol.resolve.orphaned
+subscribes:
+- execution.order.requested
+- symbol.resolve.result
+- SYS_SECOND
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    resolution_timeout_s: {type: number, minimum: 0.1, maximum: 300}
+  additionalProperties: false
+config:
+  resolution_timeout_s: 10.0
+metadata:
+  max_idle_s: 60

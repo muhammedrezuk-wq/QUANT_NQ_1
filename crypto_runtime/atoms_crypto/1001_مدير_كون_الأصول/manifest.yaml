@@ -1,0 +1,67 @@
+id: 1001
+name: Crypto Asset Universe Manager
+version: 1.2.0
+core_version: ">=1.22.0,<2.0.0"
+critical: true
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+  - crypto.market.ticker.all
+  - crypto.universe.snapshot.state
+  - crypto.universe.membership.state
+  - crypto.universe.rejected.state
+subscribes:
+  - crypto.universe.override.command
+  - crypto.universe.scan.requested
+startup_mode: auto
+health:
+  interval_ms: 30000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 3
+  restart_backoff_ms: 5000
+config_schema:
+  type: object
+  properties:
+    poll_interval_s: {type: number, minimum: 30}
+    core_min_liquidity_usd_24h: {type: number, minimum: 0}
+    outer_min_liquidity_usd_24h: {type: number, minimum: 0}
+    max_spread_ticks: {type: number, minimum: 0}
+    max_daily_range_pct: {type: number, minimum: 0}
+    core_target_count: {type: integer, minimum: 1, maximum: 100}
+    outer_target_count: {type: integer, minimum: 0, maximum: 200}
+    entry_resilience_days: {type: number, minimum: 0}
+    exit_failure_days: {type: number, minimum: 0}
+    overrides_path: {type: string}
+    membership_state_path: {type: string}
+    open_positions_path: {type: string}
+  required: []
+  additionalProperties: false
+config:
+  poll_interval_s: 300
+  core_min_liquidity_usd_24h: 50000000
+  outer_min_liquidity_usd_24h: 10000000
+  max_spread_ticks: 3
+  max_daily_range_pct: 20
+  core_target_count: 12
+  outer_target_count: 15
+  # 2026-08-27 (owner decision, replacing the original 2/3-day defaults):
+  # liquidity spikes/drops in crypto futures typically dissipate within
+  # hours, not days -- a multi-day debounce meant this scalping-oriented
+  # universe could miss a newly-liquid coin for two full days, or keep
+  # trading a degraded one for three. 0.25d (6h, ~72 confirming scans at
+  # the 300s poll interval) still filters a single noisy spike; 1d (24h)
+  # exit still gives a downstream consumer a controlled window, not an
+  # instant cutoff. Open positions stay protected regardless of this
+  # value (checked separately via open_positions_path).
+  entry_resilience_days: 0.25
+  exit_failure_days: 1
+  overrides_path: var/universe_overrides.json
+  membership_state_path: var/universe_membership.json
+  open_positions_path: var/open_positions.json
+metadata:
+  market: crypto
+  phase: A
+  role: universe
+  no_senses: true

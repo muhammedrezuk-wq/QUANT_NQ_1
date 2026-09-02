@@ -1,0 +1,60 @@
+id: 455
+name: "Buy Eligibility Checker"
+version: "1.4.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "decision.eligibility.buy.state"
+  - "decision.settings.state"
+
+subscribes:
+  - "decision.scored.state"
+  - "decision.settings.command"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    buy_min_direction:
+      type: number
+      minimum: 0
+      maximum: 100
+    min_strength:
+      type: number
+      minimum: 0
+      maximum: 100
+    min_confidence:
+      type: number
+      minimum: 0
+      maximum: 100
+    min_current_depth:
+      type: number
+      minimum: 0
+      maximum: 100
+  required:
+    - buy_min_direction
+    - min_strength
+    - min_confidence
+    - min_current_depth
+  additionalProperties: false
+
+config:
+  buy_min_direction: 50.0
+  min_strength: 45.0
+  min_confidence: 63.0
+  min_current_depth: 45.0
+metadata:
+  max_idle_s: 301

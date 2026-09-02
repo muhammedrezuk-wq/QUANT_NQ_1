@@ -1,0 +1,144 @@
+id: 2708
+name: Symbol Registry And Resolution
+version: 2.5.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- storage.symbol.map.state
+- storage.symbol.resolved
+- storage.symbol.unmapped
+- symbol.resolve.result
+subscribes:
+- storage.symbol.resolve_requested
+- symbol.resolve.requested
+- market.symbol_specs
+- market.ctrader.symbol_specs
+- platform.account.state
+startup_mode: manual
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    canonical_map:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          type: string
+    canonical_patterns:
+      type: object
+      additionalProperties:
+        type: string
+    broker_map:
+      type: object
+      additionalProperties:
+        type: string
+    min_stem_length:
+      type: integer
+      minimum: 1
+      maximum: 20
+    strip_suffixes:
+      type: array
+      items:
+        type: string
+    passthrough_unknown:
+      type: boolean
+  required:
+  - canonical_map
+  - canonical_patterns
+  - broker_map
+  - strip_suffixes
+  - passthrough_unknown
+  - min_stem_length
+  additionalProperties: false
+config:
+  canonical_map:
+    NQ100:
+    - USTEC
+    - NAS100
+    - US100
+    - NDX
+    - USTECH100
+    US30:
+    - US30
+    - DJI30
+    - DOW30
+    - WS30
+    SP500:
+    - US500
+    - SPX500
+    - SPX
+    GER40:
+    - GER40
+    - DE40
+    - DAX40
+    - GERMANY40
+    XAUUSD:
+    - XAUUSD
+    - GOLD
+    XAGUSD:
+    - XAGUSD
+    - SILVER
+    BTCUSD:
+    - BTCUSD
+    - BTCUSDT
+    - XBTUSD
+    ETHUSD:
+    - ETHUSD
+    - ETHUSDT
+    WTI:
+    - USOIL
+    - WTI
+    - CRUDE
+    - OIL
+    EURUSD:
+    - EURUSD
+    GBPUSD:
+    - GBPUSD
+    USDJPY:
+    - USDJPY
+    USDCHF:
+    - USDCHF
+    USDCAD:
+    - USDCAD
+    AUDUSD:
+    - AUDUSD
+    NZDUSD:
+    - NZDUSD
+    USDCNH:
+    - USDCNH
+    USDSEK:
+    - USDSEK
+  canonical_patterns:
+    NQ100: (NAS|USTEC|US100|NDX)\d*
+  broker_map:
+    52992818|BTCUSD: BTCUSD
+  min_stem_length: 4
+  strip_suffixes:
+  - .a
+  - .b
+  - .c
+  - .raw
+  - .pro
+  - .ecn
+  - .cash
+  - _i
+  - '-5'
+  - m
+  - '#'
+  passthrough_unknown: true
+metadata:
+  max_idle_s: 3600
+  market: crypto
+  namespace: crypto_full
+  source_id: 708
+  legacy_source: true
+  phase: full-source

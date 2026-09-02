@@ -1,0 +1,56 @@
+id: 611
+name: Trade Events Reader
+version: 4.0.3
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- platform.trade_event
+subscribes:
+- SYS_SECOND
+startup_mode: auto
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 2000
+config_schema:
+  type: object
+  properties:
+    db_path:
+      type: string
+    table_name:
+      type: string
+    poll_interval_s:
+      type: number
+      minimum: 0.1
+    batch_limit:
+      type: integer
+      minimum: 1
+    max_age_s:
+      type: number
+      minimum: 1
+    cost_refresh_timeout_s:
+      type: number
+      minimum: 1
+      maximum: 3600
+  required:
+  - db_path
+  - table_name
+  - poll_interval_s
+  - batch_limit
+  - max_age_s
+  - cost_refresh_timeout_s
+  additionalProperties: false
+config:
+  db_path: C:\Users\NQ\AppData\Roaming\MetaQuotes\Terminal\Common\Files\nq_brain.db
+  table_name: trade_events_v2
+  poll_interval_s: 1.0
+  batch_limit: 100
+  max_age_s: 60
+  cost_refresh_timeout_s: 60
+metadata:
+  max_idle_s: 60

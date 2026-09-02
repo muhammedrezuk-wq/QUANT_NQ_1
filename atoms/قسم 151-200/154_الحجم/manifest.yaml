@@ -1,0 +1,69 @@
+id: 154
+name: "Volume Analyzer"
+version: "2.5.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "analysis.volume.state"
+  - "analysis.setting.changed"
+
+subscribes:
+  - "market_data.candle_closed"
+
+  - "market.tick.validated"
+  - "analysis.settings.command"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    baseline_window:
+      type: integer
+      minimum: 2
+    trend_short:
+      type: integer
+      minimum: 1
+    trend_long:
+      type: integer
+      minimum: 2
+    high_mult:
+      type: number
+      minimum: 1
+    spike_mult:
+      type: number
+      minimum: 1
+    min_candles:
+      type: integer
+      minimum: 2
+  required:
+    - baseline_window
+    - trend_short
+    - trend_long
+    - high_mult
+    - spike_mult
+    - min_candles
+  additionalProperties: false
+
+config:
+  baseline_window: 50
+  trend_short: 5
+  trend_long: 20
+  high_mult: 1.5
+  spike_mult: 2.5
+  min_candles: 20
+metadata:
+  max_idle_s: 301

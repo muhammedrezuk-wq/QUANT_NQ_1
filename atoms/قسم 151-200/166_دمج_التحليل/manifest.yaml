@@ -1,0 +1,79 @@
+id: 166
+name: "Analysis Fusion"
+version: "2.8.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "analysis.section.live"
+  - "analysis.raw.completed"
+  - "analysis.fast.state"
+  - "analysis.slow.state"
+  - "decision.settings.state"
+
+subscribes:
+  - "analysis.cycle.collected"
+  - "decision.settings.command"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    section_weight:
+      type: number
+      minimum: 0
+    agree_threshold:
+      type: number
+      minimum: 0
+      maximum: 1
+    live_stale_after_s:
+      type: number
+      minimum: 0.1
+      maximum: 600
+    fast_weight:
+      type: number
+      minimum: 0
+      maximum: 100
+    slow_weight:
+      type: number
+      minimum: 0
+      maximum: 100
+    fast_required_depth:
+      type: number
+      minimum: 0
+      maximum: 100
+    slow_required_depth:
+      type: number
+      minimum: 0
+      maximum: 100
+  required:
+    - agree_threshold
+    - live_stale_after_s
+    - fast_weight
+    - slow_weight
+    - fast_required_depth
+    - slow_required_depth
+  additionalProperties: false
+
+config:
+  section_weight: 35.0
+  agree_threshold: 0.55
+  live_stale_after_s: 3.0
+  fast_weight: 90.0
+  slow_weight: 10.0
+  fast_required_depth: 50.0
+  slow_required_depth: 35.0
+metadata:
+  max_idle_s: 301

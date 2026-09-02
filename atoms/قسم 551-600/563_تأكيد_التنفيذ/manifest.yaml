@@ -1,0 +1,33 @@
+id: 563
+name: "Durable Execution Confirm"
+version: "3.1.1"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+dependencies: []
+publishes:
+- market.outcome.realized
+- execution.command.ack
+- execution.confirmation.rejected
+subscribes:
+- platform.trade_event
+- trading.final_decision
+- market.symbol_specs
+- platform.account.state
+startup_mode: auto
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    dedupe_db_path: {type: string}
+  additionalProperties: false
+config:
+  dedupe_db_path: 'var/store\execution_confirmation.db'
+metadata:
+  max_idle_s: 3600

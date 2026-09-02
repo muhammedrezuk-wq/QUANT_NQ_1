@@ -1,0 +1,63 @@
+id: 576
+name: "Perpetual Engine"
+version: "3.6.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "execution.order.requested"
+  - "perpetual.entry.state"
+  - "perpetual.entry.rejected"
+
+subscribes:
+  - "perpetual.asset.activate"
+  - "perpetual.asset.deactivate"
+  - "decision.gate.passed"
+  - "emergency.halt"
+  - "risk.kill_switch.reset_requested"
+  - "SYS_SECOND"
+  - "dial.profile.state"
+  - "market.symbol_specs"
+  - "market_data.candle_closed"
+  - "market.tick.validated"
+  - "risk.asset_ledger.state"
+  - "platform.positions.state"
+  - "platform.account.state"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    lot_step:
+      type: number
+      minimum: 0
+    min_lot:
+      type: number
+      minimum: 0
+    max_lot:
+      type: number
+      minimum: 0
+    fallback_stop_distance_frac:
+      type: number
+      minimum: 0
+  additionalProperties: false
+
+config:
+  lot_step: 0.01
+  min_lot: 0.01
+  max_lot: 20.0
+  fallback_stop_distance_frac: 0.005
+metadata:
+  max_idle_s: 300

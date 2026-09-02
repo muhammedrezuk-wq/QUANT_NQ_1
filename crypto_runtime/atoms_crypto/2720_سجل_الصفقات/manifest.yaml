@@ -1,0 +1,57 @@
+id: 2720
+name: Trades Log
+version: 1.0.1
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- logs.trades.state
+subscribes:
+- platform.trade_event
+- platform.position.appeared
+- platform.position.vanished
+- execution.order.rejected
+- execution.command.ack
+- execution.command.failed
+startup_mode: manual
+health:
+  interval_ms: 60000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 3000
+config_schema:
+  type: object
+  properties:
+    dir:
+      type: string
+    file_prefix:
+      type: string
+    state_tail:
+      type: integer
+      minimum: 1
+      maximum: 100
+    max_lines_per_day:
+      type: integer
+      minimum: 100
+      maximum: 1000000
+  required:
+  - dir
+  - file_prefix
+  - state_tail
+  - max_lines_per_day
+  additionalProperties: false
+config:
+  dir: var/logs
+  file_prefix: trades
+  state_tail: 12
+  max_lines_per_day: 20000
+metadata:
+  max_idle_s: 3600
+  market: crypto
+  namespace: crypto_full
+  source_id: 720
+  legacy_source: true
+  phase: full-source

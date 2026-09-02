@@ -1,0 +1,74 @@
+id: 608
+name: Time Sync
+version: 2.3.0
+core_version: '>=1.0.0,<2.0.0'
+critical: true
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- time.ntp.samples.state
+- time.ntp.drift
+- time.utc.stale
+subscribes: []
+startup_mode: auto
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    reference_servers:
+      type: array
+      items:
+        type: string
+      minItems: 1
+    sync_interval_s:
+      type: number
+      minimum: 1
+    query_timeout_s:
+      type: number
+      minimum: 0.1
+    drift_alert_s:
+      type: number
+      minimum: 0
+    stale_after_s:
+      type: number
+      minimum: 1
+    max_accepted_offset_s:
+      type: number
+      minimum: 0.01
+      maximum: 300
+    max_sample_deviation_s:
+      type: number
+      minimum: 0.001
+      maximum: 5
+    min_samples:
+      type: integer
+      minimum: 2
+      maximum: 10
+  required:
+  - reference_servers
+  - sync_interval_s
+  - query_timeout_s
+  - drift_alert_s
+  - stale_after_s
+  - max_accepted_offset_s
+  - max_sample_deviation_s
+  - min_samples
+  additionalProperties: false
+config:
+  reference_servers:
+  - pool.ntp.org
+  - time.google.com
+  - time.windows.com
+  sync_interval_s: 300
+  query_timeout_s: 3
+  drift_alert_s: 1.0
+  stale_after_s: 900
+  max_accepted_offset_s: 5.0
+  max_sample_deviation_s: 0.25
+  min_samples: 2

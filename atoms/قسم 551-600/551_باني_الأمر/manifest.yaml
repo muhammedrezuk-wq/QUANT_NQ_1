@@ -1,0 +1,49 @@
+id: 551
+name: "Order Builder"
+version: "4.3.1"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "execution.order.built"
+  - "execution.desired.state"
+  - "execution.order.skipped"
+
+subscribes:
+  - "risk.validation.completed"
+  - "risk.position_size.state"
+  - "risk.position_size.rejected"
+  - "platform.account.state"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    reward_risk:
+      type: number
+      minimum: 0
+    magic:
+      type: integer
+      minimum: 1
+  required:
+    - reward_risk
+    - magic
+  additionalProperties: false
+
+config:
+  reward_risk: 2.0
+  magic: 20260801
+metadata:
+  max_idle_s: 3600

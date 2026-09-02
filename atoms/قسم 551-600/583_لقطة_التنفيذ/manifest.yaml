@@ -1,0 +1,43 @@
+id: 583
+name: "Execution Snapshot With Completeness"
+version: "3.0.2"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+dependencies: []
+publishes:
+- execution.snapshot.state
+subscribes:
+- SYS_SECOND
+- perpetual.target.state
+- risk.asset_ledger.state
+- asset.portfolio.state
+- feed.mt5.tick
+- market.symbol_specs
+- dial.profile.state
+- platform.account.state
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    ledger_max_age_s: {type: number, exclusiveMinimum: 0}
+    portfolio_max_age_s: {type: number, exclusiveMinimum: 0}
+    price_max_age_s: {type: number, exclusiveMinimum: 0}
+    specs_max_age_s: {type: number, exclusiveMinimum: 0}
+    dial_max_age_s: {type: number, exclusiveMinimum: 0}
+  additionalProperties: false
+config:
+  ledger_max_age_s: 30
+  portfolio_max_age_s: 30
+  price_max_age_s: 5
+  specs_max_age_s: 600
+  dial_max_age_s: 3600
+metadata:
+  max_idle_s: 60

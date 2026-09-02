@@ -1,0 +1,33 @@
+id: 2276
+name: Decision Assembler (Display Only — decision.approved.state)
+version: 2.2.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- decision.approved.state
+subscribes:
+- crypto.decision.signal_card.state
+startup_mode: auto
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    max_age_s:
+      type: number
+      minimum: 1
+  additionalProperties: false
+config:
+  max_age_s: 120
+metadata:
+  max_idle_s: 180
+  market: crypto
+  namespace: crypto_strategy
+  source_id: 276

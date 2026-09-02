@@ -1,0 +1,48 @@
+id: 630
+name: "Replay Source"
+version: "1.0.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+dependencies: []
+publishes:
+- feed.replay.tick
+subscribes: []
+startup_mode: manual
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    db_path:
+      type: string
+    symbol:
+      type: string
+    speed:
+      type: number
+      minimum: 0
+    batch_size:
+      type: integer
+      minimum: 1
+    start_at:
+      type: ["number", "null"]
+    end_at:
+      type: ["number", "null"]
+    loop:
+      type: number
+  additionalProperties: false
+config:
+  db_path: "var/store/market_data.db"
+  symbol: ""
+  speed: 1.0
+  batch_size: 100
+  start_at: null
+  end_at: null
+  loop: 0
+metadata:
+  max_idle_s: 86400

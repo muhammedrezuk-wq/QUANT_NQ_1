@@ -1,0 +1,47 @@
+id: 522
+name: "Audit Trail"
+version: "1.0.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "audit.trail.state"
+
+subscribes:
+  - "trading.final_decision"
+  - "execution.manage.command"
+  - "asset.extraction.requested"
+  - "asset.full_extraction.requested"
+  - "platform.brain_signal.written"
+  - "platform.trade_event"
+  - "perpetual.owner.escalation"
+  - "asset.portfolio.state"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    log_path:
+      type: string
+    max_memory:
+      type: integer
+      minimum: 1
+  additionalProperties: false
+
+config:
+  log_path: "var/audit/perpetual.jsonl"
+  max_memory: 100
+metadata:
+  max_idle_s: 3600

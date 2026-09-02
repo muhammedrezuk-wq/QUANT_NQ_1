@@ -1,0 +1,65 @@
+id: 2160
+name: Cross-Market Sync (BTC vs peers)
+version: 1.1.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- sense.cross_market.state
+subscribes:
+- market.candle
+startup_mode: auto
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    timeframe:
+      type: string
+    reference:
+      type: string
+    symbols:
+      type: array
+      items:
+        type: string
+    window_bars:
+      type: integer
+      minimum: 2
+    min_move_pct:
+      type: number
+      minimum: 0
+    follow_ratio:
+      type: number
+      minimum: 0
+    diverge_pct:
+      type: number
+      minimum: 0
+    max_age_s:
+      type: number
+      minimum: 1
+  additionalProperties: false
+config:
+  timeframe: 5m
+  reference: BTC_USDT
+  symbols:
+  - BTC_USDT
+  - ETH_USDT
+  - SOL_USDT
+  window_bars: 5
+  min_move_pct: 0.3
+  follow_ratio: 0.3
+  diverge_pct: 0.2
+  max_age_s: 600
+metadata:
+  max_idle_s: 900
+  market: crypto
+  namespace: crypto_full
+  source_id: 160
+  legacy_source: true
+  phase: full-source

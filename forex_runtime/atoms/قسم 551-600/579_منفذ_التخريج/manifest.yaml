@@ -1,0 +1,55 @@
+id: 579
+name: Extraction Executor
+version: 5.0.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- execution.manage.command
+- asset.extraction.execution_requested
+- asset.extraction.confirmed
+- asset.extraction.failed
+- perpetual.asset.deactivate
+subscribes:
+- asset.extraction.requested
+- asset.full_extraction.requested
+- platform.positions.state
+- platform.trade_event
+- SYS_SECOND
+- execution.command.failed
+- execution.order.rejected
+- asset.extraction.retry_requested
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    lot_step:
+      type: number
+      minimum: 0
+    confirmation_timeout_s:
+      type: number
+      minimum: 1
+      maximum: 3600
+    max_attempts:
+      type: integer
+      minimum: 1
+      maximum: 10
+    magic:
+      type: integer
+      minimum: 1
+  additionalProperties: false
+config:
+  lot_step: 0.01
+  confirmation_timeout_s: 30.0
+  max_attempts: 1
+  magic: 20260801
+metadata:
+  max_idle_s: 60

@@ -1,0 +1,86 @@
+.crypto-root{min-height:100%;padding:18px 20px 28px;background:radial-gradient(circle at 85% 0%,#182c48 0,#0b111b 38%,#080d14 100%);color:#e7eef7;font-family:'IBM Plex Sans Arabic','Segoe UI',sans-serif}.crypto-hero{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding:22px 24px;border:1px solid #28435f;border-radius:18px;background:linear-gradient(135deg,#132236dd,#0d1521dd);box-shadow:0 14px 40px #0005}.crypto-kicker{color:#57d5ff;font-size:11px;font-weight:800;letter-spacing:1.4px}.crypto-hero h1{margin:5px 0 0;font-size:30px;line-height:1.2}.crypto-hero p{margin:8px 0 0;color:#8ea5bd;font-size:13px}.crypto-hero-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}.crypto-pill{border:1px solid #344c65;border-radius:999px;padding:6px 11px;font-size:11px;font-weight:800;color:#b9c9d8;white-space:nowrap}.crypto-pill.green,.crypto-state.green{color:#4ee0a7}.crypto-pill.amber,.crypto-state.amber{color:#f8c65a}.crypto-pill.red,.crypto-state.red{color:#ff7991}.crypto-pill.blue{color:#6fcfff;border-color:#2e6387}.crypto-refresh{border:1px solid #2d6385;border-radius:8px;background:#15344a;color:#c8edff;padding:7px 12px;font:inherit;font-size:12px;cursor:pointer}.crypto-refresh:hover{background:#1d4a67}.crypto-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0}.crypto-tabs button{border:1px solid #243a51;background:#111c2a;color:#9bb0c5;border-radius:9px;padding:8px 14px;font:inherit;font-size:12px;cursor:pointer}.crypto-tabs button.active,.crypto-tabs button:hover{background:#1c405c;border-color:#4c9fc7;color:#e9f8ff}.crypto-stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}.crypto-stat{border:1px solid #22384e;border-radius:12px;background:#101a27dd;padding:14px}.crypto-stat span{display:block;color:#8198ae;font-size:11px}.crypto-stat strong{display:block;margin-top:6px;font-size:20px;color:#e9f3fb}.crypto-stat strong.green{color:#4ee0a7}.crypto-stat strong.red{color:#ff7991}.crypto-panel{border:1px solid #22384e;border-radius:15px;background:#0e1824e8;padding:15px;margin-bottom:12px}.crypto-panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-bottom:1px solid #203247;padding-bottom:9px;margin-bottom:12px}.crypto-panel-head h2{font-size:17px;margin:0;color:#e9f4fb}.crypto-panel-head span{font-size:11px;color:#7189a0}.crypto-symbol-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}.crypto-symbol{border:1px solid #29435a;border-radius:12px;padding:12px;background:linear-gradient(160deg,#152638,#0d1723)}.crypto-symbol-title{display:flex;justify-content:space-between;align-items:center;color:#77d9ff;margin-bottom:10px}.crypto-live-dot{width:7px;height:7px;border-radius:50%;background:#42dda4;box-shadow:0 0 10px #42dda4}.crypto-price-row{display:flex;justify-content:space-between;gap:10px;margin:5px 0;color:#849bb1;font-size:12px}.crypto-price-row strong{font-family:ui-monospace,monospace;color:#ecf6ff}.crypto-price-row.muted{color:#647b90}.crypto-two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}.crypto-list{display:flex;flex-direction:column;gap:6px}.crypto-list-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 9px;border-radius:8px;background:#121f2d;color:#a6b9ca;font-size:11px}.crypto-list-row b{color:#d6e6f2;font-size:11px;direction:ltr;text-align:left}.crypto-list-row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.crypto-health-grid,.crypto-feed-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.crypto-health-grid>div,.crypto-feed-grid>div{padding:11px;border-radius:9px;background:#121f2d;border:1px solid #243d54}.crypto-health-grid span,.crypto-feed-grid span{display:block;color:#7891a6;font-size:11px}.crypto-health-grid b,.crypto-feed-grid b{display:block;margin-top:5px;color:#d9edf8;font-size:12px;overflow:hidden;text-overflow:ellipsis}.crypto-decision-card{border:1px solid #2f6280;border-radius:13px;padding:14px;background:linear-gradient(135deg,#132d40,#111a26)}.crypto-decision-head{display:flex;justify-content:space-between;color:#76d9ff}.crypto-decision-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:12px}.crypto-decision-grid div{background:#102333;border-radius:8px;padding:9px}.crypto-decision-grid span{display:block;color:#718ba0;font-size:10px}.crypto-decision-grid b{display:block;margin-top:5px;color:#e8f4fb;font:700 14px ui-monospace,monospace}.crypto-decision-card small{display:block;margin-top:12px;color:#f8c65a}.crypto-subtitle{margin:18px 0 8px;color:#8cdcff;font-size:14px}.crypto-controls{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-top:14px}.crypto-controls input{min-width:150px;border:1px solid #38526a;border-radius:8px;background:#0b1520;color:#eaf4fb;padding:8px 10px;font:inherit;font-size:12px;direction:ltr}.crypto-controls button{border:1px solid #2f7087;border-radius:8px;background:#123245;color:#bdefff;padding:8px 10px;font:inherit;font-size:11px;font-weight:800;cursor:pointer}.crypto-controls button:hover{background:#1d526b}.crypto-control-message{margin-top:8px;color:#83e7b8;font-size:11px}.crypto-policy{margin-top:14px;padding:11px;border:1px solid #5e4d25;border-radius:9px;background:#2a2112;color:#f3cf72;font-size:12px}.crypto-market-table{overflow:auto}.crypto-market-row{display:grid;grid-template-columns:1.1fr 1fr 1.2fr 1fr 1fr .9fr;gap:8px;align-items:center;padding:9px 10px;border-bottom:1px solid #1c3042;min-width:700px;font-size:11px}.crypto-market-row b{color:#81dfff;direction:ltr;text-align:left}.crypto-table-head{background:#132435;color:#7895ac;font-weight:800;border-radius:8px}.crypto-market-row span{color:#b9c9d5}.crypto-rejected-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:9px}.crypto-rejected{padding:11px;border:1px solid #573342;border-radius:10px;background:#241722}.crypto-rejected b{display:block;color:#ff9aab;direction:ltr}.crypto-rejected span{display:block;color:#ffd2d9;font-size:12px;margin-top:7px}.crypto-rejected small{display:block;color:#aa8792;margin-top:7px}.crypto-sense-grid,.crypto-source-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.crypto-sense,.crypto-source{border:1px solid #263f56;border-radius:11px;padding:12px;background:#121f2d}.crypto-sense b{display:block;color:#8bddff;direction:ltr;text-align:left}.crypto-sense .crypto-state,.crypto-source .crypto-state{display:inline-block;margin-top:8px;font-size:11px;font-weight:800}.crypto-sense p,.crypto-source p{margin:8px 0 0;color:#8ea4b7;font-size:12px;line-height:1.7}.crypto-source-id{float:left;color:#466982;font:700 18px ui-monospace,monospace}.crypto-source h3{margin:0;color:#e2eff9;font-size:13px}.crypto-event-list{display:flex;flex-direction:column;gap:6px;margin-top:12px}.crypto-event{display:grid;grid-template-columns:85px minmax(160px,1fr) minmax(120px,2fr);gap:10px;align-items:center;padding:8px 10px;background:#111e2b;border-radius:8px;font-size:11px}.crypto-event time{color:#6f879d;font-family:ui-monospace,monospace}.crypto-event b{color:#8bdcff;direction:ltr;text-align:left;overflow:hidden;text-overflow:ellipsis}.crypto-event span{color:#b5c5d2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.crypto-empty{padding:24px;text-align:center;color:#7e95aa;border:1px dashed #2b4257;border-radius:10px}.crypto-footer{text-align:center;color:#668097;font-size:11px;padding:10px}.crypto-state.grey{color:#8ba1b5}@media(max-width:900px){.crypto-hero{flex-direction:column}.crypto-hero-actions{justify-content:flex-start}.crypto-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.crypto-two-col{grid-template-columns:1fr}.crypto-decision-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:520px){.crypto-root{padding:10px}.crypto-stat-grid{grid-template-columns:1fr}.crypto-event{grid-template-columns:1fr;gap:3px}.crypto-event b{text-align:right}.crypto-panel-head{flex-direction:column;gap:3px}.crypto-decision-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   لوحة الكريبتو — لوحة ألوان على طراز منصّة MEXC (حكم المالك ٢٠٢٦-٠٩-٠١)
+   خلفيّة شبه سوداء، لوحات رماديّة داكنة، أخضر مزرقّ للصعود وأحمر للهبوط.
+   كتلة إلحاق مقصودة: الملفّ أعلاه سطر واحد مصغَّر، فالتجاوز بالترتيب لا
+   بإعادة كتابته — فيبقى أثر التغيير مقروءًا ومنفصلًا عمّا سبقه.
+   ═══════════════════════════════════════════════════════════════════════ */
+.crypto-root{
+  --mx-bg:#0b0e11; --mx-panel:#181a20; --mx-panel-2:#1e2329;
+  --mx-line:#2b3139; --mx-text:#eaecef; --mx-muted:#848e9c;
+  --mx-up:#00b897; --mx-down:#f6465d; --mx-warn:#f0b90b;
+  background:var(--mx-bg); color:var(--mx-text);
+}
+.crypto-hero,.crypto-panel,.crypto-stat{background:var(--mx-panel);border-color:var(--mx-line)}
+.crypto-hero{box-shadow:none}
+.crypto-kicker{color:var(--mx-up)}
+.crypto-hero p,.crypto-panel-head span,.crypto-stat span{color:var(--mx-muted)}
+.crypto-panel-head{border-bottom-color:var(--mx-line)}
+.crypto-panel-head h2,.crypto-stat strong{color:var(--mx-text)}
+.crypto-tabs button{background:var(--mx-panel-2);border-color:var(--mx-line);color:var(--mx-muted)}
+.crypto-tabs button.active,.crypto-tabs button:hover{background:#2b3139;border-color:var(--mx-up);color:var(--mx-text)}
+.crypto-pill{border-color:var(--mx-line);color:var(--mx-muted)}
+.crypto-pill.green,.crypto-state.green,.crypto-stat strong.green{color:var(--mx-up)}
+.crypto-pill.red,.crypto-state.red,.crypto-stat strong.red{color:var(--mx-down)}
+.crypto-pill.amber,.crypto-state.amber{color:var(--mx-warn)}
+.crypto-live-dot{background:var(--mx-up);box-shadow:0 0 10px var(--mx-up)}
+.crypto-symbol,.crypto-health-grid>div,.crypto-feed-grid>div,.crypto-list-row,
+.crypto-event,.crypto-sense,.crypto-source{background:var(--mx-panel-2);border-color:var(--mx-line)}
+.crypto-symbol{background:var(--mx-panel-2)}
+.crypto-symbol-title,.crypto-market-row b,.crypto-event b,.crypto-sense b{color:var(--mx-text)}
+.crypto-table-head{background:var(--mx-panel-2);color:var(--mx-muted)}
+.crypto-market-row{border-bottom-color:var(--mx-line)}
+.crypto-controls input{background:var(--mx-bg);border-color:var(--mx-line);color:var(--mx-text)}
+.crypto-controls button{background:var(--mx-panel-2);border-color:var(--mx-line);color:var(--mx-text)}
+.crypto-controls button:hover{border-color:var(--mx-up);color:var(--mx-up)}
+.crypto-refresh{background:var(--mx-panel-2);border-color:var(--mx-line);color:var(--mx-text)}
+.crypto-refresh:hover{border-color:var(--mx-up);color:var(--mx-up)}
+.crypto-policy{background:#2a2312;border-color:#4d431c;color:var(--mx-warn)}
+.crypto-empty{border-color:var(--mx-line);color:var(--mx-muted)}
+.crypto-subtitle{color:var(--mx-text)}
+
+/* بطاقات الإشارة — واحدة لكل عملة، جنبًا إلى جنب لا واحدة تدهس الأخرى */
+.crypto-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px}
+.crypto-decision-card{background:var(--mx-panel-2);border-color:var(--mx-line);
+  border-right:3px solid var(--mx-line)}
+.crypto-decision-card.up{border-right-color:var(--mx-up)}
+.crypto-decision-card.down{border-right-color:var(--mx-down)}
+.crypto-decision-head{align-items:center;gap:8px;color:var(--mx-text)}
+.crypto-decision-head b{direction:ltr;font:800 15px ui-monospace,monospace}
+.crypto-side{font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px;
+  border:1px solid var(--mx-line);color:var(--mx-muted)}
+.crypto-side.up{color:var(--mx-up);border-color:var(--mx-up)}
+.crypto-side.down{color:var(--mx-down);border-color:var(--mx-down)}
+.crypto-class{margin-inline-start:auto;font-size:11px;color:var(--mx-muted)}
+.crypto-decision-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.crypto-decision-grid div{background:var(--mx-bg)}
+.crypto-decision-grid span{color:var(--mx-muted)}
+.crypto-decision-grid b{color:var(--mx-text)}
+.crypto-decision-grid b.up{color:var(--mx-up)}
+.crypto-decision-grid b.down{color:var(--mx-down)}
+.crypto-decision-card small{color:var(--mx-muted)}
+
+/* محكمة الزناد — لماذا لم تدخل الصفقة، لا JSON خام */
+.crypto-trigger-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px}
+.crypto-trigger{border:1px solid var(--mx-line);border-radius:12px;background:var(--mx-panel-2);padding:12px}
+.crypto-trigger>header{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  border-bottom:1px solid var(--mx-line);padding-bottom:8px;margin-bottom:10px}
+.crypto-trigger>header b{direction:ltr;font:800 14px ui-monospace,monospace;color:var(--mx-text)}
+.crypto-trigger>header span{font-size:11px;color:var(--mx-muted)}
+.crypto-trigger-sides{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.crypto-trigger-side{background:var(--mx-bg);border-radius:9px;padding:10px}
+.crypto-trigger-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.crypto-trigger-head b{color:var(--mx-text);font-size:12px}
+.crypto-verdict{font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px;border:1px solid var(--mx-line);color:var(--mx-muted)}
+.crypto-verdict.up{color:var(--mx-up);border-color:var(--mx-up)}
+.crypto-verdict.down{color:var(--mx-down);border-color:var(--mx-down)}
+.crypto-verdict.muted{color:var(--mx-muted)}
+.crypto-votes{display:flex;flex-wrap:wrap;gap:5px;margin:9px 0 7px}
+.crypto-vote{font-size:10px;padding:2px 7px;border-radius:6px;border:1px solid var(--mx-line);color:var(--mx-muted)}
+.crypto-vote.up{color:var(--mx-up);border-color:var(--mx-up);background:#00b8971a}
+.crypto-vote.off{opacity:.55}
+.crypto-trigger-side small{display:block;color:var(--mx-muted);font-size:10px;line-height:1.6}
+@media(max-width:900px){.crypto-trigger-sides{grid-template-columns:1fr}
+  .crypto-decision-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:520px){.crypto-decision-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}

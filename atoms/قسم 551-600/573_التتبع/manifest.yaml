@@ -1,0 +1,41 @@
+id: 573
+name: "Trailing Stop"
+version: "2.0.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "execution.manage.intent"
+
+subscribes:
+  - "platform.positions.state"
+  - "risk.structure_stop.state"
+  - "platform.account.state"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    trail_start_r:
+      type: number
+      minimum: 0
+  required:
+    - trail_start_r
+  additionalProperties: false
+
+config:
+  trail_start_r: 1.0
+metadata:
+  max_idle_s: 3600

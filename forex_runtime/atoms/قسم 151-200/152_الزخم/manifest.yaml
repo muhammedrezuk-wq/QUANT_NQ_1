@@ -1,0 +1,78 @@
+id: 152
+name: "Momentum Analyzer"
+version: "2.5.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "analysis.momentum.state"
+  - "analysis.setting.changed"
+
+subscribes:
+  - "market_data.candle_closed"
+
+  - "market.tick.validated"
+  - "analysis.settings.command"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    roc_period:
+      type: integer
+      minimum: 1
+    impulse_window:
+      type: integer
+      minimum: 2
+    persistence_window:
+      type: integer
+      minimum: 2
+    roc_flat_pct:
+      type: number
+      minimum: 0
+    persistence_min:
+      type: number
+      minimum: 0
+      maximum: 1
+    strong_score:
+      type: number
+    medium_score:
+      type: number
+    min_candles:
+      type: integer
+      minimum: 2
+  required:
+    - roc_period
+    - impulse_window
+    - persistence_window
+    - roc_flat_pct
+    - persistence_min
+    - strong_score
+    - medium_score
+    - min_candles
+  additionalProperties: false
+
+config:
+  roc_period: 5
+  impulse_window: 8
+  persistence_window: 12
+  roc_flat_pct: 0.04
+  persistence_min: 0.55
+  strong_score: 70
+  medium_score: 40
+  min_candles: 16
+metadata:
+  max_idle_s: 301

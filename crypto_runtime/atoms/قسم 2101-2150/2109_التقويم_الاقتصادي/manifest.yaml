@@ -1,0 +1,57 @@
+id: 2109
+name: Economic Calendar Receiver
+version: 3.1.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- market_data.calendar_event
+- market_data.calendar_window
+- market_data.calendar.state
+subscribes:
+- market.calendar
+- SYS_SECOND
+startup_mode: manual
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 5
+  restart_backoff_ms: 3000
+config_schema:
+  type: object
+  properties:
+    source_event:
+      type: string
+    alert_before_seconds:
+      type: number
+      minimum: 10
+    keep_past_seconds:
+      type: number
+      minimum: 0
+    min_impact:
+      type: string
+      enum:
+      - LOW
+      - MEDIUM
+      - HIGH
+  required:
+  - source_event
+  - alert_before_seconds
+  - keep_past_seconds
+  - min_impact
+  additionalProperties: false
+config:
+  source_event: market.calendar
+  alert_before_seconds: 900.0
+  keep_past_seconds: 3600.0
+  min_impact: LOW
+metadata:
+  max_idle_s: 172800
+  market: crypto
+  namespace: crypto_full
+  source_id: 109
+  legacy_source: true
+  phase: full-source

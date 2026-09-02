@@ -1,0 +1,55 @@
+id: 803
+name: "File Cleanup Manager"
+version: "2.1.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "tools.file_cleanup.completed"
+  - "tools.file_cleanup.failed"
+
+subscribes:
+  - "SYS_DAY"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 3600000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 5000
+
+config_schema:
+  type: object
+  properties:
+    scan_dirs:
+      type: array
+      items:
+        type: string
+    older_than_days:
+      type: integer
+      minimum: 1
+    patterns:
+      type: array
+      items:
+        type: string
+    interval_days:
+      type: integer
+      minimum: 1
+  required: [scan_dirs, older_than_days, patterns, interval_days]
+  additionalProperties: false
+
+config:
+  scan_dirs:
+    - 'var'
+  older_than_days: 180
+  patterns: ["*.tmp", "*.log.old"]
+  interval_days: 7
+metadata:
+  max_idle_s: 60

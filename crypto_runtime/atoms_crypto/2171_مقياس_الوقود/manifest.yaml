@@ -1,0 +1,67 @@
+id: 2171
+name: Cascade Fuel Gauge (Bi-directional)
+version: 1.1.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- sense.fuel.state
+subscribes:
+- market.oi
+- market.funding
+- market.premium
+- market.candle
+startup_mode: auto
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    window_s:
+      type: number
+      minimum: 60
+    oi_build_pct:
+      type: number
+    px_move_pct:
+      type: number
+    spent_pct:
+      type: number
+    long_funding:
+      type: number
+    short_funding:
+      type: number
+    premium_hot_bps:
+      type: number
+    premium_short_bps:
+      type: number
+    max_age_s:
+      type: number
+      minimum: 1
+    max_log_rows:
+      type: integer
+      minimum: 10
+  additionalProperties: false
+config:
+  window_s: 1800
+  oi_build_pct: 0.15
+  px_move_pct: 0.1
+  spent_pct: -0.5
+  long_funding: 0.01
+  short_funding: -0.003
+  premium_hot_bps: -3
+  premium_short_bps: -7
+  max_age_s: 60
+  max_log_rows: 4000
+metadata:
+  max_idle_s: 120
+  market: crypto
+  namespace: crypto_full
+  source_id: 171
+  legacy_source: true
+  phase: full-source

@@ -1,0 +1,48 @@
+id: 2267
+name: Liquidation Density Map (Structural)
+version: 1.0.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- sense.liquidations.state
+subscribes:
+- feed.binance.liquidation
+startup_mode: manual
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    bin_bps:
+      type: number
+      minimum: 0.1
+    window_s:
+      type: number
+      minimum: 1
+    top_zones:
+      type: integer
+      minimum: 1
+      maximum: 100
+    max_age_s:
+      type: number
+      minimum: 1
+  additionalProperties: false
+config:
+  bin_bps: 10.0
+  window_s: 3600.0
+  top_zones: 5
+  max_age_s: 600.0
+metadata:
+  max_idle_s: 60
+  market: crypto
+  namespace: crypto_full
+  source_id: 267
+  legacy_source: true
+  phase: full-source

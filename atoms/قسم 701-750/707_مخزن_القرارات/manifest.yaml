@@ -1,0 +1,46 @@
+id: 707
+name: "Execution Lifecycle Store"
+version: "4.2.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+dependencies: []
+publishes:
+- storage.decisions_saved
+subscribes:
+- decision.approved.state
+- perpetual.target.state
+- decision.dispatch.state
+- execution.order.requested
+- execution.order.built
+- execution.order.rejected
+- trading.final_decision
+- platform.brain_signal.written
+- platform.brain_signal.write_failed
+- execution.command.ack
+- execution.command.failed
+- platform.trade_event
+startup_mode: auto
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 5
+  restart_backoff_ms: 3000
+config_schema:
+  type: object
+  properties:
+    db_path: {type: string}
+    keep_full_payload: {type: boolean}
+    max_rows: {type: integer, minimum: 1}
+    max_db_bytes: {type: integer, minimum: 1}
+  required: [db_path, keep_full_payload, max_rows, max_db_bytes]
+  additionalProperties: false
+config:
+  max_rows: 1000000
+  max_db_bytes: 1000000000
+  db_path: 'var/store\decisions.db'
+  keep_full_payload: true
+metadata:
+  max_idle_s: 301

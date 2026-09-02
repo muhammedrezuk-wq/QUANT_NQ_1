@@ -1,0 +1,62 @@
+id: 620
+name: "Yahoo Finance Source"
+version: "1.2.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "market.reference"
+
+subscribes:
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 5
+  restart_backoff_ms: 3000
+
+config_schema:
+  type: object
+  properties:
+    symbols:
+      type: array
+      items:
+        type: string
+    base_url:
+      type: string
+    poll_interval_s:
+      type: number
+      minimum: 1
+    request_timeout_s:
+      type: number
+      minimum: 1
+    max_consecutive_errors:
+      type: integer
+      minimum: 1
+  required:
+    - symbols
+    - base_url
+    - poll_interval_s
+    - request_timeout_s
+    - max_consecutive_errors
+  additionalProperties: false
+
+config:
+  symbols:
+    - "^VIX"
+    - "DX-Y.NYB"
+    - "^TNX"
+  base_url: "https://query1.finance.yahoo.com/v8/finance/chart/"
+  poll_interval_s: 30
+  request_timeout_s: 6
+  max_consecutive_errors: 5
+metadata:
+  max_idle_s: 60

@@ -1,0 +1,54 @@
+id: 2273
+name: Trigger Court (5-Sense Confirm/Veto Vote)
+version: 1.0.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- crypto.decision.trigger_court.state
+subscribes:
+- sense.aggressor.state
+- sense.walls.state
+- sense.oi.state
+- sense.premium.state
+- sense.min1_lens.state
+startup_mode: auto
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    dominance_threshold:
+      type: number
+      minimum: 0.5
+      maximum: 1
+    cut_bps:
+      type: number
+      minimum: 0
+    walls_ratio_threshold:
+      type: number
+      minimum: 1
+    lens_vol_x_threshold:
+      type: number
+      minimum: 0
+    max_age_s:
+      type: number
+      minimum: 1
+  additionalProperties: false
+config:
+  dominance_threshold: 0.65
+  cut_bps: 15.0
+  walls_ratio_threshold: 1.3
+  lens_vol_x_threshold: 1.5
+  max_age_s: 30
+metadata:
+  max_idle_s: 60
+  market: crypto
+  namespace: crypto_strategy
+  source_id: 273

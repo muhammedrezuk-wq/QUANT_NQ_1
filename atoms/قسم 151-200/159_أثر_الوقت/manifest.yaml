@@ -1,0 +1,55 @@
+id: 159
+name: "Time Effect Analyzer"
+version: "2.5.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "analysis.time.state"
+  - "analysis.setting.changed"
+
+subscribes:
+  - "market_data.candle_closed"
+
+  - "market.tick.validated"
+  - "analysis.settings.command"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    utc_offset_hours:
+      type: integer
+    week_open_day:
+      type: integer
+      minimum: 0
+      maximum: 6
+    week_close_day:
+      type: integer
+      minimum: 0
+      maximum: 6
+  required:
+    - utc_offset_hours
+    - week_open_day
+    - week_close_day
+  additionalProperties: false
+
+config:
+  utc_offset_hours: 0
+  week_open_day: 0
+  week_close_day: 4
+metadata:
+  max_idle_s: 301

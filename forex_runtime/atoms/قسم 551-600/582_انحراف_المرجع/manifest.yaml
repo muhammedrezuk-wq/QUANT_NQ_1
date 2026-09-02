@@ -1,0 +1,65 @@
+id: 582
+name: Reference Broker Divergence
+version: 2.0.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- execution.reference_divergence.state
+subscribes:
+- feed.ctrader.tick
+- feed.mt5.tick
+- market.symbol_specs
+- SYS_SECOND
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    max_deviation_points:
+      type: number
+      minimum: 0
+    max_age_s:
+      type: number
+      minimum: 0
+    alignment_window_s:
+      type: number
+      exclusiveMinimum: 0
+    window_ticks:
+      type: integer
+      minimum: 2
+    window_seconds:
+      type: number
+      exclusiveMinimum: 0
+    suspicious_repeats:
+      type: integer
+      minimum: 1
+    expected_return_abs:
+      type: number
+      minimum: 0
+    suspicious_return_abs:
+      type: number
+      minimum: 0
+  required:
+  - max_deviation_points
+  - max_age_s
+  - alignment_window_s
+  additionalProperties: false
+config:
+  max_deviation_points: 50
+  max_age_s: 5
+  alignment_window_s: 0.15
+  window_ticks: 20
+  window_seconds: 30
+  suspicious_repeats: 3
+  expected_return_abs: 0.0005
+  suspicious_return_abs: 0.005
+metadata:
+  max_idle_s: 51

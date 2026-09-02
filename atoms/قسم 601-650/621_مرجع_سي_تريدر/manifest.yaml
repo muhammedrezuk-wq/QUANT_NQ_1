@@ -1,0 +1,43 @@
+id: 621
+name: "cTrader Reference Bridge"
+version: "1.0.1"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "market.reference"
+
+subscribes:
+  - "feed.ctrader.tick"
+
+startup_mode: auto
+
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    symbol_map:
+      type: object
+      additionalProperties:
+        type: string
+  required:
+    - symbol_map
+  additionalProperties: false
+
+config:
+  symbol_map:
+    DXY: "DX-Y.NYB"
+    US500: "^GSPC"
+    VIX: "^VIX"
+metadata:
+  max_idle_s: 60

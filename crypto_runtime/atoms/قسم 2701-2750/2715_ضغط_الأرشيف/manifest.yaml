@@ -1,0 +1,53 @@
+id: 2715
+name: Archive Compression
+version: 3.0.2
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies:
+- id: 2714
+  version: '>=3.0.0,<4.0.0'
+publishes:
+- storage.compressed
+subscribes:
+- storage.archived
+startup_mode: manual
+health:
+  interval_ms: 60000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 3000
+config_schema:
+  type: object
+  properties:
+    min_size_bytes:
+      type: integer
+      minimum: 0
+    compression_level:
+      type: integer
+      minimum: 1
+      maximum: 9
+    keep_original:
+      type: boolean
+    active_archive_db_path:
+      type: string
+  required:
+  - min_size_bytes
+  - compression_level
+  - keep_original
+  - active_archive_db_path
+  additionalProperties: false
+config:
+  min_size_bytes: 65536
+  compression_level: 6
+  keep_original: true
+  active_archive_db_path: var/store\archive.db
+metadata:
+  max_idle_s: 3600
+  market: crypto
+  namespace: crypto_full
+  source_id: 715
+  legacy_source: true
+  phase: full-source

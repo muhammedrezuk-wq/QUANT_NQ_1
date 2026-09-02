@@ -1,0 +1,39 @@
+# سجل تخصيص Atom ID — أداة تتبع، ليست ذرات
+# ==============================================
+# الغرض: منع تصادم Atom ID قبل الوصول لـ Bootloader (الذي يكتشفه
+# لكن بعد فوات الأوان)، وتطبيق المادة 32 — لا يُعاد استخدام رقم
+# متقاعد أبدًا، حتى بعد حذف الذرة نهائيًا.
+#
+# الاستخدام: قبل بدء أي ذرة جديدة، احجز رقمها هنا أولاً بحالة
+# "planned"، ثم حدِّثها إلى "active" بعد الاعتماد الفعلي. عند تقاعد
+# ذرة: status → "deprecated" أو "archived"، id يبقى هنا للأبد ولا
+# يُحذف من هذا الملف ولا يُعاد تخصيصه لغيره.
+#
+# status المسموحة: planned | active | deprecated | archived
+
+atoms:
+  - id: 1
+    name: "Hello Atom"
+    status: active
+    critical: false
+    owner: core-team
+    manifest_path: "atoms/_examples/hello_atom/manifest.yaml"
+    notes: "ذرة توضيحية بحتة لاختبار Core — ليست ذرة تشغيلية حقيقية"
+
+  - id: 831
+    name: "Alert Aggregator"
+    status: active
+    critical: false
+    owner: core-team
+    manifest_path: "atoms/831_المُنذِر/manifest.yaml"
+    notes: "المُنذِر — يسمع 15 حدث إخفاق/خطر كانت بلا مستمع وينشر system.alert الموحّد (حالة مخزّنة تُعاد للمتأخر) + ملف حالة لـ /gov/alerts وتلغرام. أُنشئت 2026-08-24."
+
+  # - id: 2
+  #   name: ""
+  #   status: planned
+  #   critical: false
+  #   owner: ""
+  #   manifest_path: ""
+  #   notes: ""
+
+next_available_id: 2   # حدِّث هذا الرقم يدويًا بعد كل تخصيص جديد

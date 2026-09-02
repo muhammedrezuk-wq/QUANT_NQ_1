@@ -1,0 +1,74 @@
+id: 622
+name: cTrader FIX Price Feed
+version: "1.4.0"
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- feed.ctrader.tick
+- market.ctrader.symbol_specs
+- market.depth
+- feed.ctrader.heartbeat
+- feed.ctrader.state
+subscribes:
+- SYS_SECOND
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    host: {type: string}
+    port: {type: integer, minimum: 1}
+    use_tls: {type: boolean}
+    sender_comp_id: {type: string}
+    target_comp_id: {type: string}
+    sub_id: {type: string}
+    username: {type: string}
+    identity_account_id: {type: string}
+    broker: {type: string}
+    password_secret_key: {type: string}
+    symbols: {type: array, items: {type: string}}
+    market_depth: {type: integer, minimum: 0}
+    heartbeat_s: {type: integer, minimum: 1}
+    poll_interval_s: {type: number, minimum: 0}
+    reconnect_backoff_s: {type: number, minimum: 0}
+    live_max_backlog_bytes: {type: integer, minimum: 1024}
+    tick_stale_after_s: {type: number, minimum: 1}
+    depth_stale_after_s: {type: number, minimum: 1}
+    specs_stale_after_s: {type: number, minimum: 1}
+    dead_after_s: {type: number, minimum: 1}
+  required: [host, port, use_tls, sender_comp_id, target_comp_id, sub_id, username,
+    broker, password_secret_key, symbols, market_depth, heartbeat_s, poll_interval_s,
+    reconnect_backoff_s, live_max_backlog_bytes, tick_stale_after_s, depth_stale_after_s, specs_stale_after_s,
+    dead_after_s]
+  additionalProperties: false
+config:
+  host: live-uk-eqx-01.p.c-trader.com
+  port: 5211
+  use_tls: true
+  sender_comp_id: live4.icmarkets.6175701
+  target_comp_id: cServer
+  sub_id: QUOTE
+  username: '6175701'
+  identity_account_id: '52992818'
+  broker: Raw Trading Ltd
+  password_secret_key: ctrader_fix_password
+  symbols: [BTCUSD, XAUUSD, EURUSD, GBPUSD, US30, USTEC, US500]
+  market_depth: 0
+  heartbeat_s: 30
+  poll_interval_s: 0.005
+  reconnect_backoff_s: 5
+  live_max_backlog_bytes: 1048576
+  tick_stale_after_s: 30
+  depth_stale_after_s: 30
+  specs_stale_after_s: 600
+  dead_after_s: 120
+metadata:
+  max_idle_s: 60

@@ -1,0 +1,73 @@
+id: 2274
+name: Entry Classifier (Gates + Class ①②③)
+version: 1.6.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- crypto.decision.entry_candidate.state
+subscribes:
+- crypto.decision.license.state
+- crypto.decision.value_state.state
+- crypto.decision.breaks.state
+- crypto.decision.trigger_court.state
+- sense.htf.state
+- sense.fuel.state
+- sense.abnormal.state
+- sense.volume_ma.state
+- market_data.news_received
+- market.candle
+- sense.round_numbers.state
+- sense.oi.state
+- sense.premium.state
+startup_mode: auto
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    filtered_break_max_points:
+      type: number
+      minimum: 0
+    purge_day_oi_pct:
+      type: number
+      maximum: 0
+    loud_break_ratio:
+      type: number
+      minimum: 1
+    quiet_break_max:
+      type: number
+      minimum: 1
+    news_fresh_minutes:
+      type: number
+      minimum: 0
+    max_age_s:
+      type: number
+      minimum: 1
+    wick_body_mult:
+      type: number
+      minimum: 1
+    round_number_confluence_bps:
+      type: number
+      minimum: 0
+  additionalProperties: false
+config:
+  filtered_break_max_points: 150.0
+  purge_day_oi_pct: -1.5
+  loud_break_ratio: 3.0
+  quiet_break_max: 1.5
+  news_fresh_minutes: 30.0
+  max_age_s: 60
+  wick_body_mult: 2.0
+  round_number_confluence_bps: 15.0
+metadata:
+  max_idle_s: 60
+  market: crypto
+  namespace: crypto_strategy
+  source_id: 274

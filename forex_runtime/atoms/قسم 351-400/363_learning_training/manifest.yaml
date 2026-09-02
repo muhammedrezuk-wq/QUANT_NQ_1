@@ -1,0 +1,56 @@
+id: 363
+name: Learning Trainer
+version: 1.1.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- learning.model.candidate
+subscribes:
+- learning.feature.ready
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    min_samples:
+      type: integer
+      minimum: 1
+    validation_size:
+      type: integer
+      minimum: 1
+    train_every_new_samples:
+      type: integer
+      minimum: 1
+    epochs:
+      type: integer
+      minimum: 1
+      maximum: 10000
+    learning_rate:
+      type: number
+      exclusiveMinimum: 0
+      maximum: 1
+    l2:
+      type: number
+      minimum: 0
+      maximum: 10
+  required:
+  - min_samples
+  - validation_size
+  additionalProperties: false
+config:
+  min_samples: 20
+  validation_size: 5
+  train_every_new_samples: 10
+  epochs: 100
+  learning_rate: 0.05
+  l2: 0.001
+metadata:
+  max_idle_s: 86400

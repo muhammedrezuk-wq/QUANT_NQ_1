@@ -1,0 +1,47 @@
+id: 2702
+name: Trade Store
+version: 2.4.2
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- storage.trades_saved
+subscribes:
+- platform.trade_event
+- market.outcome.realized
+startup_mode: manual
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 5
+  restart_backoff_ms: 3000
+config_schema:
+  type: object
+  properties:
+    db_path:
+      type: string
+    max_rows:
+      type: integer
+      minimum: 1
+    max_db_bytes:
+      type: integer
+      minimum: 1
+  required:
+  - db_path
+  - max_rows
+  - max_db_bytes
+  additionalProperties: false
+config:
+  max_rows: 2000000
+  max_db_bytes: 1000000000
+  db_path: var/store\trades.db
+metadata:
+  max_idle_s: 3600
+  market: crypto
+  namespace: crypto_full
+  source_id: 702
+  legacy_source: true
+  phase: full-source

@@ -1,0 +1,53 @@
+id: 619
+name: "Account State Reader"
+version: "3.1.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "platform.account.state"
+  - "platform.terminal_state"
+
+subscribes:
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 2000
+
+config_schema:
+  type: object
+  properties:
+    db_path:
+      type: string
+    table_name:
+      type: string
+    poll_interval_s:
+      type: number
+      minimum: 0.1
+    max_age_s:
+      type: number
+      minimum: 1.0
+  required:
+    - db_path
+    - table_name
+    - poll_interval_s
+    - max_age_s
+  additionalProperties: false
+
+config:
+  db_path: 'C:\Users\NQ\AppData\Roaming\MetaQuotes\Terminal\Common\Files\nq_brain.db'
+  table_name: "account_v2"
+  poll_interval_s: 1.0
+  max_age_s: 300.0
+metadata:
+  max_idle_s: 60

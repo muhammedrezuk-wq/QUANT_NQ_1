@@ -1,0 +1,82 @@
+id: 151
+name: "Trend Analyzer"
+version: "2.5.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "analysis.trend.state"
+  - "analysis.setting.changed"
+
+subscribes:
+  - "market_data.candle_closed"
+
+  - "market.tick.validated"
+  - "analysis.settings.command"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    ema_fast:
+      type: integer
+      minimum: 2
+    ema_slow:
+      type: integer
+      minimum: 3
+    slope_lookback:
+      type: integer
+      minimum: 1
+    min_candles:
+      type: integer
+      minimum: 2
+    flat_slope_pct:
+      type: number
+      minimum: 0
+    flat_distance_pct:
+      type: number
+      minimum: 0
+    strong_score:
+      type: number
+    moderate_score:
+      type: number
+    emerging_bars:
+      type: integer
+      minimum: 1
+  required:
+    - ema_fast
+    - ema_slow
+    - slope_lookback
+    - min_candles
+    - flat_slope_pct
+    - flat_distance_pct
+    - strong_score
+    - moderate_score
+    - emerging_bars
+  additionalProperties: false
+
+config:
+  ema_fast: 10
+  ema_slow: 20
+  slope_lookback: 3
+  min_candles: 20
+  flat_slope_pct: 0.015
+  flat_distance_pct: 0.04
+  strong_score: 75
+  moderate_score: 45
+  emerging_bars: 2
+metadata:
+  max_idle_s: 301

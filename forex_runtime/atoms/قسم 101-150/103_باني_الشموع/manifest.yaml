@@ -1,0 +1,49 @@
+id: 103
+name: "Candle Builder"
+version: "5.3.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "market_data.candle_closed"
+
+subscribes:
+  - "market.tick.validated"
+
+startup_mode: auto
+
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    timeframes:
+      type: array
+      items:
+        type: string
+      minItems: 1
+  required:
+    - timeframes
+  additionalProperties: false
+
+config:
+  timeframes:
+    - "10s"
+    - "30s"
+    - "1m"
+    - "5m"
+    - "15m"
+    - "1h"
+    - "4h"
+    - "1d"
+metadata:
+  max_idle_s: 301

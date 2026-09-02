@@ -1,0 +1,45 @@
+id: 359
+name: Live Tick Confidence Aggregator
+version: 2.1.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- probability.confidence.state
+subscribes:
+- probability.trend.state
+- probability.reversal.state
+- probability.breakout.state
+- probability.pullback.state
+- probability.momentum.state
+- probability.range.state
+- probability.hurst.state
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    min_confidence:
+      type: number
+      minimum: 0
+      maximum: 100
+    min_ready_coverage:
+      type: number
+      minimum: 0
+      maximum: 100
+  required:
+  - min_confidence
+  - min_ready_coverage
+  additionalProperties: false
+config:
+  min_confidence: 60.0
+  min_ready_coverage: 60.0
+metadata:
+  max_idle_s: 64

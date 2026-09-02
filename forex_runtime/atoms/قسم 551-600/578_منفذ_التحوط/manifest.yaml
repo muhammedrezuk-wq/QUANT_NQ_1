@@ -1,0 +1,88 @@
+id: 578
+name: "Perpetual Difference And Pair Coordinator"
+version: "5.4.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "execution.order.requested"
+  - "perpetual.pair.state"
+  - "perpetual.owner.escalation"
+  - "risk.asset.command"
+
+subscribes:
+  - "execution.snapshot.state"
+  - "execution.order.requested"
+  - "decision.gate.passed"
+  - "emergency.halt"
+  - "risk.kill_switch.reset_requested"
+  - "risk.validation.completed"
+  - "execution.order.rejected"
+  - "platform.brain_signal.write_failed"
+  - "execution.command.ack"
+  - "execution.command.failed"
+  - "platform.trade_event"
+  - "execution.quality.state"
+  - "execution.reference_divergence.state"
+  - "platform.account.state"
+  - "platform.terminal_state"
+  - "SYS_SECOND"
+  - "platform.positions.state"
+
+startup_mode: auto
+
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    lot_step:
+      type: number
+      minimum: 0
+    min_volume:
+      type: number
+      minimum: 0
+    reward_risk:
+      type: number
+      minimum: 0
+    max_attempts:
+      type: integer
+      minimum: 1
+    resend_hold_s:
+      type: number
+      minimum: 0.1
+    catastrophe_stop_multiple:
+      type: number
+      minimum: 1
+    fallback_stop_frac:
+      type: number
+      exclusiveMinimum: 0
+  required:
+    - lot_step
+    - min_volume
+    - reward_risk
+    - max_attempts
+    - resend_hold_s
+    - catastrophe_stop_multiple
+    - fallback_stop_frac
+  additionalProperties: false
+
+config:
+  lot_step: 0.01
+  min_volume: 0.01
+  reward_risk: 2.0
+  max_attempts: 3
+  resend_hold_s: 2.0
+  catastrophe_stop_multiple: 3.0
+  fallback_stop_frac: 0.02
+metadata:
+  max_idle_s: 60

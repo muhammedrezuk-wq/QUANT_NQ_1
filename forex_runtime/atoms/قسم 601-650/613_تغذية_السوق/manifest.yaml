@@ -1,0 +1,81 @@
+id: 613
+name: "Market Feed Hub"
+version: "2.6.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "market.tick"
+  - "market.volume"
+  - "market.feed.provider_down"
+  - "market.feed.provider_recovered"
+  - "market.feed.source_rejected"
+  # قناة عرض سعر الوسيط وسبريده — للشارت واللوحة فقط، لا يشترك بها محلّل.
+  - "market.broker_tick"
+
+subscribes:
+  - "feed.mt5.tick"
+  - "feed.ctrader.tick"
+  - "kernel.clock.heartbeat"
+
+startup_mode: auto
+
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 5
+  restart_backoff_ms: 2000
+
+config_schema:
+  type: object
+  properties:
+    routes:
+      type: object
+      minProperties: 1
+      additionalProperties:
+        type: string
+    provider_timeout_s:
+      type: number
+      minimum: 1
+    max_input_silence_seconds:
+      type: number
+      minimum: 1
+    preferred_provider:
+      type: string
+    # قائمة السماح لمسار المحلّلين (`market.tick`). أي مزوّد خارجها يُرفض
+    # ولا يُمرَّر مهما كان حال المفضّل — ختم NQ ٢٠٢٦-٠٨-٣١.
+    analyst_sources:
+      type: array
+      minItems: 1
+      items:
+        type: string
+    # وجهة العرض للمزوّدين غير المسموحين على مسار التحليل. تركها فارغة يعني
+    # الرفض الصريح بدل التحويل.
+    broker_display_route:
+      type: string
+  required:
+    - routes
+    - provider_timeout_s
+    - max_input_silence_seconds
+  additionalProperties: false
+
+config:
+  routes:
+    feed.mt5.tick: "market.tick"
+    feed.ctrader.tick: "market.tick"
+  provider_timeout_s: 30
+  max_input_silence_seconds: 60
+  preferred_provider: "CTRADER"
+  # مصدر البيانات الحقيقيّ وحده. ميتاتريدر منصّة تنفيذ لا مصدر سعر، ولا يحلّ
+  # محلّ سي‑تريدر عند سقوطه — التحليل يصمت ولا يتغذّى من سعر غير موثوق.
+  analyst_sources: ["CTRADER"]
+  # غزارة تِكّات ميتاتريدر لا تُرمى: تُحوَّل إلى قناة العرض بسبريدها، فيرى
+  # المالك على الشارت سعر التنفيذ الفعليّ — بلا أن يلمس محلّلًا واحدًا.
+  broker_display_route: "market.broker_tick"
+metadata:
+  max_idle_s: 60

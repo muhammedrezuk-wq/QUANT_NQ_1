@@ -1,0 +1,69 @@
+id: 601
+name: "Brain Bridge Writer"
+version: "4.2.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "platform.brain_signal.written"
+  - "platform.brain_signal.write_failed"
+  - "platform.brain_signal.halted"
+  - "execution.command.ack"
+  - "execution.command.failed"
+
+subscribes:
+  - "trading.final_decision"
+  - "emergency.halt"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 5000
+  timeout_ms: 3000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 5
+  restart_backoff_ms: 2000
+
+config_schema:
+  type: object
+  properties:
+    account_id:
+      type: string
+      minLength: 1
+    db_path:
+      type: string
+    heartbeat_interval_s:
+      type: number
+      minimum: 0.1
+    blocked_account_ids:
+      type: array
+      items:
+        type: string
+    cursor_db:
+      type: string
+    require_symbol_resolution:
+      type: boolean
+    magic:
+      type: integer
+      minimum: 1
+  required:
+    - account_id
+    - db_path
+    - heartbeat_interval_s
+    - magic
+  additionalProperties: false
+
+config:
+  account_id: "CURRENT_ACCOUNT"
+  blocked_account_ids: []
+  require_symbol_resolution: true
+  magic: 20260801
+  db_path: 'C:\Users\NQ\AppData\Roaming\MetaQuotes\Terminal\Common\Files\nq_brain.db'
+  heartbeat_interval_s: 1.0
+metadata:
+  max_idle_s: 60

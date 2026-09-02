@@ -1,0 +1,80 @@
+id: 523
+name: "Dial Engine"
+version: "2.3.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "dial.profile.state"
+  - "horizon.profile.state"
+
+subscribes:
+  - "risk.asset_ledger.state"
+  - "dial.command"
+  - "platform.account.state"
+  - "SYS_SECOND"
+  - "decision.settings.state"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    dials:
+      type: object
+    default_dial:
+      type: number
+      minimum: 0
+      maximum: 100
+    horizon_min_s:
+      type: number
+      minimum: 0
+    horizon_max_s:
+      type: number
+      minimum: 0
+    horizon_shape:
+      type: number
+      minimum: 0
+    filter_min:
+      type: number
+    filter_max:
+      type: number
+    stop_min_frac:
+      type: number
+      minimum: 0
+    stop_max_frac:
+      type: number
+      minimum: 0
+    cadence_fast_s:
+      type: number
+      minimum: 0
+    cadence_slow_s:
+      type: number
+      minimum: 0
+  additionalProperties: false
+
+config:
+  dials: {}
+  default_dial: 50.0
+  horizon_min_s: 180.0
+  horizon_max_s: 14400.0
+  horizon_shape: 1.0
+  filter_min: 0.2
+  filter_max: 0.9
+  stop_min_frac: 0.001
+  stop_max_frac: 0.01
+  cadence_fast_s: 5.0
+  cadence_slow_s: 60.0
+metadata:
+  max_idle_s: 3600

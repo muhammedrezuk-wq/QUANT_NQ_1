@@ -1,0 +1,15 @@
+[Unit]
+Description=QUANT_NQ_NEWS Telegram Bot
+After=network.target
+
+[Service]
+Type=simple
+User=YOUR_USER
+WorkingDirectory=/home/YOUR_USER/QUANT_NQ_NEWS
+ExecStart=/usr/bin/python3 /home/YOUR_USER/QUANT_NQ_NEWS/main.py
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,53 @@
+id: 307
+name: "Statistical Correlation"
+version: "1.2.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "stats.correlation.state"
+
+subscribes:
+  - "market.tick.validated"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    reference_symbol:
+      type: string
+    window:
+      type: integer
+      minimum: 2
+    strong_threshold:
+      type: number
+      minimum: 0
+    moderate_threshold:
+      type: number
+      minimum: 0
+  required:
+    - reference_symbol
+    - window
+    - strong_threshold
+    - moderate_threshold
+  additionalProperties: false
+
+config:
+  reference_symbol: "USTEC"
+  window: 30
+  strong_threshold: 0.7
+  moderate_threshold: 0.4
+metadata:
+  max_idle_s: 301

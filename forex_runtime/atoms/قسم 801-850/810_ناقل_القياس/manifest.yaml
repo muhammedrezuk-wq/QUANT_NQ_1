@@ -1,0 +1,57 @@
+id: 810
+name: "Telemetry Carrier"
+version: "1.0.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "telemetry.batch.closed"
+  - "telemetry.carrier.state"
+
+subscribes:
+  - "SYS_SECOND"
+
+startup_mode: auto
+health:
+  interval_ms: 30000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 3000
+
+config_schema:
+  type: object
+  properties:
+      out_dir:
+        type: string
+      batch_size:
+        type: integer
+        minimum: 0
+      flush_interval_s:
+        type: number
+        minimum: 0
+      max_files:
+        type: integer
+        minimum: 0
+      max_buffer:
+        type: integer
+        minimum: 0
+      stream_prefixes:
+        type: array
+        items: {type: string}
+  additionalProperties: false
+
+config:
+  out_dir: "var/telemetry"
+  batch_size: 500
+  flush_interval_s: 30
+  max_files: 24
+  max_buffer: 20000
+
+metadata:
+  max_idle_s: 300
+  note: "مستمع وحيد على تدفّق الأحداث الكامل (subscribe_all بعهد القراءة فقط) — صفوف نحيفة إلى دفعات gzip تحت var/telemetry/ — لا يمسّ المسار الساخن ولا مخازن الإنتاج."

@@ -1,0 +1,48 @@
+id: 519
+name: "Asset Portfolio"
+version: "3.2.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "asset.portfolio.state"
+  - "asset.portfolio.owner_intent"
+
+subscribes:
+  - "asset.portfolio.owner_intent"
+  - "risk.asset_ledger.state"
+  - "platform.trade_event"
+  - "platform.account.state"
+  - "platform.terminal_state"
+  - "emergency.halt"
+  - "risk.kill_switch.reset_requested"
+  - "risk.asset.command"
+
+startup_mode: auto
+
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 2000
+
+config_schema:
+  type: object
+  properties:
+    exit_ratio:
+      type: number
+      minimum: 0
+      maximum: 1
+  required:
+    - exit_ratio
+  additionalProperties: false
+
+config:
+  exit_ratio: 0.90
+metadata:
+  max_idle_s: 3600

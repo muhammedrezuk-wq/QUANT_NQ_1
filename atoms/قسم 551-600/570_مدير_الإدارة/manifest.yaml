@@ -1,0 +1,34 @@
+id: 570
+name: Management Coordinator
+version: "3.0.2"
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- execution.manage.command
+subscribes:
+- execution.manage.intent
+- platform.position.vanished
+- execution.manage.written
+- execution.command.failed
+- execution.command.ack
+- SYS_SECOND
+startup_mode: auto
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    magic: {type: integer, minimum: 1}
+  required: [magic]
+  additionalProperties: false
+config:
+  magic: 20260801
+metadata:
+  max_idle_s: 60

@@ -1,0 +1,40 @@
+id: 2262
+name: Order Flow Imbalance (OFI)
+version: 1.0.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- micro.ofi.state
+subscribes:
+- market.depth
+startup_mode: manual
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    window_s:
+      type: number
+      minimum: 1
+      maximum: 300
+    max_age_s:
+      type: number
+      minimum: 1
+  additionalProperties: false
+config:
+  window_s: 30.0
+  max_age_s: 10.0
+metadata:
+  max_idle_s: 60
+  market: crypto
+  namespace: crypto_full
+  source_id: 262
+  legacy_source: true
+  phase: full-source

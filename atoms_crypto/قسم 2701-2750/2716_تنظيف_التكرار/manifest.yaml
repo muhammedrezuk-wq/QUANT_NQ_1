@@ -1,0 +1,89 @@
+id: 2716
+name: Duplicate Cleanup
+version: 2.1.2
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- storage.trading_data_cleaned
+subscribes:
+- storage.archived
+startup_mode: manual
+health:
+  interval_ms: 60000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 3000
+config_schema:
+  type: object
+  properties:
+    stores:
+      type: array
+      minItems: 1
+      items:
+        type: object
+        properties:
+          db_path:
+            type: string
+          table:
+            type: string
+          dedup_columns:
+            type: array
+            minItems: 1
+            items:
+              type: string
+        required:
+        - db_path
+        - table
+        - dedup_columns
+        additionalProperties: false
+    vacuum_after_cleanup:
+      type: boolean
+  required:
+  - stores
+  - vacuum_after_cleanup
+  additionalProperties: false
+config:
+  stores:
+  - db_path: var/store\market_data.db
+    table: market_data
+    dedup_columns:
+    - symbol
+    - occurred_at
+    - payload_json
+  - db_path: var/store\analysis.db
+    table: analysis
+    dedup_columns:
+    - symbol
+    - occurred_at
+    - payload_json
+  - db_path: var/store\structure.db
+    table: structure
+    dedup_columns:
+    - symbol
+    - occurred_at
+    - payload_json
+  - db_path: var/store\liquidity.db
+    table: liquidity
+    dedup_columns:
+    - symbol
+    - occurred_at
+    - payload_json
+  - db_path: var/store\timeline.db
+    table: timeline
+    dedup_columns:
+    - event_name
+    - account_id
+    - occurred_at
+    - payload_json
+  vacuum_after_cleanup: false
+metadata:
+  max_idle_s: 3600
+  market: crypto
+  namespace: crypto_full
+  source_id: 716
+  legacy_source: true
+  phase: full-source

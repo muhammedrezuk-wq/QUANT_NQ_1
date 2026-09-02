@@ -1,0 +1,13 @@
+{
+  "format": "quant-nq-vault",
+  "version": 1,
+  "cipher": "fernet",
+  "kdf": {
+    "algorithm": "pbkdf2-sha256",
+    "salt": "<base64 — ملح عشوائي، ليس سراً>",
+    "iterations": 600000,
+    "memory_kib": 65536,
+    "parallelism": 4
+  },
+  "payload": "<base64 — النص المشفّر وحده هو السر>"
+}

@@ -1,0 +1,65 @@
+id: 625
+name: "Replay Feed Source"
+version: "1.0.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "feed.replay.tick"
+  - "replay.session.state"
+
+subscribes:
+  - "replay.session.start"
+  - "replay.session.stop"
+
+startup_mode: manual
+health:
+  interval_ms: 30000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 3000
+
+config_schema:
+  type: object
+  properties:
+    db_path:
+      type: string
+    symbols:
+      type: array
+      items: {type: string}
+    limit:
+      type: integer
+      minimum: 0
+    account_id:
+      type: string
+    broker:
+      type: string
+    tick_prefix:
+      type: string
+    pace_seconds:
+      type: number
+      minimum: 0
+    progress_every:
+      type: integer
+      minimum: 1
+  required: [db_path]
+  additionalProperties: false
+
+config:
+  db_path: "var/store/market_data.db"
+  symbols: []
+  limit: 0
+  account_id: ""
+  broker: ""
+  tick_prefix: "replay"
+  pace_seconds: 0
+  progress_every: 1000
+
+metadata:
+  max_idle_s: 3600
+  note: "X.md Build 2 — startup manual + explicit replay.session.start: never fires in a production boot."

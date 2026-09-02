@@ -1,0 +1,39 @@
+id: 364
+name: Learning Out Of Sample Validator
+version: 1.2.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- learning.model.validated
+subscribes:
+- learning.feature.ready
+- learning.model.candidate
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    validation_size:
+      type: integer
+      minimum: 1
+    min_accuracy:
+      type: number
+      minimum: 0
+      maximum: 1
+  required:
+  - validation_size
+  - min_accuracy
+  additionalProperties: false
+config:
+  validation_size: 5
+  min_accuracy: 0.55
+metadata:
+  max_idle_s: 86400

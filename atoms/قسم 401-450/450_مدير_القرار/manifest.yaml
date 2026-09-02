@@ -1,0 +1,49 @@
+id: 450
+name: "Decision Manager"
+version: "1.2.1"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "decision.cycle.collected"
+  - "decision.cycle.record"
+
+subscribes:
+  - "market.tick.validated"
+  - "SYS_SECOND"
+  - "decision.aggregated.state"
+  - "decision.scored.state"
+  - "decision.filtered.state"
+  - "decision.eligibility.buy.state"
+  - "decision.eligibility.sell.state"
+  - "decision.wait.state"
+  - "decision.approved.state"
+  - "decision.resolved.state"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    timeout_seconds:
+      type: number
+      minimum: 1
+  required:
+    - timeout_seconds
+  additionalProperties: false
+
+config:
+  timeout_seconds: 5
+metadata:
+  max_idle_s: 301

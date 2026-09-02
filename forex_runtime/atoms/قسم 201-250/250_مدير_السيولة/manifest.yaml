@@ -1,0 +1,47 @@
+id: 250
+name: "Liquidity Manager"
+version: "1.6.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "liquidity.cycle.collected"
+  - "liquidity.section.live"
+  - "liquidity.units.state"
+
+subscribes:
+  - "SYS_SECOND"
+  - "liquidity.pool.state"
+  - "liquidity.buyside.state"
+  - "liquidity.sellside.state"
+  - "liquidity.sweep.state"
+  - "liquidity.fvg.state"
+  - "liquidity.depth.state"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    timeout_seconds:
+      type: number
+      minimum: 1
+  required:
+    - timeout_seconds
+  additionalProperties: false
+
+config:
+  timeout_seconds: 5
+metadata:
+  max_idle_s: 301

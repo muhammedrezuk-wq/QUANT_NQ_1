@@ -1,0 +1,34 @@
+id: 2112
+name: Validated Market Tick Gate
+version: 4.0.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- market.tick.validated
+- market_data.validation_failed
+- market_data.validation.state
+subscribes:
+- market.tick
+- platform.account.state
+startup_mode: manual
+health:
+  interval_ms: 5000
+  timeout_ms: 2000
+  failure_threshold: 1
+  restart_on_failure: true
+  max_restarts: 5
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties: {}
+  additionalProperties: false
+config: {}
+metadata:
+  max_idle_s: 64
+  market: crypto
+  namespace: crypto_full
+  source_id: 112
+  legacy_source: true
+  phase: full-source

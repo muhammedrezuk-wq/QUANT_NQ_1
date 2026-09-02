@@ -1,0 +1,75 @@
+id: 155
+name: "Spread Analyzer"
+version: "2.5.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "analysis.spread.state"
+  - "analysis.setting.changed"
+
+subscribes:
+  - "market_data.candle_closed"
+
+  - "market.tick.validated"
+  - "analysis.settings.command"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    baseline_window:
+      type: integer
+      minimum: 2
+    exp_short:
+      type: integer
+      minimum: 1
+    exp_long:
+      type: integer
+      minimum: 2
+    exp_mult:
+      type: number
+      minimum: 1
+    wide_mult:
+      type: number
+      minimum: 1
+    narrow_mult:
+      type: number
+      minimum: 0
+      maximum: 1
+    min_candles:
+      type: integer
+      minimum: 2
+  required:
+    - baseline_window
+    - exp_short
+    - exp_long
+    - exp_mult
+    - wide_mult
+    - narrow_mult
+    - min_candles
+  additionalProperties: false
+
+config:
+  baseline_window: 24
+  exp_short: 5
+  exp_long: 20
+  exp_mult: 1.25
+  wide_mult: 1.35
+  narrow_mult: 0.7
+  min_candles: 16
+metadata:
+  max_idle_s: 301

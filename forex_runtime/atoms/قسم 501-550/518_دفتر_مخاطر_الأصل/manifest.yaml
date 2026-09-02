@@ -1,0 +1,62 @@
+id: 518
+name: "Asset Risk Ledger"
+version: "4.2.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "risk.asset_ledger.state"
+
+subscribes:
+  - "platform.positions.state"
+  - "perpetual.asset.activate"
+  - "risk.loss_reported"
+  - "platform.trade_event"
+  - "platform.account.state"
+  - "execution.order.built"
+  - "execution.order.rejected"
+  - "market.symbol_specs"
+  - "market.ctrader.symbol_specs"
+  - "risk.asset_budget.state"
+  - "risk.asset_profit.extracted"
+  - "asset.extraction.execution_requested"
+
+startup_mode: auto
+
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 2000
+
+config_schema:
+  type: object
+  properties:
+    default_risk_budget:
+      type: number
+      minimum: 0
+    count_realized:
+      type: boolean
+    max_seen_trades:
+      type: integer
+      minimum: 1
+    consumer_db_path:
+      type: string
+  required:
+    - default_risk_budget
+    - count_realized
+    - max_seen_trades
+  additionalProperties: false
+
+config:
+  default_risk_budget: 0
+  count_realized: true
+  max_seen_trades: 10000
+  consumer_db_path: "var/store/asset_ledger_consumer_518.db"
+metadata:
+  max_idle_s: 3600

@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>QUANT_NQ — مخطط هندسي كامل</title>
+<style>
+:root { --ink:#1a1a1a; --rule:#2c2c2c; --paper:#f4efe4; --box:#fffdf8; --accent:#3d4f3a; }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:#cfc8b8; color:var(--ink);
+  font-family:"Segoe UI","Tahoma","Amiri","Noto Naskh Arabic",sans-serif; }
+nav.toc { position:sticky; top:0; z-index:9; background:#1a1a1a; color:#f4efe4;
+  padding:10px 18px; display:flex; gap:14px; flex-wrap:wrap; font-size:13px; }
+nav.toc a { color:#f4efe4; text-decoration:none; border-bottom:1px solid #888; }
+.sheet { background:var(--paper); margin:18px auto; width:min(1400px,96vw);
+  min-height:900px; border:2px solid var(--ink); display:flex; flex-direction:column;
+  box-shadow:0 8px 24px #0003; }
+.sheet-head { display:grid; grid-template-columns:1fr 2fr 140px; border-bottom:2px solid var(--ink);
+  font-size:13px; }
+.sheet-head > div { padding:8px 12px; border-left:1px solid var(--ink); }
+.stitle { font-weight:700; font-size:18px; letter-spacing:.02em; }
+.snum { font-weight:700; text-align:center; background:#1a1a1a; color:#f4efe4; }
+.sheet-body { padding:16px 18px 8px; flex:1; }
+.titleblock { display:grid; grid-template-columns:repeat(5,1fr); border-top:2px solid var(--ink);
+  font-size:11px; }
+.titleblock > div { padding:6px 8px; border-left:1px solid var(--ink); }
+.titleblock .note { grid-column:1/-1; border-left:none; border-top:1px solid var(--ink); color:#444; }
+h2 { margin:0 0 10px; font-size:16px; }
+p,li { font-size:14px; line-height:1.65; }
+.flow { display:flex; flex-wrap:wrap; align-items:stretch; gap:0; margin:12px 0 18px; }
+.box { border:1.5px solid var(--ink); background:var(--box); min-width:110px; max-width:180px;
+  padding:8px 10px; flex:1; }
+.bt { font-weight:700; font-size:13px; }
+.bs { font-size:11px; color:#444; margin-top:4px; }
+.arr { display:flex; align-items:center; padding:0 6px; font-size:20px; font-weight:700; }
+.layers { display:flex; flex-direction:column; gap:6px; margin:12px 0; }
+.layer { border:1.5px solid var(--ink); padding:10px 14px; background:var(--box); }
+.layer b { display:block; font-size:14px; }
+.layer span { font-size:12px; color:#333; }
+.grid { width:100%; border-collapse:collapse; font-size:12px; margin:8px 0 14px; }
+.grid th,.grid td { border:1px solid var(--ink); padding:4px 6px; vertical-align:top; }
+.grid th { background:#1a1a1a; color:#f4efe4; font-weight:600; }
+.grid.small { font-size:11px; }
+.grid tr:nth-child(even) td { background:#ebe4d6; }
+.twin { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.legend { display:flex; gap:16px; flex-wrap:wrap; font-size:12px; margin:8px 0; }
+.sw { display:inline-block; width:12px; height:12px; border:1px solid #000; margin-left:4px; vertical-align:middle; }
+.manual { background:#f3d9a4; }
+.auto { background:#d5e4d0; }
+.draw { width:100%; height:auto; border:1px solid var(--ink); background:#fffdf8; margin:8px 0 14px; }
+.kvs { display:grid; grid-template-columns:180px 1fr; gap:0; font-size:13px; border:1px solid var(--ink); }
+.kvs div { padding:5px 8px; border-bottom:1px solid #ccc; }
+.kvs div:nth-child(odd) { font-weight:700; background:#ebe4d6; }
+@media print {
+  nav.toc { display:none; }
+  body { background:#fff; }
+  .sheet { box-shadow:none; margin:0; width:auto; page-break-after:always; min-height:0; }
+}
+</style>
+</head>
+<body>
+<nav class="toc"><a href="#p00">00</a> <a href="#p01">01</a> <a href="#p02">02</a> <a href="#p03">03</a> <a href="#p04">04</a> <a href="#p05">05</a> <a href="#p06">06</a> <a href="#p07">07</a> <a href="#p08">08</a> <a href="#p09">09</a> <a href="#p10">10</a> <a href="#p11">11</a> <a href="#p12">12</a> <a href="#p13">13</a> <a href="#p14">14</a> <a href="#p15">15</a> <a href="#p16">16</a> <a href="#p17">17</a> <a href="#p18">18</a> <a href="#p19">19</a> <a href="#p20">20</a> <a href="#p21">21</a> <a href="#p22">22</a> <a href="#p23">23</a> <a href="#p24">24</a> <a href="#p25">25</a> <a href="#p26">26</a> <a href="#p27">27</a> <a href="#p28">28</a> <a href="#p29">29</a> <a href="#p30">30</a> <a href="#p31">31</a> <a href="#p32">32</a> <a href="#p33">33</a> <a href="#p34">34</a> <a href="#p35">35</a> <a href="#p36">36</a> <a href="#p37">37</a> <a href="#p38">38</a> <a href="#p39">39</a> <a href="#p40">40</a> <a href="#p41">41</a> <a href="#p42">42</a> <a href="#p43">43</a> <a href="#p44">44</a> <a href="#p45">45</a> <a href="#p46">46</a> <a href="#p47">47</a> <a href="#p48">48</a> <a href="#p49">49</a> <a href="#p50">50</a> <a href="#p51">51</a> <a href="#p52">52</a> <a href="#p53">53</a> <a href="#p54">54</a> <a href="#p55">55</a> <a href="#p56">56</a> <a href="#p57">57</a> <a href="#p58">58</a> <a href="#p59">59</a> <a href="#p60">60</a> <a href="#p61">61</a> <a href="#p62">62</a> <a href="#p63">63</a></nav>
+
+<section class="sheet" id="p00">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">غلاف المجموعة</div>
+    <div class="snum">ورقة 00</div>
+  </header>
+  <div class="sheet-body">
+        <h2>مجموعة رسومات هندسية — QUANT_NQ</h2>
+        <p>هذه ليست مقالة ولا دليل تسويق. هي <b>مخطط من الكود</b>: كل ذرّة في الجداول
+        موجودة بـ <code>manifest.yaml</code>. النواة من <code>CORE.lock</code>.
+        الجسر من <code>mt5/QUANT_NQ.mq5</code>.</p>
+        <div class="kvs">
+          <div>الاسم</div><div>QUANT_NQ — منصّة ذرّات، نواة لا تعرف أسماء الذرّات</div>
+          <div>النواة</div><div>Core 1.31.0 · 23 ملفًا · بصمة 1b0d0f6b91505984…</div>
+          <div>فوركس</div><div>233 ذرّة · تلقائي 226 · يدوي 7</div>
+          <div>كريبتو</div><div>80 ذرّة · تلقائي 33 · يدوي 47</div>
+          <div>أحداث مميّزة</div><div>نشر 398 · اشتراك 322 · اتحاد 405</div>
+          <div>الإطلاق</div><div>زرّان منفصلان — فوركس 8090/8010 · كريبتو 8091/8020</div>
+        </div>
+        
+<svg class="draw" viewBox="0 0 1100 420" xmlns="http://www.w3.org/2000/svg">
+  <rect x="20" y="20" width="1060" height="50" fill="#1a1a1a"/>
+  <text x="550" y="52" fill="#f4efe4" font-size="18" text-anchor="middle">⑥ لوحة الحوكمة — أسرار من اللوحة · أوامر ٩٠١ · مختبر معزول</text>
+  <rect x="20" y="80" width="1060" height="50" fill="#3d4f3a"/>
+  <text x="550" y="112" fill="#fff" font-size="18" text-anchor="middle">⑤ أحداث — ناقل داخل كل runtime · لا استيراد ذرّة لذرّة</text>
+  <rect x="20" y="140" width="1060" height="70" fill="#6b5a3a"/>
+  <text x="550" y="172" fill="#fff" font-size="18" text-anchor="middle">④ ذرّات — فوركس 233 · كريبتو 80 · المانيفست سلطة الإقلاع</text>
+  <text x="550" y="196" fill="#f4efe4" font-size="13" text-anchor="middle">عقد AtomBase فقط · النواة لا تعرف رقم ذرّة</text>
+  <rect x="20" y="220" width="1060" height="50" fill="#4a3f55"/>
+  <text x="550" y="252" fill="#fff" font-size="18" text-anchor="middle">③ توابع النواة — ساعة · نقل · أمن · تخزين · سجلّ مشترَك</text>
+  <rect x="20" y="280" width="1060" height="50" fill="#2c3a4a"/>
+  <text x="550" y="312" fill="#fff" font-size="18" text-anchor="middle">② النواة المختومة Core 1.31.0 — 23 ملفًا · CORE.lock · root 1b0d0f6b…</text>
+  <rect x="20" y="340" width="1060" height="50" fill="#f4efe4" stroke="#1a1a1a"/>
+  <text x="550" y="372" fill="#1a1a1a" font-size="18" text-anchor="middle">① الأرض — المستودع · سوقان مفصولان (forex_runtime / crypto_runtime) · أزرار إطلاق</text>
+</svg>
+
+        </div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 00 — غلاف المجموعة</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">الرسم يُقرأ من الأرض (١) إلى اللوحة (٦). كل طبقة فوق التي قبلها، لا داخلها.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p01">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">فهرس الأوراق</div>
+    <div class="snum">ورقة 01</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>ورقة</th><th>الموضوع</th></tr></thead><tbody><tr><td>00</td><td><a href="#p00">غلاف المجموعة</a></td></tr><tr><td>02</td><td><a href="#p02">كيف تُقرأ هذه الرسوم</a></td></tr><tr><td>03</td><td><a href="#p03">الأرض — طبقات المشروع كما بُنيت</a></td></tr><tr><td>04</td><td><a href="#p04">سوقان معزولان</a></td></tr><tr><td>05</td><td><a href="#p05">النواة المختومة — 23 ملفًا</a></td></tr><tr><td>06</td><td><a href="#p06">عقد الذرّة ودورة الحياة</a></td></tr><tr><td>07</td><td><a href="#p07">الناقل — قانون الأحداث</a></td></tr><tr><td>08</td><td><a href="#p08">الزمن</a></td></tr><tr><td>09</td><td><a href="#p09">مسار الحي فوركس — من التيك إلى الجسر</a></td></tr><tr><td>10</td><td><a href="#p10">التنفيذ — 576 · 551 · 552 · 901</a></td></tr><tr><td>11</td><td><a href="#p11">الإكسبرت والجسر المشترك</a></td></tr><tr><td>12</td><td><a href="#p12">التغذية — FIX وMT5 والمجمّع</a></td></tr><tr><td>13</td><td><a href="#p13">الحوكمة — اللوحة والـAPI</a></td></tr><tr><td>14</td><td><a href="#p14">عزل المختبر عن الحي</a></td></tr><tr><td>15</td><td><a href="#p15">الباك تست الرسمي</a></td></tr><tr><td>16</td><td><a href="#p16">الأمن</a></td></tr><tr><td>17</td><td><a href="#p17">الإطلاق والمنافذ</a></td></tr><tr><td>18</td><td><a href="#p18">التخزين</a></td></tr><tr><td>19</td><td><a href="#p19">الأخبار</a></td></tr><tr><td>20</td><td><a href="#p20">الصحة والاكتشاف</a></td></tr><tr><td>21</td><td><a href="#p21">فهرس أقسام الفوركس</a></td></tr><tr><td>22</td><td><a href="#p22">جدول ذرّات — قسم 001-050</a></td></tr><tr><td>23</td><td><a href="#p23">جدول ذرّات — قسم 101-150</a></td></tr><tr><td>24</td><td><a href="#p24">جدول ذرّات — قسم 151-200</a></td></tr><tr><td>25</td><td><a href="#p25">جدول ذرّات — قسم 201-250</a></td></tr><tr><td>26</td><td><a href="#p26">جدول ذرّات — قسم 251-300</a></td></tr><tr><td>27</td><td><a href="#p27">جدول ذرّات — قسم 301-350</a></td></tr><tr><td>28</td><td><a href="#p28">جدول ذرّات — قسم 351-400</a></td></tr><tr><td>29</td><td><a href="#p29">جدول ذرّات — قسم 401-450</a></td></tr><tr><td>30</td><td><a href="#p30">جدول ذرّات — قسم 451-500</a></td></tr><tr><td>31</td><td><a href="#p31">جدول ذرّات — قسم 501-550</a></td></tr><tr><td>32</td><td><a href="#p32">جدول ذرّات — قسم 551-600</a></td></tr><tr><td>33</td><td><a href="#p33">جدول ذرّات — قسم 601-650</a></td></tr><tr><td>34</td><td><a href="#p34">جدول ذرّات — قسم 651-700</a></td></tr><tr><td>35</td><td><a href="#p35">جدول ذرّات — قسم 701-750</a></td></tr><tr><td>36</td><td><a href="#p36">جدول ذرّات — قسم 751-800</a></td></tr><tr><td>37</td><td><a href="#p37">جدول ذرّات — قسم 801-850</a></td></tr><tr><td>38</td><td><a href="#p38">جدول ذرّات — قسم 851-900</a></td></tr><tr><td>39</td><td><a href="#p39">جدول ذرّات — قسم 901-950</a></td></tr><tr><td>40</td><td><a href="#p40">فهرس أقسام الكريبتو</a></td></tr><tr><td>41</td><td><a href="#p41">جدول ذرّات كريبتو — قسم 1001-1050</a></td></tr><tr><td>42</td><td><a href="#p42">جدول ذرّات كريبتو — قسم 2001-2050</a></td></tr><tr><td>43</td><td><a href="#p43">جدول ذرّات كريبتو — قسم 2101-2150</a></td></tr><tr><td>44</td><td><a href="#p44">جدول ذرّات كريبتو — قسم 2151-2200</a></td></tr><tr><td>45</td><td><a href="#p45">جدول ذرّات كريبتو — قسم 2251-2300</a></td></tr><tr><td>46</td><td><a href="#p46">جدول ذرّات كريبتو — قسم 2601-2650</a></td></tr><tr><td>47</td><td><a href="#p47">جدول ذرّات كريبتو — قسم 2701-2750</a></td></tr><tr><td>48</td><td><a href="#p48">جدول ذرّات كريبتو — قسم 2751-2800</a></td></tr><tr><td>49</td><td><a href="#p49">جدول ذرّات كريبتو — قسم 2801-2850</a></td></tr><tr><td>50</td><td><a href="#p50">جدول ذرّات كريبتو — قسم 2851-2900</a></td></tr><tr><td>51</td><td><a href="#p51">جدول ذرّات كريبتو — قسم 2901-2950</a></td></tr><tr><td>52</td><td><a href="#p52">كتالوج أحداث 1–45 / 405</a></td></tr><tr><td>53</td><td><a href="#p53">كتالوج أحداث 46–90 / 405</a></td></tr><tr><td>54</td><td><a href="#p54">كتالوج أحداث 91–135 / 405</a></td></tr><tr><td>55</td><td><a href="#p55">كتالوج أحداث 136–180 / 405</a></td></tr><tr><td>56</td><td><a href="#p56">كتالوج أحداث 181–225 / 405</a></td></tr><tr><td>57</td><td><a href="#p57">كتالوج أحداث 226–270 / 405</a></td></tr><tr><td>58</td><td><a href="#p58">كتالوج أحداث 271–315 / 405</a></td></tr><tr><td>59</td><td><a href="#p59">كتالوج أحداث 316–360 / 405</a></td></tr><tr><td>60</td><td><a href="#p60">كتالوج أحداث 361–405 / 405</a></td></tr><tr><td>61</td><td><a href="#p61">جدول كل ذرّات الفوركس (مختصر)</a></td></tr><tr><td>62</td><td><a href="#p62">جدول كل ذرّات الكريبتو (مختصر)</a></td></tr><tr><td>63</td><td><a href="#p63">ما ليس في المخطط عن قصد</a></td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 01 — فهرس الأوراق</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">64 ورقة في المجموعة (مع الفهرس).</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p02">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">كيف تُقرأ هذه الرسوم</div>
+    <div class="snum">ورقة 02</div>
+  </header>
+  <div class="sheet-body">
+        <div class="legend">
+          <span><i class="sw auto"></i> تلقائي startup_mode=auto</span>
+          <span><i class="sw manual"></i> يدوي — النواة ترفض تشغيله في hot-reload</span>
+        </div>
+        <ul>
+          <li>السهم في مسار الحي = حدث على الناقل، ليس استدعاء دالة.</li>
+          <li>جدول القسم = جدول أبواب المعماري: كل ذرّة سطر، بنشرها واشتراكها.</li>
+          <li>إذا تعارضت ورقة مع <code>atom.py</code> فالورقة تُصحَّح.</li>
+          <li>الأسرار لا تُرسم: تُنشأ من لوحة الحوكمة على جهاز المالك.</li>
+          <li>الإكسبرت غبيّ عمدًا: ينفّذ أوامر الجسر ولا يقرّر.</li>
+        </ul>
+        </div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 02 — كيف تُقرأ هذه الرسوم</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p03">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">الأرض — طبقات المشروع كما بُنيت</div>
+    <div class="snum">ورقة 03</div>
+  </header>
+  <div class="sheet-body">
+        <p>المالك وصف البناء: أرض → نواة → توابع → ذرّات → أحداث → طبقة حوكمة.
+        الرسم في الغلاف هو نفس السلم. التفصيل:</p>
+        <div class="layers">
+          <div class="layer"><b>الأرض</b><span>المستودع، الأزرار، runtime لكل سوق، config/unified_release.json</span></div>
+          <div class="layer"><b>النواة</b><span>اكتشاف، دورة حياة، ناقل، صحة، لقطة — بلا اسم ذرّة</span></div>
+          <div class="layer"><b>التوابع</b><span>clock/ · transport/ · security/ · storage_policy/ · shared/</span></div>
+          <div class="layer"><b>الذرّات</b><span>atoms/ فوركس · atoms_crypto/ كريبتو · كل واحدة مانيفست+atom.py</span></div>
+          <div class="layer"><b>الأحداث</b><span>عقد النشر/الاشتراك في المانيفست — المادة: لا وصول مباشر بين الذرّات</span></div>
+          <div class="layer"><b>الحوكمة</b><span>governance/server.py · الواجهة · الخزنة · ٩٠١ بوابة أوامر الإنسان</span></div>
+        </div>
+        </div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 03 — الأرض — طبقات المشروع كما بُنيت</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p04">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">سوقان معزولان</div>
+    <div class="snum">ورقة 04</div>
+  </header>
+  <div class="sheet-body">
+        <div class="twin">
+          <div>
+            <h2>فوركس</h2>
+            <table class="grid"><thead><tr><th>بند</th><th>قيمة</th></tr></thead><tbody><tr><td>الذرّات</td><td>233</td></tr><tr><td>النواة</td><td>127.0.0.1:8010</td></tr><tr><td>اللوحة</td><td>8090</td></tr><tr><td>الإطلاق</td><td>أزرار التشغيل/تشغيل الفوركس الموحد.bat</td></tr><tr><td>الجسر</td><td>nq_brain.db · إكسبرت MT5</td></tr><tr><td>التغذية التحليلية</td><td>622 FIX cTrader</td></tr></tbody></table>
+          </div>
+          <div>
+            <h2>كريبتو</h2>
+            <table class="grid"><thead><tr><th>بند</th><th>قيمة</th></tr></thead><tbody><tr><td>الذرّات</td><td>80</td></tr><tr><td>النواة</td><td>127.0.0.1:8020</td></tr><tr><td>اللوحة</td><td>8091</td></tr><tr><td>الإطلاق</td><td>أزرار التشغيل/تشغيل الكريبتو الموحد.bat</td></tr><tr><td>جذر البيانات</td><td>crypto_runtime/var</td></tr><tr><td>سلطة الإقلاع</td><td>manifest.startup_mode</td></tr></tbody></table>
+          </div>
+        </div>
+        <p>عبارة «ناقل واحد» تعني ناقلًا داخل كل runtime، لا ناقلًا مشتركًا بين السوقين.</p>
+        </div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 04 — سوقان معزولان</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p05">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">النواة المختومة — 23 ملفًا</div>
+    <div class="snum">ورقة 05</div>
+  </header>
+  <div class="sheet-body"><table class="grid"><thead><tr><th>الملف</th><th>الدور</th></tr></thead><tbody><tr><td>contracts/atom.py</td><td>عقد الذرّة — AtomBase · السياق · الصحة</td></tr><tr><td>contracts/manifest.py</td><td>عقد المانيفست</td></tr><tr><td>contracts/services.py</td><td>خدمات النواة للذرّة</td></tr><tr><td>bootloader.py</td><td>الإقلاع واكتشاف الذرّات</td></tr><tr><td>lifecycle.py</td><td>دورة الحياة الموحّدة</td></tr><tr><td>registry.py</td><td>السجلّ الحيّ</td></tr><tr><td>event_bus.py</td><td>ناقل الأحداث داخل العملية</td></tr><tr><td>health_manager.py</td><td>فحوص الصحة وإعادة التشغيل</td></tr><tr><td>hot_reload_service.py</td><td>إعادة التحميل الساخن / رفض اليدوي</td></tr><tr><td>manifest_loader.py</td><td>قراءة المانيفست</td></tr><tr><td>dependency_resolver.py</td><td>ترتيب الاعتماد</td></tr><tr><td>snapshot_engine.py</td><td>لقطات الحالة</td></tr><tr><td>journal.py</td><td>اليوميات</td></tr><tr><td>logger.py</td><td>السجلّ</td></tr><tr><td>metrics.py</td><td>المقاييس</td></tr><tr><td>config.py</td><td>إعداد النواة</td></tr><tr><td>errors.py</td><td>الأخطاء</td></tr><tr><td>version_manager.py</td><td>الإصدار</td></tr><tr><td>api/app.py</td><td>HTTP/WebSocket النواة</td></tr><tr><td>api/__init__.py</td><td>حزمة الـAPI</td></tr><tr><td>__init__.py</td><td>حزمة النواة</td></tr><tr><td>__version__.py</td><td>الثابت 1.31.0</td></tr><tr><td>CORE.lock</td><td>ختم التجميد — 23 ملفًا</td></tr></tbody></table><p>الختم: core_version=1.31.0 · sealed_at=2026-08-31T20:40:48+00:00 · file_count=23</p></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 05 — النواة المختومة — 23 ملفًا</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">لا تُعدَّل هذه الملفات يدويًا دون كسر CORE.lock.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p06">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">عقد الذرّة ودورة الحياة</div>
+    <div class="snum">ورقة 06</div>
+  </header>
+  <div class="sheet-body">
+        <h2>AtomBase — ما تلتزم به كل ذرّة</h2>
+        <ul>
+          <li><code>initialize(context)</code> — تجهيز، بلا عمل.</li>
+          <li><code>start()</code> / <code>stop()</code> — العمل والإيقاف القابل للعكس (إعادة الصحة).</li>
+          <li><code>shutdown()</code> — إنهاء غير قابل للعكس عند إغلاق العملية فقط.</li>
+          <li><code>health_check()</code> — healthy / degraded / unhealthy / unknown.</li>
+          <li><code>snapshot</code> / <code>restore</code> — اختياري؛ None = تجاوز.</li>
+        </ul>
+        <h2>السياق AtomContext</h2>
+        <p>atom_id · config · logger · publish · subscribe · subscribe_all اختياري.
+        الذرّة لا تستورد وحدات النواة.</p>
+        <h2>حالات AtomState</h2>
+        <p>discovered → registered → initializing → initialized → starting → running
+        → stopping → stopped · failed · unloaded</p>
+        <h2>startup_mode</h2>
+        <p><b>auto</b> تُقلعها النواة. <b>manual</b> تُكتشف وتُرفض في hot-reload
+        (مثال فوركس: 107، 256–258، 625، 626، 630). هذا رفض تصميم لا عطل.</p>
+        </div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 06 — عقد الذرّة ودورة الحياة</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p07">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">الناقل — قانون الأحداث</div>
+    <div class="snum">ورقة 07</div>
+  </header>
+  <div class="sheet-body">
+        <p>كل تواصل سلوكي عبر أحداث. المقاس من المانيفستات:</p>
+        <table class="grid"><thead><tr><th></th><th>العدد</th></tr></thead><tbody><tr><td>أحداث لها ناشر</td><td>398</td></tr><tr><td>أحداث لها مستمع</td><td>322</td></tr><tr><td>أحداث بلا مستمع في المانيفست</td><td>83</td></tr><tr><td>اشتراكات بلا ناشر في المانيفست</td><td>7</td></tr></tbody></table>
+        <p>النبض الزمني <code>SYS_SECOND</code> ناشره 806 (فوركس). الاشتراك عليه شائع للدورات والجسور.</p>
+        <p>أوراق لاحقة: كتالوج كامل ناشر/مستمع لكل اسم حدث.</p>
+        </div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 07 — الناقل — قانون الأحداث</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p08">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">الزمن</div>
+    <div class="snum">ورقة 08</div>
+  </header>
+  <div class="sheet-body">
+        <p>الذرة <b>806 Time Tick</b> تنشر: SYS_SECOND · SYS_5MIN · SYS_15MIN · SYS_HOUR · SYS_DAY.
+        لا تشترك على شيء. الناقل يختم الوقت من الساعة الرسمية لا من إزاحة الحدث.</p>
+        <p>608 تُزامن NTP كعيّنات، وليست مالك زمن الإطلاق.</p>
+        <p>المختبر/الباك تست يحقنان زمنًا تاريخيًا في مسار معزول — لا يحرّكان ساعة التداول الحي.</p>
+        </div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 08 — الزمن</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p09">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">مسار الحي فوركس — من التيك إلى الجسر</div>
+    <div class="snum">ورقة 09</div>
+  </header>
+  <div class="sheet-body"><svg class="draw" viewBox="0 0 1100 200" xmlns="http://www.w3.org/2000/svg"><rect x="40" y="70" width="110" height="48" fill="#fffdf8" stroke="#1a1a1a"/><text x="95" y="100" text-anchor="middle" font-size="12">622 FIX</text><rect x="160" y="70" width="110" height="48" fill="#fffdf8" stroke="#1a1a1a"/><text x="215" y="100" text-anchor="middle" font-size="12">613 مجمّع</text><line x1="150" y1="94" x2="160" y2="94" stroke="#1a1a1a" marker-end="url(#a)"/><rect x="280" y="70" width="110" height="48" fill="#fffdf8" stroke="#1a1a1a"/><text x="335" y="100" text-anchor="middle" font-size="12">112 بوابة</text><line x1="270" y1="94" x2="280" y2="94" stroke="#1a1a1a" marker-end="url(#a)"/><rect x="400" y="70" width="110" height="48" fill="#fffdf8" stroke="#1a1a1a"/><text x="455" y="100" text-anchor="middle" font-size="12">103 شموع</text><line x1="390" y1="94" x2="400" y2="94" stroke="#1a1a1a" marker-end="url(#a)"/><rect x="520" y="70" width="110" height="48" fill="#fffdf8" stroke="#1a1a1a"/><text x="575" y="100" text-anchor="middle" font-size="12">تحليل</text><line x1="510" y1="94" x2="520" y2="94" stroke="#1a1a1a" marker-end="url(#a)"/><rect x="640" y="70" width="110" height="48" fill="#fffdf8" stroke="#1a1a1a"/><text x="695" y="100" text-anchor="middle" font-size="12">400 استراتيجية</text><line x1="630" y1="94" x2="640" y2="94" stroke="#1a1a1a" marker-end="url(#a)"/><rect x="780" y="70" width="110" height="48" fill="#fffdf8" stroke="#1a1a1a"/><text x="835" y="100" text-anchor="middle" font-size="12">450 قرار</text><line x1="750" y1="94" x2="780" y2="94" stroke="#1a1a1a" marker-end="url(#a)"/><rect x="900" y="70" width="110" height="48" fill="#fffdf8" stroke="#1a1a1a"/><text x="955" y="100" text-anchor="middle" font-size="12">576 محرك</text><line x1="890" y1="94" x2="900" y2="94" stroke="#1a1a1a" marker-end="url(#a)"/><rect x="1020" y="70" width="110" height="48" fill="#fffdf8" stroke="#1a1a1a"/><text x="1075" y="100" text-anchor="middle" font-size="12">552/601/EA</text><line x1="1010" y1="94" x2="1020" y2="94" stroke="#1a1a1a" marker-end="url(#a)"/><defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#1a1a1a"/></marker></defs><text x="550" y="160" text-anchor="middle" font-size="13">تغذية حيّة بالتيك لا بالشمعة. الشمعة ناتج محدود من التيكات (103). القرار لا يفتح صفقة؛ 601 يكتب والجسر ينفّذ.</text></svg><table class="grid"><thead><tr><th>المرحلة</th><th>الذرّة</th><th>العقد</th></tr></thead><tbody><tr><td>SYS_SECOND</td><td>نبض الزمن</td><td>806</td></tr><tr><td>feed.ctrader.tick</td><td>FIX سي تريدر — مصدر التحليل</td><td>622</td></tr><tr><td>market.tick  (CTRADER) · MT5 → market.broker_tick عرض</td><td>مجمّع: سي تريدر فقط → تحليل</td><td>613</td></tr><tr><td>market.tick.validated</td><td>بوابة التيك الصالح</td><td>112</td></tr><tr><td>market_data.price_received / candle_closed</td><td>سعر + بنّاء شموع من التيك الصالح</td><td>102 / 103</td></tr><tr><td>analysis.*.state</td><td>محللون سريعون</td><td>151–165</td></tr><tr><td>section.live</td><td>بنية · سيولة · إحصاء · احتمال</td><td>200 / 250 / 300 / 351</td></tr><tr><td>strategy.*.state</td><td>الاستراتيجية</td><td>400–413</td></tr><tr><td>decision.resolved</td><td>غرفة القرار</td><td>450–467</td></tr><tr><td>execution.order.requested</td><td>المحرك الدائم</td><td>576</td></tr><tr><td>trading.final_decision</td><td>بناء الأمر + المدقق</td><td>551 / 552</td></tr><tr><td>جدول commands</td><td>كاتب الجسر</td><td>601</td></tr><tr><td>CTrade · feed.mt5.tick للعرض/الانحراف فقط</td><td>إكسبرت + قراءة الجسر — تنفيذ لا تحليل</td><td>EA / 618</td></tr></tbody></table>
+        <p>٩٠١ لا تشتري. هي بوابة أوامر الإنسان: تفعيل أصل، بوابة تنفيذ، إيقاف، معايرة معتمدة.
+        ٥٧٦ لا تكتب في الوسيط. ٥٥٢ تملك <code>trading.final_decision</code>.
+        ٦٠١ تكتب صف PENDING. الإكسبرت ينفّذ.</p>
+        </div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 09 — مسار الحي فوركس — من التيك إلى الجسر</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">هذا مسار الفوركس كما في المانيفست. الكريبتو ناقل وسوق منفصلان.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p10">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">التنفيذ — 576 · 551 · 552 · 901</div>
+    <div class="snum">ورقة 10</div>
+  </header>
+  <div class="sheet-body">
+        <ul>
+          <li><b>901</b> تنشر perpetual.asset.activate / deactivate و execution.gate.command و risk.halt.requested.</li>
+          <li><b>576</b> تسمع التفعيل والقرار والhalt وتنشر execution.order.requested.</li>
+          <li><b>551</b> تبني الأمر بعد risk.validation.completed.</li>
+          <li><b>552</b> مدقق الأمر — enabled في المانيفست — تنشر trading.final_decision أو رفضًا.</li>
+        </ul>
+        <p>قرار wait / NOT_READY من التحليل والعقد الموحّد (عمق معلوم، اتجاه معلوم، هوية حساب+وسيط+رمز)
+        يغلق بوابة READY. هذا حكم التحليل لا عطل نواة.</p>
+        </div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 10 — التنفيذ — 576 · 551 · 552 · 901</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p11">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">الإكسبرت والجسر المشترك</div>
+    <div class="snum">ورقة 11</div>
+  </header>
+  <div class="sheet-body">
+        <p><code>mt5/QUANT_NQ.mq5</code> — منفّذ، بلا استراتيجية. القاعدة اسمًا
+        <code>nq_brain.db</code> في Common\Files (WAL). بايثون ٦٠١ يكتب commands،
+        الإكسبرت يقرأ PENDING وينفّذ CTrade ويكتب النتيجة.</p>
+        <h2>جداول تشغيلية (v2 حيث وُجدت)</h2>
+        <table class="grid"><thead><tr><th>جدول</th><th>من يكتب</th><th>من يقرأ</th></tr></thead><tbody><tr><td>account_v2</td><td>الإكسبرت</td><td>٦٠١ هوية CURRENT_ACCOUNT · ٦١٩</td></tr><tr><td>ticks_v2</td><td>الإكسبرت CopyTicks</td><td>٦١٨ → تغذية MT5</td></tr><tr><td>commands</td><td>٦٠١</td><td>الإكسبرت PumpCommands</td></tr><tr><td>trade_events_v2</td><td>الإكسبرت</td><td>٦١١</td></tr><tr><td>positions_v2</td><td>الإكسبرت</td><td>٦٠٩</td></tr><tr><td>symbol_specs_v2</td><td>الإكسبرت</td><td>٦١٨</td></tr><tr><td>display</td><td>٦٠١ نبض</td><td>لوحة الإكسبرت — بايثون حيّ؟</td></tr><tr><td>calendar / candles_history / depth</td><td>الإكسبرت</td><td>٦١٦ / ٦٠٢ / مخزون</td></tr></tbody></table><p>magic الافتراضي 20260801 عند الطرفين. أمر بلا ملكية حساب/بناء يُرفض.</p></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 11 — الإكسبرت والجسر المشترك</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p12">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">التغذية — FIX وMT5 والمجمّع</div>
+    <div class="snum">ورقة 12</div>
+  </header>
+  <div class="sheet-body">
+        <ul>
+          <li><b>622</b> FIX cTrader — ينشر feed.ctrader.tick (تحليل/مرجع).</li>
+          <li><b>618</b> تقرأ الجسر وتنشر feed.mt5.tick.</li>
+          <li><b>613</b> تسمع الاثنين وتنشر market.tick.</li>
+          <li><b>112</b> بوابة التيك الصالح → market.tick.validated. معظم التحليل يسمع هذا الحدث.</li>
+          <li><b>103</b> تبني شموعًا من التيك الصالح. النظام تيكات؛ الشموع عدد محدود منها.</li>
+        </ul>
+        </div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 12 — التغذية — FIX وMT5 والمجمّع</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p13">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">الحوكمة — اللوحة والـAPI</div>
+    <div class="snum">ورقة 13</div>
+  </header>
+  <div class="sheet-body"><p>تبويبات الواجهة (src/sections):</p><p>Alerts · Analysis · AnalystsPanel · AssetControl · AtomModal · Atoms · Backtest · ChangeGovernor · Charts · Connection · Control · CryptoDashboard · Decision · Diag · Execution · Home · Judgement · Lab · Liquidity · Log · Manager · Market · Mexc · Monitor · NQ · Network · NewDashboard · News · Portfolios · Probability · Risk · Scripts · Security · Senses · Settings · Statistics · Stats · Strategies · Structure · TiltEngine · Universe</p><table class="grid"><thead><tr><th>مسار</th><th>دور</th></tr></thead><tbody><tr><td>/gov/command</td><td>أمر إنسان → ٩٠١</td></tr><tr><td>/gov/lab</td><td>مختبر معزول</td></tr><tr><td>/gov/backtest</td><td>باك تست رسمي + دفتر ورقي</td></tr><tr><td>/gov/vault</td><td>أسرار من اللوحة</td></tr><tr><td>/gov/analysis/settings</td><td>معايرة تحليل معتمدة</td></tr><tr><td>/api/rescan</td><td>إعادة اكتشاف النواة</td></tr><tr><td>/gov/health · /gov/atoms</td><td>صحة وتشغيل ذرّة</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 13 — الحوكمة — اللوحة والـAPI</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p14">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">عزل المختبر عن الحي</div>
+    <div class="snum">ورقة 14</div>
+  </header>
+  <div class="sheet-body">
+<svg class="draw" viewBox="0 0 1100 260" xmlns="http://www.w3.org/2000/svg">
+  <rect x="30" y="30" width="500" height="200" fill="#fffdf8" stroke="#1a1a1a" stroke-width="2"/>
+  <text x="280" y="58" text-anchor="middle" font-size="16" font-weight="700">مسار التداول الحي</text>
+  <text x="280" y="90" text-anchor="middle" font-size="13">manifest.yaml كما هو</text>
+  <text x="280" y="114" text-anchor="middle" font-size="13">عتبات اللوحة → /api/rescan و٩٠١</text>
+  <text x="280" y="138" text-anchor="middle" font-size="13">٦٢٢ · ٥٧٦ · ٩٠١ · ٦٠١ · إكسبرت</text>
+  <text x="280" y="178" text-anchor="middle" font-size="12">لا overlay للمختبر هنا</text>
+  <rect x="570" y="30" width="500" height="200" fill="#ebe4d6" stroke="#1a1a1a" stroke-width="2"/>
+  <text x="820" y="58" text-anchor="middle" font-size="16" font-weight="700">مختبر / باك تست</text>
+  <text x="820" y="90" text-anchor="middle" font-size="13">var/lab/overrides فقط</text>
+  <text x="820" y="114" text-anchor="middle" font-size="13">ذرّات حقيقية في الذاكرة</text>
+  <text x="820" y="138" text-anchor="middle" font-size="13">بلا ٩٠١ / ٥٧٦ / ٦٠١ / ٦٢٢</text>
+  <text x="820" y="178" text-anchor="middle" font-size="12">دفتر ورقي على decision.resolved</text>
+  <text x="550" y="250" text-anchor="middle" font-size="12">جدار عزل: تعديل عتبة بالمختبر لا يُكتب في المانيفست ولا يُرسل للتداول</text>
+</svg>
+<p>الملف الحاكم: <code>backtest/lab_sandbox.py</code> — overlays في var/lab/overrides/{id}.json. لا manifest ولا rescan.</p></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 14 — عزل المختبر عن الحي</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p15">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">الباك تست الرسمي</div>
+    <div class="snum">ورقة 15</div>
+  </header>
+  <div class="sheet-body">
+        <p><code>backtest/trade_replay.py</code> يشغّل ذرّات التداول الحقيقية على تيكات تاريخية.
+        BLOCKED = {576, 601, 901, 622, 618}. الدفتر يسمع decision.resolved فقط.
+        إن انتظرت الاستراتيجية، الدفتر لا يخترع صفقة.</p>
+        <p>من–إلى، نافذة أخبار من الجسر إن وُجدت، ملف PnL بعد الجولة.</p>
+        </div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 15 — الباك تست الرسمي</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p16">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">الأمن</div>
+    <div class="snum">ورقة 16</div>
+  </header>
+  <div class="sheet-body">
+        <p>طبقة الخزنة في <code>security/</code> و<code>governance/vault_ops.py</code>.
+        الأسرار تُنشأ من لوحة الحوكمة. المفتاح ليس لقفل اللوحة.
+        ٦٢٢ تطلب سرًا باسم <code>ctrader_fix_password</code> من المزوّد — بلا كلمة سر في المانيفست.</p>
+        <p>checkout بلا خزنة = SECURITY_STATE=NOT_CONFIGURED. هذا مصدر نظيف، لا عطل.</p>
+        </div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 16 — الأمن</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p17">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">الإطلاق والمنافذ</div>
+    <div class="snum">ورقة 17</div>
+  </header>
+  <div class="sheet-body"><table class="grid"><thead><tr><th>العقد</th><th>الملف / المنفذ</th></tr></thead><tbody><tr><td>فوركس رسمي</td><td>أزرار التشغيل/تشغيل الفوركس الموحد.bat → لوحة 8090 · نواة 8010</td></tr><tr><td>كريبتو رسمي</td><td>أزرار التشغيل/تشغيل الكريبتو الموحد.bat → 8091 · 8020</td></tr><tr><td>تهيئة</td><td>تهيئة المشروع الموحد.bat</td></tr><tr><td>غرفة القيادة</td><td>غرفة القيادة.bat — أداة جذر، ليست عقد السوق</td></tr><tr><td>إيقاف</td><td>إيقاف النظام.bat</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 17 — الإطلاق والمنافذ</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p18">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">التخزين</div>
+    <div class="snum">ورقة 18</div>
+  </header>
+  <div class="sheet-body">
+        <p>ذرّات 701+ تحفظ أسعارًا وقراراتًا في مخازن SQLite تحت runtime/var لكل سوق.
+        كريبتو: الجذر الوحيد crypto_runtime/var. فوركس: forex_runtime/var.
+        جسر MT5 خارج هذا الشجر: Common\Files\nq_brain.db.</p>
+        </div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 18 — التخزين</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p19">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">الأخبار</div>
+    <div class="snum">ورقة 19</div>
+  </header>
+  <div class="sheet-body">
+        <p>411 News Strategic Regime تسمع market.news.enriched و market_data.news_received.
+        بوت news_bot مصدر مستقل يكتب للجسر إن شُغّل. المختبر يقرأ نافذة اليوم من الجسر إن وُجدت،
+        ولا يخترع عنوانًا.</p>
+        </div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 19 — الأخبار</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p20">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">الصحة والاكتشاف</div>
+    <div class="snum">ورقة 20</div>
+  </header>
+  <div class="sheet-body">
+        <p>Discovery كل 5 ثوانٍ + POST /api/rescan. الصحة: interval من المانيفست.
+        مثال ٦٠١: كل 5ث، عتبة 3 فشل، إعادة تشغيل حتى 5. غير صحية بعد الإقلاع تعني غالبًا
+        أن account_v2 فارغ (الإكسبرت لم يكتب الحساب بعد) لأن الحساب CURRENT_ACCOUNT.</p>
+        </div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 20 — الصحة والاكتشاف</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p21">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">فهرس أقسام الفوركس</div>
+    <div class="snum">ورقة 21</div>
+  </header>
+  <div class="sheet-body"><table class="grid"><thead><tr><th>قسم</th><th>ذرّات</th><th>تلقائي</th><th>يدوي</th></tr></thead><tbody><tr><td>قسم 001-050</td><td>4</td><td>4</td><td>0</td></tr><tr><td>قسم 101-150</td><td>17</td><td>16</td><td>1</td></tr><tr><td>قسم 151-200</td><td>17</td><td>17</td><td>0</td></tr><tr><td>قسم 201-250</td><td>11</td><td>11</td><td>0</td></tr><tr><td>قسم 251-300</td><td>15</td><td>12</td><td>3</td></tr><tr><td>قسم 301-350</td><td>18</td><td>18</td><td>0</td></tr><tr><td>قسم 351-400</td><td>19</td><td>19</td><td>0</td></tr><tr><td>قسم 401-450</td><td>13</td><td>13</td><td>0</td></tr><tr><td>قسم 451-500</td><td>17</td><td>17</td><td>0</td></tr><tr><td>قسم 501-550</td><td>16</td><td>16</td><td>0</td></tr><tr><td>قسم 551-600</td><td>21</td><td>21</td><td>0</td></tr><tr><td>قسم 601-650</td><td>16</td><td>13</td><td>3</td></tr><tr><td>قسم 651-700</td><td>16</td><td>16</td><td>0</td></tr><tr><td>قسم 701-750</td><td>17</td><td>17</td><td>0</td></tr><tr><td>قسم 751-800</td><td>2</td><td>2</td><td>0</td></tr><tr><td>قسم 801-850</td><td>11</td><td>11</td><td>0</td></tr><tr><td>قسم 851-900</td><td>2</td><td>2</td><td>0</td></tr><tr><td>قسم 901-950</td><td>1</td><td>1</td><td>0</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 21 — فهرس أقسام الفوركس</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p22">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 001-050</div>
+    <div class="snum">ورقة 22</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>1</td><td>NQ</td><td>1.2.1</td><td>تلقائي</td><td>—</td><td>NQ · core.integrity.alert</td><td>SYS_5MIN</td></tr><tr><td>3</td><td>Clock</td><td>3.0.3</td><td>تلقائي</td><td>حرجة</td><td>time.utc.synced · time.utc.drift · time.clock.quality.state · kernel.clock.sys_tick · kernel.clock.heartbeat · kernel.clock.minute_elapsed</td><td>time.ntp.samples.state</td></tr><tr><td>6</td><td>Storage Monitor</td><td>2.1.0</td><td>تلقائي</td><td>—</td><td>tools.storage.low · tools.storage.recovered</td><td>SYS_5MIN</td></tr><tr><td>7</td><td>File Integrity Monitor</td><td>4.2.1</td><td>تلقائي</td><td>—</td><td>tools.integrity.violation</td><td>SYS_HOUR</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 22 — جدول ذرّات — قسم 001-050</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">4 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p23">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 101-150</div>
+    <div class="snum">ورقة 23</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>101</td><td>Market Data Manager</td><td>2.1.0</td><td>تلقائي</td><td>—</td><td>market_data.state</td><td>market.tick.validated · market_data.price_received · market_data.candle_closed · market_data.volume_received · market_data.spread_updated · market_data.depth_updated +4</td></tr><tr><td>102</td><td>Price Receiver</td><td>2.1.1</td><td>تلقائي</td><td>—</td><td>market_data.price_received</td><td>market.tick.validated</td></tr><tr><td>103</td><td>Candle Builder</td><td>5.3.0</td><td>تلقائي</td><td>—</td><td>market_data.candle_closed</td><td>market.tick.validated</td></tr><tr><td>104</td><td>Volume Receiver</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>market_data.volume_received</td><td>market.volume</td></tr><tr><td>105</td><td>Spread Receiver</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>market_data.spread_updated</td><td>market.tick.validated</td></tr><tr><td>106</td><td>Market Depth Receiver</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>market_data.depth_updated</td><td>market.depth</td></tr><tr><td>107</td><td>Trade Tape Receiver</td><td>2.0.1</td><td>يدوي</td><td>—</td><td>market_data.trade_tape_updated</td><td>market.trade</td></tr><tr><td>108</td><td>News Receiver</td><td>2.0.1</td><td>تلقائي</td><td>—</td><td>market_data.news_received</td><td>market.news</td></tr><tr><td>109</td><td>Economic Calendar Receiver</td><td>3.1.0</td><td>تلقائي</td><td>—</td><td>market_data.calendar_event · market_data.calendar_window · market_data.calendar.state</td><td>market.calendar · SYS_SECOND</td></tr><tr><td>110</td><td>Reference Indices Receiver</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>market_data.reference_index_updated</td><td>market.reference</td></tr><tr><td>111</td><td>Time Bridge</td><td>3.0.1</td><td>تلقائي</td><td>—</td><td>market.time.drift · market.time.synced · time.clock.divergence</td><td>time.utc.drift · time.utc.synced · kernel.clock.heartbeat</td></tr><tr><td>112</td><td>Validated Market Tick Gate</td><td>4.0.0</td><td>تلقائي</td><td>—</td><td>market.tick.validated · market_data.validation_failed · market_data.validation.state</td><td>market.tick · platform.account.state</td></tr><tr><td>113</td><td>Side-Path Data Cleaner</td><td>4.2.0</td><td>تلقائي</td><td>—</td><td>market_data.cleaned</td><td>market.tick.validated · market_data.price_received · market_data.spread_updated · market_data.candle_closed · market_data.volume_received · market_data.depth_updated +4</td></tr><tr><td>114</td><td>Data Normalizer</td><td>4.0.0</td><td>تلقائي</td><td>—</td><td>market_data.normalized</td><td>market_data.cleaned</td></tr><tr><td>115</td><td>Raw Data Quality Monitor</td><td>4.1.0</td><td>تلقائي</td><td>—</td><td>market_data.quality_alert · market_data.quality.state</td><td>market.tick · platform.account.state</td></tr><tr><td>116</td><td>Feed Interruption Detector</td><td>3.1.0</td><td>تلقائي</td><td>—</td><td>market_data.feed_interrupted · market_data.feed_recovered · market_data.feed.state</td><td>feed.mt5.tick · feed.ctrader.tick · SYS_SECOND</td></tr><tr><td>150</td><td>Analysis Manager</td><td>2.9.0</td><td>تلقائي</td><td>—</td><td>analysis.cycle.collected · analysis.analysts.state · decision.settings.state</td><td>market_data.candle_closed · SYS_SECOND · decision.settings.command · analysis.trend.state · analysis.momentum.state · analysis.volatility.state +12</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 23 — جدول ذرّات — قسم 101-150</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">17 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p24">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 151-200</div>
+    <div class="snum">ورقة 24</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>151</td><td>Trend Analyzer</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>analysis.trend.state · analysis.setting.changed</td><td>market_data.candle_closed · market.tick.validated · analysis.settings.command · SYS_SECOND</td></tr><tr><td>152</td><td>Momentum Analyzer</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>analysis.momentum.state · analysis.setting.changed</td><td>market_data.candle_closed · market.tick.validated · analysis.settings.command · SYS_SECOND</td></tr><tr><td>153</td><td>Volatility Analyzer</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>analysis.volatility.state · analysis.setting.changed</td><td>market_data.candle_closed · market.tick.validated · analysis.settings.command · SYS_SECOND</td></tr><tr><td>154</td><td>Volume Analyzer</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>analysis.volume.state · analysis.setting.changed</td><td>market_data.candle_closed · market.tick.validated · analysis.settings.command · SYS_SECOND</td></tr><tr><td>155</td><td>Spread Analyzer</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>analysis.spread.state · analysis.setting.changed</td><td>market_data.candle_closed · market.tick.validated · analysis.settings.command · SYS_SECOND</td></tr><tr><td>156</td><td>Candlestick Analyzer</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>analysis.candle.state · analysis.setting.changed</td><td>market_data.candle_closed · market.tick.validated · analysis.settings.command · SYS_SECOND</td></tr><tr><td>157</td><td>Gap Analyzer</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>analysis.gap.state · analysis.setting.changed</td><td>market_data.candle_closed · market.tick.validated · analysis.settings.command · SYS_SECOND</td></tr><tr><td>158</td><td>Session Analyzer</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>analysis.session.state · analysis.setting.changed</td><td>market_data.candle_closed · market.tick.validated · analysis.settings.command · SYS_SECOND</td></tr><tr><td>159</td><td>Time Effect Analyzer</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>analysis.time.state · analysis.setting.changed</td><td>market_data.candle_closed · market.tick.validated · analysis.settings.command · SYS_SECOND</td></tr><tr><td>160</td><td>Correlation Analyzer</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>analysis.correlation.state · analysis.setting.changed</td><td>market_data.candle_closed · market.tick.validated · analysis.settings.command · SYS_SECOND</td></tr><tr><td>161</td><td>Relative Strength Analyzer</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>analysis.relative_strength.state · analysis.setting.changed</td><td>market_data.candle_closed · market.tick.validated · analysis.settings.command · SYS_SECOND</td></tr><tr><td>162</td><td>Velocity Analyzer</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>analysis.velocity.state · analysis.setting.changed</td><td>market_data.candle_closed · market.tick.validated · analysis.settings.command · SYS_SECOND</td></tr><tr><td>163</td><td>Acceleration Analyzer</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>analysis.acceleration.state · analysis.setting.changed</td><td>market_data.candle_closed · market.tick.validated · analysis.settings.command · SYS_SECOND</td></tr><tr><td>164</td><td>Volume Quality Analyzer</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>analysis.volume_quality.state · analysis.setting.changed</td><td>market_data.candle_closed · market.tick.validated · analysis.settings.command · SYS_SECOND</td></tr><tr><td>165</td><td>Noise Analyzer</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>analysis.noise.state · analysis.setting.changed</td><td>market_data.candle_closed · market.tick.validated · analysis.settings.command · SYS_SECOND</td></tr><tr><td>166</td><td>Analysis Fusion</td><td>2.8.0</td><td>تلقائي</td><td>—</td><td>analysis.section.live · analysis.raw.completed · analysis.fast.state · analysis.slow.state · decision.settings.state</td><td>analysis.cycle.collected · decision.settings.command</td></tr><tr><td>200</td><td>Structure Manager</td><td>1.4.0</td><td>تلقائي</td><td>—</td><td>structure.cycle.collected · structure.section.live · structure.units.state</td><td>SYS_SECOND · structure.swing.state · structure.external.state · structure.internal.state · structure.bos.state · structure.choch.state +3</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 24 — جدول ذرّات — قسم 151-200</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">17 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p25">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 201-250</div>
+    <div class="snum">ورقة 25</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>201</td><td>Swing Detection</td><td>1.3.0</td><td>تلقائي</td><td>—</td><td>structure.swing.state</td><td>market_data.candle_closed</td></tr><tr><td>202</td><td>External Structure</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>structure.external.state</td><td>structure.swing.state</td></tr><tr><td>203</td><td>Internal Structure</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>structure.internal.state</td><td>structure.swing.state</td></tr><tr><td>204</td><td>BOS Detector</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>structure.bos.state</td><td>structure.external.state</td></tr><tr><td>205</td><td>CHoCH Detector</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>structure.choch.state</td><td>structure.external.state</td></tr><tr><td>206</td><td>MSS Detector</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>structure.mss.state</td><td>structure.bos.state · structure.choch.state</td></tr><tr><td>207</td><td>Trend State</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>structure.trend.state</td><td>structure.mss.state · analysis.trend.state</td></tr><tr><td>208</td><td>Market Phase</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>structure.phase.state</td><td>structure.trend.state</td></tr><tr><td>209</td><td>Structure Validator</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>structure.cycle.validated · structure.validation_failed</td><td>structure.cycle.collected</td></tr><tr><td>210</td><td>Structure Publisher</td><td>1.3.0</td><td>تلقائي</td><td>—</td><td>market.structure.updated</td><td>structure.cycle.validated</td></tr><tr><td>250</td><td>Liquidity Manager</td><td>1.6.0</td><td>تلقائي</td><td>—</td><td>liquidity.cycle.collected · liquidity.section.live · liquidity.units.state</td><td>SYS_SECOND · liquidity.pool.state · liquidity.buyside.state · liquidity.sellside.state · liquidity.sweep.state · liquidity.fvg.state +1</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 25 — جدول ذرّات — قسم 201-250</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">11 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p26">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 251-300</div>
+    <div class="snum">ورقة 26</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>251</td><td>Liquidity Pool Detector</td><td>1.2.1</td><td>تلقائي</td><td>—</td><td>liquidity.pool.state</td><td>structure.swing.state</td></tr><tr><td>252</td><td>Buy Side Liquidity</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>liquidity.buyside.state</td><td>liquidity.pool.state</td></tr><tr><td>253</td><td>Sell Side Liquidity</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>liquidity.sellside.state</td><td>liquidity.pool.state</td></tr><tr><td>254</td><td>Liquidity Sweep</td><td>1.2.1</td><td>تلقائي</td><td>—</td><td>liquidity.sweep.state</td><td>liquidity.buyside.state · liquidity.sellside.state · market_data.candle_closed</td></tr><tr><td>255</td><td>Imbalance FVG</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>liquidity.fvg.state</td><td>market_data.candle_closed</td></tr><tr><td>256</td><td>Delta Analyzer</td><td>1.2.0</td><td>يدوي</td><td>—</td><td>liquidity.delta.state</td><td>market_data.trade_tape_updated</td></tr><tr><td>257</td><td>CVD Analyzer</td><td>1.2.0</td><td>يدوي</td><td>—</td><td>liquidity.cvd.state</td><td>liquidity.delta.state</td></tr><tr><td>258</td><td>Absorption Detector</td><td>1.2.0</td><td>يدوي</td><td>—</td><td>liquidity.absorption.state</td><td>liquidity.delta.state · market_data.candle_closed</td></tr><tr><td>259</td><td>Liquidity Validator</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>liquidity.cycle.validated · liquidity.validation_failed</td><td>liquidity.cycle.collected</td></tr><tr><td>260</td><td>Liquidity Publisher</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>market.liquidity.updated</td><td>liquidity.cycle.validated</td></tr><tr><td>261</td><td>Depth Analyzer</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>liquidity.depth.state</td><td>market_data.depth_updated</td></tr><tr><td>262</td><td>Microprice Analyzer</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>liquidity.microprice.state</td><td>market_data.depth_updated</td></tr><tr><td>263</td><td>Order Flow Imbalance (OFI)</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>liquidity.ofi.state</td><td>market_data.depth_updated</td></tr><tr><td>264</td><td>Book Price Impact (Kyle Lambda)</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>liquidity.price_impact.state</td><td>market_data.depth_updated</td></tr><tr><td>300</td><td>Statistics Manager</td><td>1.4.0</td><td>تلقائي</td><td>—</td><td>stats.cycle.collected · stats.section.live · stats.units.state</td><td>SYS_SECOND · stats.mean.state · stats.median.state · stats.mode.state · stats.std.state · stats.variance.state +12</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 26 — جدول ذرّات — قسم 251-300</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">15 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p27">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 301-350</div>
+    <div class="snum">ورقة 27</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>301</td><td>Mean</td><td>1.3.0</td><td>تلقائي</td><td>—</td><td>stats.mean.state</td><td>market.tick.validated</td></tr><tr><td>302</td><td>Median</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>stats.median.state</td><td>market.tick.validated</td></tr><tr><td>303</td><td>Mode</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>stats.mode.state</td><td>market.tick.validated</td></tr><tr><td>304</td><td>Std Dev</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>stats.std.state</td><td>market.tick.validated</td></tr><tr><td>305</td><td>Variance</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>stats.variance.state</td><td>market.tick.validated</td></tr><tr><td>306</td><td>Coefficient of Variation</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>stats.cv.state</td><td>market.tick.validated</td></tr><tr><td>307</td><td>Statistical Correlation</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>stats.correlation.state</td><td>market.tick.validated</td></tr><tr><td>308</td><td>Linear Regression</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>stats.regression.state</td><td>market.tick.validated</td></tr><tr><td>309</td><td>R Squared</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>stats.r_squared.state</td><td>market.tick.validated</td></tr><tr><td>310</td><td>Z Score</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>stats.zscore.state</td><td>market.tick.validated</td></tr><tr><td>311</td><td>Skewness</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>stats.skewness.state</td><td>market.tick.validated</td></tr><tr><td>312</td><td>Kurtosis</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>stats.kurtosis.state</td><td>market.tick.validated</td></tr><tr><td>313</td><td>Outlier Detector</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>stats.outlier.state</td><td>market.tick.validated</td></tr><tr><td>314</td><td>Distribution Histogram</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>stats.distribution.state</td><td>market.tick.validated</td></tr><tr><td>315</td><td>Range Bundle</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>stats.range.state</td><td>market.tick.validated</td></tr><tr><td>316</td><td>Data Quality Monitor</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>stats.quality.state</td><td>market.tick.validated</td></tr><tr><td>318</td><td>Period Comparison</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>stats.period_compare.state</td><td>market.tick.validated</td></tr><tr><td>350</td><td>Probability Manager</td><td>3.3.0</td><td>تلقائي</td><td>—</td><td>probability.cycle.collected · probability.section.live · probability.units.state</td><td>SYS_SECOND · probability.trend.state · probability.reversal.state · probability.breakout.state · probability.pullback.state · probability.momentum.state +4</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 27 — جدول ذرّات — قسم 301-350</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">18 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p28">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 351-400</div>
+    <div class="snum">ورقة 28</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>351</td><td>Tick Trend Probability Model</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>probability.trend.state</td><td>market.tick.validated</td></tr><tr><td>352</td><td>Tick Reversal Probability Model</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>probability.reversal.state</td><td>market.tick.validated</td></tr><tr><td>353</td><td>Tick Breakout Probability Model</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>probability.breakout.state</td><td>market.tick.validated</td></tr><tr><td>354</td><td>Tick Pullback Probability Model</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>probability.pullback.state</td><td>market.tick.validated</td></tr><tr><td>355</td><td>Tick Momentum Probability Model</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>probability.momentum.state</td><td>market.tick.validated</td></tr><tr><td>356</td><td>Tick Range Probability Model</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>probability.range.state</td><td>market.tick.validated</td></tr><tr><td>357</td><td>Live Tick Model Merger</td><td>2.1.0</td><td>تلقائي</td><td>—</td><td>probability.merged.state</td><td>probability.trend.state · probability.reversal.state · probability.breakout.state · probability.pullback.state · probability.momentum.state · probability.range.state +1</td></tr><tr><td>358</td><td>Tick Hurst Probability Model</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>probability.hurst.state</td><td>market.tick.validated</td></tr><tr><td>359</td><td>Live Tick Confidence Aggregator</td><td>2.1.0</td><td>تلقائي</td><td>—</td><td>probability.confidence.state</td><td>probability.trend.state · probability.reversal.state · probability.breakout.state · probability.pullback.state · probability.momentum.state · probability.range.state +1</td></tr><tr><td>360</td><td>Learning Outcome Collector</td><td>1.2.1</td><td>تلقائي</td><td>—</td><td>learning.outcome.recorded</td><td>decision.scored.state · decision.resolved.state · trading.final_decision · market.outcome.realized · market.tick.validated</td></tr><tr><td>361</td><td>Learning Dataset Builder</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>learning.sample.ready</td><td>learning.outcome.recorded</td></tr><tr><td>362</td><td>Learning Feature Builder</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>learning.feature.ready</td><td>learning.sample.ready</td></tr><tr><td>363</td><td>Learning Trainer</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>learning.model.candidate</td><td>learning.feature.ready</td></tr><tr><td>364</td><td>Learning Out Of Sample Validator</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>learning.model.validated</td><td>learning.feature.ready · learning.model.candidate</td></tr><tr><td>365</td><td>Learning Model Comparison</td><td>1.0.4</td><td>تلقائي</td><td>—</td><td>learning.model.selection</td><td>learning.model.validated · learning.model.active.state</td></tr><tr><td>366</td><td>Learning Model Selection</td><td>1.0.5</td><td>تلقائي</td><td>—</td><td>learning.model.selected</td><td>learning.model.selection</td></tr><tr><td>367</td><td>Learning Model Registry</td><td>1.3.1</td><td>تلقائي</td><td>—</td><td>learning.model.active.state · learning.model.evidence · model.persist_requested · storage.persistence.load_requested</td><td>learning.model.selected · model.persisted · storage.persistence.load_response · learning.model.rollback_requested · market.tick.validated</td></tr><tr><td>368</td><td>Learning Drift And Rollback</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>learning.model.drift.state · learning.model.rollback_requested</td><td>learning.outcome.recorded · learning.model.active.state</td></tr><tr><td>400</td><td>Strategy Section Manager</td><td>3.5.0</td><td>تلقائي</td><td>—</td><td>strategy.cycle.collected · strategy.section.live · strategy.units.state</td><td>SYS_SECOND · strategy.trend.state · strategy.reversal.state · strategy.breakout.state · strategy.pullback.state · strategy.momentum.state +7</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 28 — جدول ذرّات — قسم 351-400</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">19 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p29">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 401-450</div>
+    <div class="snum">ورقة 29</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>401</td><td>Strategic Entry Structure Quality</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>strategy.entry_quality.state</td><td>market.tick.validated</td></tr><tr><td>402</td><td>Strategic Invalidation Quality</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>strategy.invalidation_quality.state</td><td>market.tick.validated</td></tr><tr><td>404</td><td>Trend Continuation Strategy Opinion</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>strategy.trend.state</td><td>market.tick.validated</td></tr><tr><td>405</td><td>Reversal Potential Strategy Opinion</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>strategy.reversal.state</td><td>market.tick.validated</td></tr><tr><td>406</td><td>Breakout Acceptance Strategy Opinion</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>strategy.breakout.state</td><td>market.tick.validated</td></tr><tr><td>407</td><td>Pullback Quality Strategy Opinion</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>strategy.pullback.state</td><td>market.tick.validated</td></tr><tr><td>408</td><td>Momentum Expansion Strategy Opinion</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>strategy.momentum.state</td><td>market.tick.validated</td></tr><tr><td>409</td><td>Range Rotation Strategy Opinion</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>strategy.range.state</td><td>market.tick.validated</td></tr><tr><td>410</td><td>Liquidity Raid Strategy Opinion</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>strategy.liquidity.state</td><td>market.tick.validated</td></tr><tr><td>411</td><td>News Strategic Regime</td><td>2.1.0</td><td>تلقائي</td><td>—</td><td>strategy.news.state · news.trading_window.state</td><td>market.tick.validated · market_data.news_received · market.news.enriched</td></tr><tr><td>412</td><td>Session Strategic Regime</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>strategy.session.state</td><td>market.tick.validated</td></tr><tr><td>413</td><td>Weighted Strategy Aggregator</td><td>2.2.0</td><td>تلقائي</td><td>—</td><td>strategy.aggregate.state</td><td>strategy.trend.state · strategy.reversal.state · strategy.breakout.state · strategy.pullback.state · strategy.momentum.state · strategy.range.state +5</td></tr><tr><td>450</td><td>Decision Manager</td><td>1.2.1</td><td>تلقائي</td><td>—</td><td>decision.cycle.collected · decision.cycle.record</td><td>market.tick.validated · SYS_SECOND · decision.aggregated.state · decision.scored.state · decision.filtered.state · decision.eligibility.buy.state +4</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 29 — جدول ذرّات — قسم 401-450</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">13 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p30">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 451-500</div>
+    <div class="snum">ورقة 30</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>451</td><td>Decision Aggregator</td><td>3.0.1</td><td>تلقائي</td><td>—</td><td>decision.aggregated.state · decision.room.state</td><td>market.tick.validated · strategy.cycle.collected · probability.cycle.collected · probability.confidence.state · market.structure.updated · market.liquidity.updated +7</td></tr><tr><td>452</td><td>Signal Evaluation</td><td>2.4.1</td><td>تلقائي</td><td>—</td><td>decision.evaluated.state · decision.settings.state</td><td>decision.aggregated.state · learning.model.evidence · decision.settings.command</td></tr><tr><td>453</td><td>Score Calculator</td><td>3.10.0</td><td>تلقائي</td><td>—</td><td>decision.scored.state · decision.settings.state</td><td>decision.evaluated.state · decision.settings.command</td></tr><tr><td>454</td><td>Decision Filter</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>decision.filtered.state · decision.settings.state</td><td>decision.resolved.state · decision.settings.command · decision.filter.confidence.state · decision.filter.conditions.state · decision.filter.timing.state · decision.filter.position.state +6</td></tr><tr><td>455</td><td>Buy Eligibility Checker</td><td>1.4.0</td><td>تلقائي</td><td>—</td><td>decision.eligibility.buy.state · decision.settings.state</td><td>decision.scored.state · decision.settings.command</td></tr><tr><td>456</td><td>Sell Eligibility Checker</td><td>1.4.0</td><td>تلقائي</td><td>—</td><td>decision.eligibility.sell.state · decision.settings.state</td><td>decision.scored.state · decision.settings.command</td></tr><tr><td>457</td><td>Wait State Explainer</td><td>1.3.0</td><td>تلقائي</td><td>—</td><td>decision.wait.state · decision.settings.state</td><td>decision.scored.state · decision.settings.command</td></tr><tr><td>458</td><td>Conflict Resolver</td><td>3.1.0</td><td>تلقائي</td><td>—</td><td>decision.resolved.state · decision.settings.state</td><td>decision.scored.state · decision.settings.command · decision.eligibility.buy.state · decision.eligibility.sell.state · decision.wait.state</td></tr><tr><td>460</td><td>Confidence Filter</td><td>1.1.1</td><td>تلقائي</td><td>—</td><td>decision.filter.confidence.state</td><td>probability.confidence.state</td></tr><tr><td>461</td><td>Conditions Filter</td><td>1.1.1</td><td>تلقائي</td><td>—</td><td>decision.filter.conditions.state</td><td>stats.quality.state</td></tr><tr><td>462</td><td>Timing Filter</td><td>1.1.1</td><td>تلقائي</td><td>—</td><td>decision.filter.timing.state</td><td>analysis.session.state</td></tr><tr><td>463</td><td>Position Guard</td><td>1.2.1</td><td>تلقائي</td><td>—</td><td>decision.filter.position.state · decision.settings.state</td><td>platform.positions.state · decision.scored.state · decision.resolved.state · risk.asset.command · decision.settings.command</td></tr><tr><td>464</td><td>Freshness Filter</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>decision.filter.freshness.state</td><td>SYS_SECOND · market.tick.validated</td></tr><tr><td>466</td><td>Decision Approval</td><td>2.1.0</td><td>تلقائي</td><td>—</td><td>decision.approved.state</td><td>decision.filtered.state</td></tr><tr><td>467</td><td>Decision Dispatch</td><td>2.2.0</td><td>تلقائي</td><td>—</td><td>decision.dispatch.state · decision.gate.passed · decision.gate.blocked · decision.gate.recorded</td><td>decision.approved.state · SYS_SECOND</td></tr><tr><td>468</td><td>Asset Control Filter</td><td>1.5.0</td><td>تلقائي</td><td>—</td><td>decision.filter.asset.state · allowed.symbols.state</td><td>market.tick.validated · perpetual.asset.activate · risk.asset.command</td></tr><tr><td>500</td><td>Risk Read-Only Aggregator</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>risk.unified.state</td><td>risk.account.state · risk.exposure.state · risk.profit_limits.state · risk.session_limits.state</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 30 — جدول ذرّات — قسم 451-500</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">17 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p31">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 501-550</div>
+    <div class="snum">ورقة 31</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>506</td><td>Session Limits</td><td>1.4.0</td><td>تلقائي</td><td>—</td><td>risk.session_limits.state · risk.halt.requested</td><td>analysis.session.state · platform.account.state · risk.loss_reported · platform.trade_event · SYS_DAY · risk.kill_switch.reset_requested</td></tr><tr><td>507</td><td>Profit Limits</td><td>1.3.0</td><td>تلقائي</td><td>—</td><td>risk.profit_limits.state · risk.halt.requested</td><td>risk.loss_reported · platform.account.state · SYS_DAY · risk.kill_switch.reset_requested</td></tr><tr><td>508</td><td>Exposure Manager</td><td>3.1.0</td><td>تلقائي</td><td>—</td><td>risk.exposure.state · risk.halt.requested</td><td>platform.positions.state · platform.account.state · market.symbol_specs · execution.order.built · execution.order.rejected · platform.trade_event</td></tr><tr><td>512</td><td>Asset Dollar Stop</td><td>2.2.2</td><td>تلقائي</td><td>—</td><td>risk.asset_stop.state · risk.structure_stop.state</td><td>risk.asset_ledger.state</td></tr><tr><td>513</td><td>Position Sizing</td><td>4.3.0</td><td>تلقائي</td><td>—</td><td>risk.position_size.state · risk.position_size.rejected</td><td>market.tick.validated · platform.account.state · market.symbol_specs · market.ctrader.symbol_specs · risk.structure_stop.state</td></tr><tr><td>516</td><td>Per-Account Risk Authority</td><td>5.3.0</td><td>تلقائي</td><td>—</td><td>risk.validation.completed · emergency.halt · risk.kill_switch.reset_requested · risk.account.state · risk.audit.state</td><td>risk.margin.validation.completed · risk.loss_reported · SYS_DAY · SYS_SECOND · risk.halt.requested · risk.release.requested +6</td></tr><tr><td>517</td><td>Trade Outcome</td><td>4.1.0</td><td>تلقائي</td><td>—</td><td>risk.loss_reported</td><td>market.outcome.realized · platform.account.state</td></tr><tr><td>518</td><td>Asset Risk Ledger</td><td>4.2.0</td><td>تلقائي</td><td>—</td><td>risk.asset_ledger.state</td><td>platform.positions.state · perpetual.asset.activate · risk.loss_reported · platform.trade_event · platform.account.state · execution.order.built +6</td></tr><tr><td>519</td><td>Asset Portfolio</td><td>3.2.0</td><td>تلقائي</td><td>—</td><td>asset.portfolio.state · asset.portfolio.owner_intent</td><td>asset.portfolio.owner_intent · risk.asset_ledger.state · platform.trade_event · platform.account.state · platform.terminal_state · emergency.halt +2</td></tr><tr><td>520</td><td>Position Reconciliation</td><td>3.5.0</td><td>تلقائي</td><td>—</td><td>execution.reconcile.state</td><td>execution.desired.state · platform.positions.state · execution.command.ack · execution.reconcile.requested · market_data.feed_recovered · platform.account.state</td></tr><tr><td>521</td><td>Reference Feed Health</td><td>2.4.0</td><td>تلقائي</td><td>—</td><td>reference.health.state</td><td>feed.ctrader.tick · feed.mt5.tick · market.reference · SYS_SECOND</td></tr><tr><td>522</td><td>Audit Trail</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>audit.trail.state</td><td>trading.final_decision · execution.manage.command · asset.extraction.requested · asset.full_extraction.requested · platform.brain_signal.written · platform.trade_event +2</td></tr><tr><td>523</td><td>Dial Engine</td><td>2.3.0</td><td>تلقائي</td><td>—</td><td>dial.profile.state · horizon.profile.state</td><td>risk.asset_ledger.state · dial.command · platform.account.state · SYS_SECOND · decision.settings.state</td></tr><tr><td>524</td><td>Cumulative Gross Profit Extraction</td><td>3.1.0</td><td>تلقائي</td><td>—</td><td>asset.extraction.state · asset.extraction.requested · asset.full_extraction.requested · risk.asset_profit.extracted</td><td>risk.asset_ledger.state · asset.extraction.confirmed · asset.extraction.failed</td></tr><tr><td>525</td><td>Hard Stop Price</td><td>2.1.0</td><td>تلقائي</td><td>—</td><td>risk.hard_stop.price</td><td>risk.asset_ledger.state · market.symbol_specs · platform.account.state</td></tr><tr><td>550</td><td>Truthful Execution Lifecycle</td><td>2.1.2</td><td>تلقائي</td><td>—</td><td>execution.unified.state</td><td>execution.unified.state · execution.order.built · trading.final_decision · execution.order.rejected · execution.order.skipped · platform.brain_signal.written +9</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 31 — جدول ذرّات — قسم 501-550</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">16 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p32">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 551-600</div>
+    <div class="snum">ورقة 32</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>551</td><td>Order Builder</td><td>4.3.1</td><td>تلقائي</td><td>—</td><td>execution.order.built · execution.desired.state · execution.order.skipped</td><td>risk.validation.completed · risk.position_size.state · risk.position_size.rejected · platform.account.state</td></tr><tr><td>552</td><td>Order Validator</td><td>5.5.0</td><td>تلقائي</td><td>—</td><td>trading.final_decision · execution.order.rejected · execution.gate.state</td><td>execution.gate.state · execution.order.legal · emergency.halt · risk.kill_switch.reset_requested · allowed.symbols.state · feed.mt5.tick +8</td></tr><tr><td>560</td><td>Scoped Execution Quality</td><td>2.0.3</td><td>تلقائي</td><td>—</td><td>execution.quality.state</td><td>trading.final_decision · platform.trade_event · execution.order.rejected · platform.brain_signal.write_failed · market.symbol_specs · platform.account.state</td></tr><tr><td>563</td><td>Durable Execution Confirm</td><td>3.1.1</td><td>تلقائي</td><td>—</td><td>market.outcome.realized · execution.command.ack · execution.confirmation.rejected</td><td>platform.trade_event · trading.final_decision · market.symbol_specs · platform.account.state</td></tr><tr><td>570</td><td>Management Coordinator</td><td>3.0.2</td><td>تلقائي</td><td>—</td><td>execution.manage.command</td><td>execution.manage.intent · platform.position.vanished · execution.manage.written · execution.command.failed · execution.command.ack · SYS_SECOND</td></tr><tr><td>571</td><td>Perpetual Management Plan</td><td>1.3.0</td><td>تلقائي</td><td>—</td><td>perpetual.plan.state</td><td>asset.portfolio.state · risk.hard_stop.price</td></tr><tr><td>572</td><td>Breakeven</td><td>1.0.1</td><td>تلقائي</td><td>—</td><td>execution.manage.intent</td><td>platform.positions.state</td></tr><tr><td>573</td><td>Trailing Stop</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>execution.manage.intent</td><td>platform.positions.state · risk.structure_stop.state · platform.account.state</td></tr><tr><td>574</td><td>Partial Close</td><td>1.0.2</td><td>تلقائي</td><td>—</td><td>execution.manage.intent</td><td>platform.positions.state</td></tr><tr><td>575</td><td>Management Sender</td><td>2.3.0</td><td>تلقائي</td><td>—</td><td>execution.manage.written · execution.command.failed</td><td>execution.manage.command · execution.gate.command · emergency.halt · risk.kill_switch.reset_requested · SYS_SECOND</td></tr><tr><td>576</td><td>Perpetual Engine</td><td>3.6.0</td><td>تلقائي</td><td>—</td><td>execution.order.requested · perpetual.entry.state · perpetual.entry.rejected</td><td>perpetual.asset.activate · perpetual.asset.deactivate · decision.gate.passed · emergency.halt · risk.kill_switch.reset_requested · SYS_SECOND +7</td></tr><tr><td>577</td><td>Stop Maintenance</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>execution.manage.command</td><td>perpetual.plan.state · platform.positions.state</td></tr><tr><td>578</td><td>Perpetual Difference And Pair Coordinator</td><td>5.4.0</td><td>تلقائي</td><td>—</td><td>execution.order.requested · perpetual.pair.state · perpetual.owner.escalation · risk.asset.command</td><td>execution.snapshot.state · execution.order.requested · decision.gate.passed · emergency.halt · risk.kill_switch.reset_requested · risk.validation.completed +11</td></tr><tr><td>579</td><td>Extraction Executor</td><td>5.0.0</td><td>تلقائي</td><td>—</td><td>execution.manage.command · asset.extraction.execution_requested · asset.extraction.confirmed · asset.extraction.failed · perpetual.asset.deactivate</td><td>asset.extraction.requested · asset.full_extraction.requested · platform.positions.state · platform.trade_event · SYS_SECOND · execution.command.failed +2</td></tr><tr><td>580</td><td>Multi-Level Tilt Engine</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>tilt.state · tilt.rules.state</td><td>decision.gate.passed · tilt.rule.command</td></tr><tr><td>581</td><td>Position Delta Engine</td><td>3.4.1</td><td>تلقائي</td><td>—</td><td>perpetual.target.state · decision.settings.state</td><td>decision.gate.passed · decision.gate.blocked · decision.gate.recorded · decision.resolved.state · decision.approved.state · risk.asset_ledger.state +8</td></tr><tr><td>582</td><td>Reference Broker Divergence</td><td>1.5.1</td><td>تلقائي</td><td>—</td><td>execution.reference_divergence.state</td><td>feed.ctrader.tick · feed.mt5.tick · market.symbol_specs · SYS_SECOND</td></tr><tr><td>583</td><td>Execution Snapshot With Completeness</td><td>3.0.2</td><td>تلقائي</td><td>—</td><td>execution.snapshot.state</td><td>SYS_SECOND · perpetual.target.state · risk.asset_ledger.state · asset.portfolio.state · feed.mt5.tick · market.symbol_specs +2</td></tr><tr><td>584</td><td>Stop Legality</td><td>1.5.2</td><td>تلقائي</td><td>—</td><td>execution.order.legal · execution.order.rejected</td><td>execution.order.built · market.symbol_specs</td></tr><tr><td>585</td><td>Margin Guard</td><td>1.3.3</td><td>تلقائي</td><td>—</td><td>risk.margin.validation.completed · financial.truth.shortage</td><td>execution.order.resolved · platform.account.state · market.symbol_specs · risk.validation.completed · execution.order.rejected · execution.command.failed +3</td></tr><tr><td>586</td><td>Durable Symbol Resolution Gate</td><td>2.0.2</td><td>تلقائي</td><td>—</td><td>symbol.resolve.requested · storage.symbol.resolve_requested · execution.order.resolved · execution.order.rejected · symbol.resolve.orphaned</td><td>execution.order.requested · symbol.resolve.result · SYS_SECOND</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 32 — جدول ذرّات — قسم 551-600</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">21 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p33">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 601-650</div>
+    <div class="snum">ورقة 33</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>601</td><td>Brain Bridge Writer</td><td>4.2.0</td><td>تلقائي</td><td>—</td><td>platform.brain_signal.written · platform.brain_signal.write_failed · platform.brain_signal.halted · execution.command.ack · execution.command.failed</td><td>trading.final_decision · emergency.halt · SYS_SECOND</td></tr><tr><td>608</td><td>Time Sync</td><td>2.3.0</td><td>تلقائي</td><td>حرجة</td><td>time.ntp.samples.state · time.ntp.drift · time.utc.stale</td><td>—</td></tr><tr><td>609</td><td>Position Sync</td><td>5.0.2</td><td>تلقائي</td><td>—</td><td>platform.positions.state · platform.position.appeared · platform.position.vanished · platform.positions.schema_state</td><td>platform.account.state · SYS_SECOND</td></tr><tr><td>611</td><td>Trade Events Reader</td><td>4.0.3</td><td>تلقائي</td><td>—</td><td>platform.trade_event</td><td>SYS_SECOND</td></tr><tr><td>613</td><td>Market Feed Hub</td><td>2.6.0</td><td>تلقائي</td><td>—</td><td>market.tick · market.volume · market.feed.provider_down · market.feed.provider_recovered · market.feed.source_rejected · market.broker_tick</td><td>feed.mt5.tick · feed.ctrader.tick · kernel.clock.heartbeat</td></tr><tr><td>615</td><td>News Source Bridge</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>market.news · market.news.enriched</td><td>SYS_SECOND</td></tr><tr><td>616</td><td>News Bridge Reader</td><td>1.5.0</td><td>تلقائي</td><td>—</td><td>market.news · market.calendar</td><td>SYS_SECOND</td></tr><tr><td>618</td><td>MT5 Bridge Source</td><td>4.3.0</td><td>تلقائي</td><td>—</td><td>feed.mt5.tick · market.symbol_specs</td><td>SYS_SECOND · platform.account.state · SYS_10MS</td></tr><tr><td>619</td><td>Account State Reader</td><td>3.1.0</td><td>تلقائي</td><td>—</td><td>platform.account.state · platform.terminal_state</td><td>SYS_SECOND</td></tr><tr><td>620</td><td>Yahoo Finance Source</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>market.reference</td><td>SYS_SECOND</td></tr><tr><td>621</td><td>cTrader Reference Bridge</td><td>1.0.1</td><td>تلقائي</td><td>—</td><td>market.reference</td><td>feed.ctrader.tick</td></tr><tr><td>622</td><td>cTrader FIX Price Feed</td><td>1.4.0</td><td>تلقائي</td><td>—</td><td>feed.ctrader.tick · market.ctrader.symbol_specs · market.depth · feed.ctrader.heartbeat · feed.ctrader.state</td><td>SYS_SECOND</td></tr><tr><td>625</td><td>Replay Feed Source</td><td>1.0.0</td><td>يدوي</td><td>—</td><td>feed.replay.tick · replay.session.state</td><td>replay.session.start · replay.session.stop</td></tr><tr><td>626</td><td>Simulated Execution Bridge</td><td>1.0.0</td><td>يدوي</td><td>—</td><td>platform.trade_event.simulated · sim.execution.state</td><td>trading.final_decision · market.tick.validated</td></tr><tr><td>630</td><td>Replay Source</td><td>1.0.0</td><td>يدوي</td><td>—</td><td>feed.replay.tick</td><td>—</td></tr><tr><td>650</td><td>Portfolio Manager</td><td>2.1.0</td><td>تلقائي</td><td>—</td><td>portfolio.components.state · portfolio.summary</td><td>portfolio.account.tracked · portfolio.account.state · portfolio.balance.state · portfolio.equity.state · portfolio.margin.state · portfolio.free_margin.state +5</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 33 — جدول ذرّات — قسم 601-650</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">16 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p34">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 651-700</div>
+    <div class="snum">ورقة 34</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>651</td><td>Portfolio Account Tracker</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>portfolio.account.tracked</td><td>platform.account.state</td></tr><tr><td>652</td><td>Portfolio Account State</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>portfolio.account.state</td><td>platform.account.state · platform.terminal_state</td></tr><tr><td>653</td><td>Portfolio Balance</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>portfolio.balance.state</td><td>platform.account.state</td></tr><tr><td>654</td><td>Portfolio Equity</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>portfolio.equity.state</td><td>platform.account.state</td></tr><tr><td>655</td><td>Portfolio Margin</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>portfolio.margin.state</td><td>platform.account.state</td></tr><tr><td>656</td><td>Portfolio Free Margin</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>portfolio.free_margin.state</td><td>platform.account.state</td></tr><tr><td>657</td><td>Portfolio Margin Level</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>portfolio.margin_level.state</td><td>platform.account.state</td></tr><tr><td>658</td><td>Portfolio Profit And Loss</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>portfolio.pnl.state</td><td>platform.account.state · platform.positions.state · market.outcome.realized</td></tr><tr><td>659</td><td>Portfolio Open Positions</td><td>1.1.2</td><td>تلقائي</td><td>—</td><td>portfolio.open_positions.state</td><td>platform.positions.state</td></tr><tr><td>662</td><td>Capital Distribution</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>portfolio.capital_distribution.state</td><td>portfolio.components.state</td></tr><tr><td>663</td><td>Risk Distribution</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>portfolio.risk_distribution.state</td><td>risk.asset_ledger.state</td></tr><tr><td>664</td><td>Portfolio Loss Limits</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>portfolio.loss_limits.state</td><td>risk.asset_ledger.state</td></tr><tr><td>665</td><td>Portfolio Profit Limits</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>portfolio.profit_limits.state</td><td>risk.asset_ledger.state</td></tr><tr><td>666</td><td>Portfolio Performance</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>portfolio.performance.state</td><td>portfolio.pnl.state · market.outcome.realized</td></tr><tr><td>667</td><td>Portfolio Comparison</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>portfolio.comparison.state</td><td>portfolio.performance.state</td></tr><tr><td>668</td><td>Portfolio Overview</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>portfolio.overview.state</td><td>portfolio.components.state · portfolio.capital_distribution.state · portfolio.risk_distribution.state · portfolio.loss_limits.state · portfolio.profit_limits.state · portfolio.performance.state +2</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 34 — جدول ذرّات — قسم 651-700</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">16 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p35">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 701-750</div>
+    <div class="snum">ورقة 35</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>701</td><td>Market Data Store</td><td>2.2.0</td><td>تلقائي</td><td>—</td><td>storage.market_data_saved</td><td>market_data.price_received · SYS_DAY · SYS_SECOND</td></tr><tr><td>702</td><td>Trade Store</td><td>2.4.2</td><td>تلقائي</td><td>—</td><td>storage.trades_saved</td><td>platform.trade_event · market.outcome.realized</td></tr><tr><td>703</td><td>Order Store</td><td>3.1.2</td><td>تلقائي</td><td>—</td><td>storage.orders_saved</td><td>execution.order.built · SYS_DAY · SYS_SECOND</td></tr><tr><td>704</td><td>Timeline Store</td><td>5.1.0</td><td>تلقائي</td><td>—</td><td>storage.timeline_saved</td><td>platform.trade_event · execution.order.rejected · emergency.halt · market.time.drift · market.feed.provider_down · market.feed.provider_recovered +18</td></tr><tr><td>706</td><td>Model Store</td><td>2.1.2</td><td>تلقائي</td><td>—</td><td>storage.model_saved_confirmed · model.persisted · storage.persistence.load_response · storage.persistence.save_failed</td><td>model.persist_requested · storage.persistence.load_requested</td></tr><tr><td>707</td><td>Execution Lifecycle Store</td><td>4.2.0</td><td>تلقائي</td><td>—</td><td>storage.decisions_saved</td><td>decision.approved.state · perpetual.target.state · decision.dispatch.state · execution.order.requested · execution.order.built · execution.order.rejected +6</td></tr><tr><td>708</td><td>Symbol Registry And Resolution</td><td>2.5.0</td><td>تلقائي</td><td>—</td><td>storage.symbol.map.state · storage.symbol.resolved · storage.symbol.unmapped · symbol.resolve.result</td><td>storage.symbol.resolve_requested · symbol.resolve.requested · market.symbol_specs · market.ctrader.symbol_specs · platform.account.state</td></tr><tr><td>709</td><td>Portfolio Store</td><td>2.4.0</td><td>تلقائي</td><td>—</td><td>storage.portfolio_saved</td><td>portfolio.summary · portfolio.overview.state · SYS_DAY · SYS_SECOND</td></tr><tr><td>712</td><td>Analysis Store</td><td>2.3.1</td><td>تلقائي</td><td>—</td><td>storage.analysis_saved</td><td>analysis.raw.completed · SYS_DAY · SYS_SECOND</td></tr><tr><td>713</td><td>Structure Store</td><td>2.2.0</td><td>تلقائي</td><td>—</td><td>storage.structure_saved</td><td>market.structure.updated · SYS_DAY · SYS_SECOND</td></tr><tr><td>714</td><td>Archive</td><td>3.0.2</td><td>تلقائي</td><td>—</td><td>storage.archived</td><td>SYS_DAY · SYS_SECOND</td></tr><tr><td>715</td><td>Archive Compression</td><td>3.0.2</td><td>تلقائي</td><td>—</td><td>storage.compressed</td><td>storage.archived</td></tr><tr><td>716</td><td>Duplicate Cleanup</td><td>2.1.2</td><td>تلقائي</td><td>—</td><td>storage.trading_data_cleaned</td><td>storage.archived</td></tr><tr><td>717</td><td>Trading Data Integrity</td><td>2.1.0</td><td>تلقائي</td><td>—</td><td>storage.trading_data_integrity_checked</td><td>storage.trading_data_cleaned</td></tr><tr><td>718</td><td>Liquidity Store</td><td>2.2.0</td><td>تلقائي</td><td>—</td><td>storage.liquidity_saved</td><td>market.liquidity.updated · SYS_DAY · SYS_SECOND</td></tr><tr><td>719</td><td>Error Log</td><td>1.0.2</td><td>تلقائي</td><td>—</td><td>—</td><td>—</td></tr><tr><td>720</td><td>Trades Log</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>logs.trades.state</td><td>platform.trade_event · platform.position.appeared · platform.position.vanished · execution.order.rejected · execution.command.ack · execution.command.failed</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 35 — جدول ذرّات — قسم 701-750</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">17 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p36">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 751-800</div>
+    <div class="snum">ورقة 36</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>753</td><td>Device Resource Monitor</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>tools.device_resources.state</td><td>SYS_5MIN</td></tr><tr><td>800</td><td>Backup Manager</td><td>2.2.2</td><td>تلقائي</td><td>—</td><td>tools.backup.completed · tools.backup.failed</td><td>SYS_DAY · SYS_SECOND</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 36 — جدول ذرّات — قسم 751-800</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">2 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p37">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 801-850</div>
+    <div class="snum">ورقة 37</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>802</td><td>File Archive Manager</td><td>2.2.1</td><td>تلقائي</td><td>—</td><td>tools.file_archive.completed · tools.file_archive.failed</td><td>SYS_DAY · SYS_SECOND</td></tr><tr><td>803</td><td>File Cleanup Manager</td><td>2.1.0</td><td>تلقائي</td><td>—</td><td>tools.file_cleanup.completed · tools.file_cleanup.failed</td><td>SYS_DAY · SYS_SECOND</td></tr><tr><td>806</td><td>Time Tick</td><td>3.0.2</td><td>تلقائي</td><td>حرجة</td><td>SYS_SECOND · SYS_5MIN · SYS_15MIN · SYS_HOUR · SYS_DAY</td><td>—</td></tr><tr><td>810</td><td>Telemetry Carrier</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>telemetry.batch.closed · telemetry.carrier.state</td><td>SYS_SECOND</td></tr><tr><td>811</td><td>Decision Behaviour Meter</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>decision.behaviour.telemetry</td><td>decision.scored.state · perpetual.target.state</td></tr><tr><td>820</td><td>Measurement Engine</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>measurement.health.state · measurement.latency.state</td><td>market.tick.validated · structure.section.live · liquidity.section.live · stats.section.live · probability.section.live · strategy.section.live +1</td></tr><tr><td>830</td><td>Market Regime Engine</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>market.regime.state</td><td>structure.trend.state · analysis.volatility.state</td></tr><tr><td>831</td><td>Alert Aggregator</td><td>1.0.2</td><td>تلقائي</td><td>—</td><td>system.alert · system.alert.state · system.alert.recovered</td><td>SYS_5MIN · storage.persistence.save_failed · tools.integrity.violation · tools.backup.failed · tools.file_archive.failed · tools.file_cleanup.failed +11</td></tr><tr><td>832</td><td>System Diagnostician</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>system.diagnosis.state</td><td>system.alert.state · measurement.health.state · measurement.latency.state · market.regime.state · drift.vector.state · adaptation.kill_switch.state +2</td></tr><tr><td>840</td><td>Drift Engine</td><td>1.0.1</td><td>تلقائي</td><td>—</td><td>drift.vector.state · recalibration.proposed</td><td>measurement.latency.state · measurement.health.state · market.regime.state</td></tr><tr><td>850</td><td>Change Governor</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>experiment.state · adaptation.limits.state</td><td>recalibration.proposed · adaptation.kill_switch.state</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 37 — جدول ذرّات — قسم 801-850</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">11 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p38">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 851-900</div>
+    <div class="snum">ورقة 38</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>860</td><td>Adaptation Kill Switch</td><td>1.0.1</td><td>تلقائي</td><td>—</td><td>adaptation.kill_switch.state</td><td>drift.vector.state · measurement.latency.state · adaptation.kill_switch.command</td></tr><tr><td>870</td><td>Calibration Brain</td><td>1.0.1</td><td>تلقائي</td><td>—</td><td>ai.brain.state · recalibration.applied</td><td>experiment.state · drift.vector.state · system.diagnosis.state · adaptation.kill_switch.state · SYS_SECOND</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 38 — جدول ذرّات — قسم 851-900</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">2 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p39">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات — قسم 901-950</div>
+    <div class="snum">ورقة 39</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>901</td><td>Command Gateway</td><td>2.7.0</td><td>تلقائي</td><td>—</td><td>risk.halt.requested · adaptation.kill_switch.command · risk.release.requested · perpetual.asset.activate · perpetual.asset.deactivate · execution.gate.command +10</td><td>SYS_SECOND</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 39 — جدول ذرّات — قسم 901-950</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note">1 ذرّة من المانيفست.</div>
+  </footer>
+</section>
+
+<section class="sheet" id="p40">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">فهرس أقسام الكريبتو</div>
+    <div class="snum">ورقة 40</div>
+  </header>
+  <div class="sheet-body"><table class="grid"><thead><tr><th>قسم</th><th>ذرّات</th><th>تلقائي</th><th>يدوي</th></tr></thead><tbody><tr><td>قسم 1001-1050</td><td>2</td><td>2</td><td>0</td></tr><tr><td>قسم 2001-2050</td><td>3</td><td>0</td><td>3</td></tr><tr><td>قسم 2101-2150</td><td>15</td><td>1</td><td>14</td></tr><tr><td>قسم 2151-2200</td><td>15</td><td>15</td><td>0</td></tr><tr><td>قسم 2251-2300</td><td>11</td><td>10</td><td>1</td></tr><tr><td>قسم 2601-2650</td><td>5</td><td>4</td><td>1</td></tr><tr><td>قسم 2701-2750</td><td>17</td><td>0</td><td>17</td></tr><tr><td>قسم 2751-2800</td><td>2</td><td>0</td><td>2</td></tr><tr><td>قسم 2801-2850</td><td>8</td><td>1</td><td>7</td></tr><tr><td>قسم 2851-2900</td><td>1</td><td>0</td><td>1</td></tr><tr><td>قسم 2901-2950</td><td>1</td><td>0</td><td>1</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 40 — فهرس أقسام الكريبتو</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p41">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات كريبتو — قسم 1001-1050</div>
+    <div class="snum">ورقة 41</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>1001</td><td>Crypto Asset Universe Manager</td><td>1.2.0</td><td>تلقائي</td><td>حرجة</td><td>crypto.market.ticker.all · crypto.universe.snapshot.state · crypto.universe.membership.state · crypto.universe.rejected.state</td><td>crypto.universe.override.command · crypto.universe.scan.requested</td></tr><tr><td>1002</td><td>Crypto Market Feed</td><td>1.0.0</td><td>تلقائي</td><td>حرجة</td><td>crypto.feed.tick · crypto.feed.state</td><td>crypto.market.ticker.all</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 41 — جدول ذرّات كريبتو — قسم 1001-1050</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p42">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات كريبتو — قسم 2001-2050</div>
+    <div class="snum">ورقة 42</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>2003</td><td>Clock</td><td>3.0.3</td><td>يدوي</td><td>حرجة</td><td>time.utc.synced · time.utc.drift · time.clock.quality.state · kernel.clock.sys_tick · kernel.clock.heartbeat · kernel.clock.minute_elapsed</td><td>time.ntp.samples.state</td></tr><tr><td>2006</td><td>Storage Monitor</td><td>2.1.0</td><td>يدوي</td><td>—</td><td>tools.storage.low · tools.storage.recovered</td><td>SYS_5MIN</td></tr><tr><td>2007</td><td>File Integrity Monitor</td><td>4.2.1</td><td>يدوي</td><td>—</td><td>tools.integrity.violation</td><td>SYS_HOUR</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 42 — جدول ذرّات كريبتو — قسم 2001-2050</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p43">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات كريبتو — قسم 2101-2150</div>
+    <div class="snum">ورقة 43</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>2101</td><td>Market Data Manager</td><td>2.1.0</td><td>يدوي</td><td>—</td><td>market_data.state</td><td>market.tick.validated · market_data.price_received · market_data.candle_closed · market_data.volume_received · market_data.spread_updated · market_data.depth_updated +4</td></tr><tr><td>2102</td><td>Price Receiver</td><td>2.1.1</td><td>يدوي</td><td>—</td><td>market_data.price_received</td><td>market.tick.validated</td></tr><tr><td>2103</td><td>Candle Builder</td><td>5.3.0</td><td>يدوي</td><td>—</td><td>market_data.candle_closed</td><td>market.tick.validated</td></tr><tr><td>2104</td><td>Volume Receiver</td><td>2.0.0</td><td>يدوي</td><td>—</td><td>market_data.volume_received</td><td>market.volume</td></tr><tr><td>2105</td><td>Spread Receiver</td><td>2.0.0</td><td>يدوي</td><td>—</td><td>market_data.spread_updated</td><td>market.tick.validated</td></tr><tr><td>2106</td><td>Market Depth Receiver</td><td>2.0.0</td><td>يدوي</td><td>—</td><td>market_data.depth_updated</td><td>market.depth</td></tr><tr><td>2107</td><td>Trade Tape Receiver</td><td>2.0.1</td><td>يدوي</td><td>—</td><td>market_data.trade_tape_updated</td><td>market.trade</td></tr><tr><td>2108</td><td>News Receiver</td><td>2.0.1</td><td>تلقائي</td><td>—</td><td>market_data.news_received</td><td>market.news</td></tr><tr><td>2109</td><td>Economic Calendar Receiver</td><td>3.1.0</td><td>يدوي</td><td>—</td><td>market_data.calendar_event · market_data.calendar_window · market_data.calendar.state</td><td>market.calendar · SYS_SECOND</td></tr><tr><td>2110</td><td>Reference Indices Receiver</td><td>2.0.0</td><td>يدوي</td><td>—</td><td>market_data.reference_index_updated</td><td>market.reference</td></tr><tr><td>2111</td><td>Time Bridge</td><td>3.0.1</td><td>يدوي</td><td>—</td><td>market.time.drift · market.time.synced · time.clock.divergence</td><td>time.utc.drift · time.utc.synced · kernel.clock.heartbeat</td></tr><tr><td>2112</td><td>Validated Market Tick Gate</td><td>4.0.0</td><td>يدوي</td><td>—</td><td>market.tick.validated · market_data.validation_failed · market_data.validation.state</td><td>market.tick · platform.account.state</td></tr><tr><td>2113</td><td>Side-Path Data Cleaner</td><td>4.2.0</td><td>يدوي</td><td>—</td><td>market_data.cleaned</td><td>market.tick.validated · market_data.price_received · market_data.spread_updated · market_data.candle_closed · market_data.volume_received · market_data.depth_updated +4</td></tr><tr><td>2114</td><td>Data Normalizer</td><td>4.0.0</td><td>يدوي</td><td>—</td><td>market_data.normalized</td><td>market_data.cleaned</td></tr><tr><td>2115</td><td>Raw Data Quality Monitor</td><td>4.1.0</td><td>يدوي</td><td>—</td><td>market_data.quality_alert · market_data.quality.state</td><td>market.tick · platform.account.state</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 43 — جدول ذرّات كريبتو — قسم 2101-2150</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p44">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات كريبتو — قسم 2151-2200</div>
+    <div class="snum">ورقة 44</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>2151</td><td>Session VWAP with 1-sigma Bands</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>sense.vwap.state</td><td>market.candle</td></tr><tr><td>2152</td><td>Session High/Low + Pullback Low</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>sense.session_levels.state</td><td>market.candle</td></tr><tr><td>2153</td><td>Prior Day High/Low/Close (PDH/PDL/PDC)</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>sense.prior_day.state</td><td>market.candle</td></tr><tr><td>2154</td><td>Round Numbers (Psychological Levels)</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>sense.round_numbers.state</td><td>market.candle</td></tr><tr><td>2155</td><td>Session Volume Profile (POC/VAH/VAL)</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>sense.volume_profile.state</td><td>market.candle</td></tr><tr><td>2156</td><td>Median Candle Range</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>sense.median_range.state</td><td>market.candle</td></tr><tr><td>2157</td><td>Volume vs MA20</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>sense.volume_ma.state</td><td>market.candle</td></tr><tr><td>2158</td><td>Abnormal Volatility Regime Flag</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>sense.abnormal.state</td><td>market.candle</td></tr><tr><td>2159</td><td>Higher-Timeframe Context (4H map + 15m structure)</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>sense.htf.state</td><td>market.candle</td></tr><tr><td>2161</td><td>1-Minute Lens (last 15 bars, relative volume)</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>sense.min1_lens.state</td><td>market.candle</td></tr><tr><td>2170</td><td>Open Interest (Quadrants)</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>sense.oi.state</td><td>market.oi · market.candle</td></tr><tr><td>2171</td><td>Cascade Fuel Gauge (Bi-directional)</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>sense.fuel.state</td><td>market.oi · market.funding · market.premium · market.candle</td></tr><tr><td>2172</td><td>Funding Rate (Crowd Poll)</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>sense.funding.state</td><td>market.funding</td></tr><tr><td>2173</td><td>Perp Premium (Leverage Thermometer)</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>sense.premium.state</td><td>market.premium</td></tr><tr><td>2174</td><td>Binance Global Heat (Structural)</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>sense.binance_heat.state</td><td>feed.binance.oi · feed.binance.premium</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 44 — جدول ذرّات كريبتو — قسم 2151-2200</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p45">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات كريبتو — قسم 2251-2300</div>
+    <div class="snum">ورقة 45</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>2265</td><td>Depth Walls (Resting Liquidity)</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>sense.walls.state</td><td>market.depth</td></tr><tr><td>2266</td><td>Aggressor Flow (Executors + Absorption)</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>sense.aggressor.state</td><td>market.trade</td></tr><tr><td>2267</td><td>Liquidation Density Map (Structural)</td><td>1.0.0</td><td>يدوي</td><td>—</td><td>sense.liquidations.state</td><td>feed.binance.liquidation</td></tr><tr><td>2270</td><td>Direction License Judge (VWAP)</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>crypto.decision.license.state</td><td>sense.vwap.state</td></tr><tr><td>2271</td><td>Value State Judge (POC/VAH/VAL)</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>crypto.decision.value_state.state</td><td>sense.volume_profile.state</td></tr><tr><td>2272</td><td>Prior-Day Break/Retest Tracker</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>crypto.decision.breaks.state</td><td>sense.prior_day.state · market.candle</td></tr><tr><td>2273</td><td>Trigger Court (5-Sense Confirm/Veto Vote)</td><td>1.0.0</td><td>تلقائي</td><td>—</td><td>crypto.decision.trigger_court.state</td><td>sense.aggressor.state · sense.walls.state · sense.oi.state · sense.premium.state · sense.min1_lens.state</td></tr><tr><td>2274</td><td>Entry Classifier (Gates + Class ①②③)</td><td>1.6.0</td><td>تلقائي</td><td>—</td><td>crypto.decision.entry_candidate.state</td><td>crypto.decision.license.state · crypto.decision.value_state.state · crypto.decision.breaks.state · crypto.decision.trigger_court.state · sense.htf.state · sense.fuel.state +7</td></tr><tr><td>2275</td><td>Risk Engine (Budget + Daily Halt + Competing Ladder)</td><td>1.6.1</td><td>تلقائي</td><td>—</td><td>crypto.decision.sized_entry.state</td><td>crypto.decision.entry_candidate.state · platform.trade_event · crypto.universe.snapshot.state · sense.median_range.state</td></tr><tr><td>2276</td><td>Decision Assembler (Display Only — decision.approved.state)</td><td>2.2.0</td><td>تلقائي</td><td>—</td><td>decision.approved.state</td><td>crypto.decision.signal_card.state</td></tr><tr><td>2277</td><td>Signal Card v3.1 (Anchor + Ladder + Stop + Targets)</td><td>1.2.1</td><td>تلقائي</td><td>—</td><td>crypto.decision.signal_card.state</td><td>crypto.decision.sized_entry.state · crypto.universe.snapshot.state · sense.walls.state · sense.volume_profile.state · sense.prior_day.state</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 45 — جدول ذرّات كريبتو — قسم 2251-2300</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p46">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات كريبتو — قسم 2601-2650</div>
+    <div class="snum">ورقة 46</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>2615</td><td>News Source Bridge</td><td>2.0.0</td><td>تلقائي</td><td>—</td><td>market.news</td><td>SYS_SECOND</td></tr><tr><td>2616</td><td>News Bridge Reader</td><td>1.3.0</td><td>يدوي</td><td>—</td><td>market.news · market.calendar</td><td>SYS_SECOND</td></tr><tr><td>2620</td><td>MEXC Market Source</td><td>1.2.0</td><td>تلقائي</td><td>—</td><td>market.tick · market.depth · market.trade · feed.mexc.state</td><td>crypto.universe.membership.state</td></tr><tr><td>2621</td><td>MEXC REST Source (Candles + Positioning)</td><td>1.3.0</td><td>تلقائي</td><td>—</td><td>market.candle · market.oi · market.funding · market.premium · market.depth · feed.mexc_rest.state</td><td>crypto.universe.membership.state</td></tr><tr><td>2622</td><td>Binance Global Heat Bridge (Funding + OI)</td><td>1.1.0</td><td>تلقائي</td><td>—</td><td>feed.binance.oi · feed.binance.premium · feed.binance_rest.state</td><td>crypto.universe.membership.state</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 46 — جدول ذرّات كريبتو — قسم 2601-2650</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p47">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات كريبتو — قسم 2701-2750</div>
+    <div class="snum">ورقة 47</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>2701</td><td>Market Data Store</td><td>2.2.0</td><td>يدوي</td><td>—</td><td>storage.market_data_saved</td><td>market_data.price_received · SYS_DAY · SYS_SECOND</td></tr><tr><td>2702</td><td>Trade Store</td><td>2.4.2</td><td>يدوي</td><td>—</td><td>storage.trades_saved</td><td>platform.trade_event · market.outcome.realized</td></tr><tr><td>2703</td><td>Order Store</td><td>3.1.2</td><td>يدوي</td><td>—</td><td>storage.orders_saved</td><td>execution.order.built · SYS_DAY · SYS_SECOND</td></tr><tr><td>2704</td><td>Timeline Store</td><td>5.0.0</td><td>يدوي</td><td>—</td><td>storage.timeline_saved</td><td>platform.trade_event · execution.order.rejected · emergency.halt · market.time.drift · market.feed.provider_down · market.feed.provider_recovered +16</td></tr><tr><td>2706</td><td>Model Store</td><td>2.1.2</td><td>يدوي</td><td>—</td><td>storage.model_saved_confirmed · model.persisted · storage.persistence.load_response · storage.persistence.save_failed</td><td>model.persist_requested · storage.persistence.load_requested</td></tr><tr><td>2707</td><td>Execution Lifecycle Store</td><td>4.6.0</td><td>يدوي</td><td>—</td><td>storage.decisions_saved</td><td>decision.approved.state · perpetual.target.state · decision.dispatch.state · execution.order.requested · execution.order.built · execution.order.rejected +7</td></tr><tr><td>2708</td><td>Symbol Registry And Resolution</td><td>2.5.0</td><td>يدوي</td><td>—</td><td>storage.symbol.map.state · storage.symbol.resolved · storage.symbol.unmapped · symbol.resolve.result</td><td>storage.symbol.resolve_requested · symbol.resolve.requested · market.symbol_specs · market.ctrader.symbol_specs · platform.account.state</td></tr><tr><td>2709</td><td>Portfolio Store</td><td>2.4.0</td><td>يدوي</td><td>—</td><td>storage.portfolio_saved</td><td>portfolio.summary · portfolio.overview.state · SYS_DAY · SYS_SECOND</td></tr><tr><td>2712</td><td>Analysis Store</td><td>2.3.1</td><td>يدوي</td><td>—</td><td>storage.analysis_saved</td><td>analysis.raw.completed · SYS_DAY · SYS_SECOND</td></tr><tr><td>2713</td><td>Structure Store</td><td>2.2.0</td><td>يدوي</td><td>—</td><td>storage.structure_saved</td><td>market.structure.updated · SYS_DAY · SYS_SECOND</td></tr><tr><td>2714</td><td>Archive</td><td>3.0.2</td><td>يدوي</td><td>—</td><td>storage.archived</td><td>SYS_DAY · SYS_SECOND</td></tr><tr><td>2715</td><td>Archive Compression</td><td>3.0.2</td><td>يدوي</td><td>—</td><td>storage.compressed</td><td>storage.archived</td></tr><tr><td>2716</td><td>Duplicate Cleanup</td><td>2.1.2</td><td>يدوي</td><td>—</td><td>storage.trading_data_cleaned</td><td>storage.archived</td></tr><tr><td>2717</td><td>Trading Data Integrity</td><td>2.0.2</td><td>يدوي</td><td>—</td><td>storage.trading_data_integrity_checked</td><td>storage.trading_data_cleaned</td></tr><tr><td>2718</td><td>Liquidity Store</td><td>2.2.0</td><td>يدوي</td><td>—</td><td>storage.liquidity_saved</td><td>market.liquidity.updated · SYS_DAY · SYS_SECOND</td></tr><tr><td>2719</td><td>Error Log</td><td>1.0.3</td><td>يدوي</td><td>—</td><td>—</td><td>—</td></tr><tr><td>2720</td><td>Trades Log</td><td>1.0.1</td><td>يدوي</td><td>—</td><td>logs.trades.state</td><td>platform.trade_event · platform.position.appeared · platform.position.vanished · execution.order.rejected · execution.command.ack · execution.command.failed</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 47 — جدول ذرّات كريبتو — قسم 2701-2750</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p48">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات كريبتو — قسم 2751-2800</div>
+    <div class="snum">ورقة 48</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>2753</td><td>Device Resource Monitor</td><td>2.0.0</td><td>يدوي</td><td>—</td><td>tools.device_resources.state</td><td>SYS_5MIN</td></tr><tr><td>2800</td><td>Backup Manager</td><td>2.2.2</td><td>يدوي</td><td>—</td><td>tools.backup.completed · tools.backup.failed</td><td>SYS_DAY · SYS_SECOND</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 48 — جدول ذرّات كريبتو — قسم 2751-2800</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p49">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات كريبتو — قسم 2801-2850</div>
+    <div class="snum">ورقة 49</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>2802</td><td>File Archive Manager</td><td>2.2.1</td><td>يدوي</td><td>—</td><td>tools.file_archive.completed · tools.file_archive.failed</td><td>SYS_DAY · SYS_SECOND</td></tr><tr><td>2803</td><td>File Cleanup Manager</td><td>2.1.0</td><td>يدوي</td><td>—</td><td>tools.file_cleanup.completed · tools.file_cleanup.failed</td><td>SYS_DAY · SYS_SECOND</td></tr><tr><td>2806</td><td>Time Tick</td><td>3.0.3</td><td>تلقائي</td><td>حرجة</td><td>SYS_SECOND · SYS_5MIN · SYS_15MIN · SYS_HOUR · SYS_DAY</td><td>—</td></tr><tr><td>2810</td><td>Telemetry Carrier</td><td>1.0.0</td><td>يدوي</td><td>—</td><td>telemetry.batch.closed · telemetry.carrier.state</td><td>SYS_SECOND</td></tr><tr><td>2811</td><td>Decision Behaviour Meter</td><td>1.0.0</td><td>يدوي</td><td>—</td><td>decision.behaviour.telemetry</td><td>decision.scored.state</td></tr><tr><td>2820</td><td>Measurement Engine</td><td>1.0.0</td><td>يدوي</td><td>—</td><td>measurement.health.state · measurement.latency.state</td><td>market.tick.validated · structure.section.live · liquidity.section.live · stats.section.live · probability.section.live · strategy.section.live +1</td></tr><tr><td>2831</td><td>Alert Aggregator</td><td>1.0.2</td><td>يدوي</td><td>—</td><td>system.alert · system.alert.state · system.alert.recovered</td><td>SYS_5MIN · storage.persistence.save_failed · tools.integrity.violation · tools.backup.failed · tools.file_archive.failed · tools.file_cleanup.failed +11</td></tr><tr><td>2850</td><td>Change Governor</td><td>1.0.0</td><td>يدوي</td><td>—</td><td>experiment.state · adaptation.limits.state</td><td>recalibration.proposed · adaptation.kill_switch.state</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 49 — جدول ذرّات كريبتو — قسم 2801-2850</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p50">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات كريبتو — قسم 2851-2900</div>
+    <div class="snum">ورقة 50</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>2860</td><td>Adaptation Kill Switch</td><td>1.0.1</td><td>يدوي</td><td>—</td><td>adaptation.kill_switch.state</td><td>drift.vector.state · measurement.latency.state · adaptation.kill_switch.command</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 50 — جدول ذرّات كريبتو — قسم 2851-2900</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p51">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول ذرّات كريبتو — قسم 2901-2950</div>
+    <div class="snum">ورقة 51</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إصدار</th><th>إقلاع</th><th>حرجة</th><th>تنشر</th><th>تسمع</th></tr></thead><tbody><tr><td>2901</td><td>Command Gateway</td><td>2.6.0</td><td>يدوي</td><td>—</td><td>risk.halt.requested · adaptation.kill_switch.command · risk.release.requested · perpetual.asset.activate · perpetual.asset.deactivate · execution.gate.command +10</td><td>SYS_SECOND</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 51 — جدول ذرّات كريبتو — قسم 2901-2950</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p52">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">كتالوج أحداث 1–45 / 405</div>
+    <div class="snum">ورقة 52</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>الحدث</th><th>ناشرون (id)</th><th>مستمعون (id)</th></tr></thead><tbody><tr><td>NQ</td><td>1</td><td>—</td></tr><tr><td>SYS_10MS</td><td>—</td><td>618</td></tr><tr><td>SYS_15MIN</td><td>806, 2806</td><td>—</td></tr><tr><td>SYS_5MIN</td><td>806, 2806</td><td>1, 6, 753, 831, 2006, 2753, 2831</td></tr><tr><td>SYS_DAY</td><td>806, 2806</td><td>506, 507, 516, 701, 703, 704, 709, 712, 713, 714, 718, 800, 802, 803, 2701, 2703, 2704, 2709, 2712, 2713, 2714, 2718, 2800, 2802, 2803</td></tr><tr><td>SYS_HOUR</td><td>806, 2806</td><td>7, 2007</td></tr><tr><td>SYS_SECOND</td><td>806, 2806</td><td>109, 116, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 200, 250, 300, 350, 400, 450, 464, 467, 516, 521, 523, 570, 575, 576, 578, 579, 582, 583, 586, 601, 609, 611, 615, 616, 618, 619, 620, 622, 650, 668, 701, 703, 704, 709, 712, 713, 714, 718, 800, 802, 803, 810, 832, 870, 901, 2109, 2615, 2616, 2701, 2703, 2704, 2709, 2712, 2713, 2714, 2718, 2800, 2802, 2803, 2810, 2901</td></tr><tr><td>adaptation.kill_switch.command</td><td>901, 2901</td><td>860, 2860</td></tr><tr><td>adaptation.kill_switch.state</td><td>860, 2860</td><td>832, 850, 870, 2850</td></tr><tr><td>adaptation.limits.state</td><td>850, 2850</td><td>—</td></tr><tr><td>ai.brain.state</td><td>870</td><td>—</td></tr><tr><td>allowed.symbols.state</td><td>468</td><td>552</td></tr><tr><td>analysis.acceleration.state</td><td>163</td><td>150</td></tr><tr><td>analysis.analysts.state</td><td>150</td><td>—</td></tr><tr><td>analysis.candle.state</td><td>156</td><td>150</td></tr><tr><td>analysis.correlation.state</td><td>160</td><td>150</td></tr><tr><td>analysis.cycle.collected</td><td>150</td><td>166</td></tr><tr><td>analysis.fast.state</td><td>166</td><td>—</td></tr><tr><td>analysis.gap.state</td><td>157</td><td>150</td></tr><tr><td>analysis.momentum.state</td><td>152</td><td>150</td></tr><tr><td>analysis.noise.state</td><td>165</td><td>150</td></tr><tr><td>analysis.raw.completed</td><td>166</td><td>712, 2712</td></tr><tr><td>analysis.relative_strength.state</td><td>161</td><td>150</td></tr><tr><td>analysis.section.live</td><td>166</td><td>451, 820, 2820</td></tr><tr><td>analysis.session.state</td><td>158</td><td>150, 462, 506</td></tr><tr><td>analysis.setting.changed</td><td>151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165</td><td>—</td></tr><tr><td>analysis.settings.command</td><td>901, 2901</td><td>151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165</td></tr><tr><td>analysis.slow.state</td><td>166</td><td>—</td></tr><tr><td>analysis.spread.state</td><td>155</td><td>150</td></tr><tr><td>analysis.time.state</td><td>159</td><td>150</td></tr><tr><td>analysis.trend.state</td><td>151</td><td>150, 207</td></tr><tr><td>analysis.velocity.state</td><td>162</td><td>150</td></tr><tr><td>analysis.volatility.state</td><td>153</td><td>150, 830</td></tr><tr><td>analysis.volume.state</td><td>154</td><td>150</td></tr><tr><td>analysis.volume_quality.state</td><td>164</td><td>150</td></tr><tr><td>asset.extraction.confirmed</td><td>579</td><td>524</td></tr><tr><td>asset.extraction.execution_requested</td><td>579</td><td>518</td></tr><tr><td>asset.extraction.failed</td><td>579</td><td>524, 704, 2704</td></tr><tr><td>asset.extraction.requested</td><td>524</td><td>522, 579</td></tr><tr><td>asset.extraction.retry_requested</td><td>—</td><td>579</td></tr><tr><td>asset.extraction.state</td><td>524</td><td>—</td></tr><tr><td>asset.full_extraction.requested</td><td>524</td><td>522, 579</td></tr><tr><td>asset.portfolio.owner_intent</td><td>519</td><td>519</td></tr><tr><td>asset.portfolio.state</td><td>519</td><td>522, 571, 581, 583</td></tr><tr><td>audit.trail.state</td><td>522</td><td>—</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 52 — كتالوج أحداث 1–45 / 405</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p53">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">كتالوج أحداث 46–90 / 405</div>
+    <div class="snum">ورقة 53</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>الحدث</th><th>ناشرون (id)</th><th>مستمعون (id)</th></tr></thead><tbody><tr><td>core.integrity.alert</td><td>1</td><td>831, 2831</td></tr><tr><td>crypto.decision.breaks.state</td><td>2272</td><td>2274</td></tr><tr><td>crypto.decision.entry_candidate.state</td><td>2274</td><td>2275</td></tr><tr><td>crypto.decision.license.state</td><td>2270</td><td>2274</td></tr><tr><td>crypto.decision.signal_card.state</td><td>2277</td><td>2276</td></tr><tr><td>crypto.decision.sized_entry.state</td><td>2275</td><td>2277, 2707</td></tr><tr><td>crypto.decision.trigger_court.state</td><td>2273</td><td>2274</td></tr><tr><td>crypto.decision.value_state.state</td><td>2271</td><td>2274</td></tr><tr><td>crypto.feed.state</td><td>1002</td><td>—</td></tr><tr><td>crypto.feed.tick</td><td>1002</td><td>—</td></tr><tr><td>crypto.market.ticker.all</td><td>1001</td><td>1002</td></tr><tr><td>crypto.universe.membership.state</td><td>1001</td><td>2620, 2621, 2622</td></tr><tr><td>crypto.universe.override.command</td><td>—</td><td>1001</td></tr><tr><td>crypto.universe.rejected.state</td><td>1001</td><td>—</td></tr><tr><td>crypto.universe.scan.requested</td><td>—</td><td>1001</td></tr><tr><td>crypto.universe.snapshot.state</td><td>1001</td><td>2275, 2277</td></tr><tr><td>decision.aggregated.state</td><td>451</td><td>450, 452</td></tr><tr><td>decision.approved.state</td><td>466, 2276</td><td>450, 467, 581, 707, 2707</td></tr><tr><td>decision.behaviour.telemetry</td><td>811, 2811</td><td>832</td></tr><tr><td>decision.cycle.collected</td><td>450</td><td>—</td></tr><tr><td>decision.cycle.record</td><td>450</td><td>—</td></tr><tr><td>decision.dispatch.state</td><td>467</td><td>707, 2707</td></tr><tr><td>decision.eligibility.buy.state</td><td>455</td><td>450, 458</td></tr><tr><td>decision.eligibility.sell.state</td><td>456</td><td>450, 458</td></tr><tr><td>decision.evaluated.state</td><td>452</td><td>453</td></tr><tr><td>decision.filter.asset.state</td><td>468</td><td>454</td></tr><tr><td>decision.filter.conditions.state</td><td>461</td><td>454</td></tr><tr><td>decision.filter.confidence.state</td><td>460</td><td>454</td></tr><tr><td>decision.filter.freshness.state</td><td>464</td><td>454</td></tr><tr><td>decision.filter.position.state</td><td>463</td><td>454</td></tr><tr><td>decision.filter.timing.state</td><td>462</td><td>454</td></tr><tr><td>decision.filtered.state</td><td>454</td><td>450, 466</td></tr><tr><td>decision.gate.blocked</td><td>467</td><td>581</td></tr><tr><td>decision.gate.passed</td><td>467</td><td>576, 578, 580, 581</td></tr><tr><td>decision.gate.recorded</td><td>467</td><td>581</td></tr><tr><td>decision.resolved.state</td><td>458</td><td>360, 450, 454, 463, 581</td></tr><tr><td>decision.room.state</td><td>451</td><td>—</td></tr><tr><td>decision.scored.state</td><td>453</td><td>360, 450, 455, 456, 457, 458, 463, 811, 2811</td></tr><tr><td>decision.settings.command</td><td>901, 2901</td><td>150, 166, 452, 453, 454, 455, 456, 457, 458, 463, 581</td></tr><tr><td>decision.settings.state</td><td>150, 166, 452, 453, 454, 455, 456, 457, 458, 463, 581</td><td>523</td></tr><tr><td>decision.wait.state</td><td>457</td><td>450, 458</td></tr><tr><td>dial.command</td><td>901, 2901</td><td>523</td></tr><tr><td>dial.profile.state</td><td>523</td><td>576, 581, 583</td></tr><tr><td>drift.vector.state</td><td>840</td><td>832, 860, 870, 2860</td></tr><tr><td>emergency.halt</td><td>516</td><td>519, 550, 552, 575, 576, 578, 601, 704, 2704</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 53 — كتالوج أحداث 46–90 / 405</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p54">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">كتالوج أحداث 91–135 / 405</div>
+    <div class="snum">ورقة 54</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>الحدث</th><th>ناشرون (id)</th><th>مستمعون (id)</th></tr></thead><tbody><tr><td>execution.command.ack</td><td>563, 601</td><td>520, 550, 570, 578, 707, 720, 2707, 2720</td></tr><tr><td>execution.command.failed</td><td>575, 601</td><td>550, 570, 578, 579, 585, 707, 720, 2707, 2720</td></tr><tr><td>execution.confirmation.rejected</td><td>563</td><td>704, 2704</td></tr><tr><td>execution.desired.state</td><td>551</td><td>520</td></tr><tr><td>execution.gate.command</td><td>901, 2901</td><td>552, 575</td></tr><tr><td>execution.gate.state</td><td>552</td><td>552</td></tr><tr><td>execution.manage.command</td><td>570, 577, 579</td><td>522, 550, 575</td></tr><tr><td>execution.manage.intent</td><td>572, 573, 574</td><td>570</td></tr><tr><td>execution.manage.written</td><td>575</td><td>550, 570</td></tr><tr><td>execution.order.built</td><td>551</td><td>508, 518, 550, 584, 703, 707, 2703, 2707</td></tr><tr><td>execution.order.legal</td><td>584</td><td>552</td></tr><tr><td>execution.order.rejected</td><td>552, 584, 586</td><td>508, 516, 518, 550, 560, 578, 579, 585, 704, 707, 720, 2704, 2707, 2720</td></tr><tr><td>execution.order.requested</td><td>576, 578</td><td>578, 586, 707, 2707</td></tr><tr><td>execution.order.resolved</td><td>586</td><td>585</td></tr><tr><td>execution.order.skipped</td><td>551</td><td>550</td></tr><tr><td>execution.quality.state</td><td>560</td><td>578</td></tr><tr><td>execution.reconcile.requested</td><td>901, 2901</td><td>520</td></tr><tr><td>execution.reconcile.state</td><td>520</td><td>552, 2704</td></tr><tr><td>execution.reference_divergence.state</td><td>582</td><td>578</td></tr><tr><td>execution.snapshot.state</td><td>583</td><td>552, 578</td></tr><tr><td>execution.unified.state</td><td>550</td><td>550</td></tr><tr><td>experiment.state</td><td>850, 2850</td><td>870</td></tr><tr><td>feed.binance.liquidation</td><td>—</td><td>2267</td></tr><tr><td>feed.binance.oi</td><td>2622</td><td>2174</td></tr><tr><td>feed.binance.premium</td><td>2622</td><td>2174</td></tr><tr><td>feed.binance_rest.state</td><td>2622</td><td>—</td></tr><tr><td>feed.ctrader.heartbeat</td><td>622</td><td>—</td></tr><tr><td>feed.ctrader.state</td><td>622</td><td>—</td></tr><tr><td>feed.ctrader.tick</td><td>622</td><td>116, 521, 582, 613, 621</td></tr><tr><td>feed.mexc.state</td><td>2620</td><td>—</td></tr><tr><td>feed.mexc_rest.state</td><td>2621</td><td>—</td></tr><tr><td>feed.mt5.tick</td><td>618</td><td>116, 521, 552, 581, 582, 583, 613</td></tr><tr><td>feed.replay.tick</td><td>625, 630</td><td>—</td></tr><tr><td>financial.truth.shortage</td><td>585</td><td>831, 2831</td></tr><tr><td>horizon.profile.state</td><td>523</td><td>—</td></tr><tr><td>kernel.clock.heartbeat</td><td>3, 2003</td><td>111, 613, 2111</td></tr><tr><td>kernel.clock.minute_elapsed</td><td>3, 2003</td><td>—</td></tr><tr><td>kernel.clock.sys_tick</td><td>3, 2003</td><td>—</td></tr><tr><td>learning.feature.ready</td><td>362</td><td>363, 364</td></tr><tr><td>learning.model.active.state</td><td>367</td><td>365, 368</td></tr><tr><td>learning.model.candidate</td><td>363</td><td>364</td></tr><tr><td>learning.model.drift.state</td><td>368</td><td>—</td></tr><tr><td>learning.model.evidence</td><td>367</td><td>452</td></tr><tr><td>learning.model.rollback_requested</td><td>368</td><td>367</td></tr><tr><td>learning.model.selected</td><td>366</td><td>367</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 54 — كتالوج أحداث 91–135 / 405</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p55">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">كتالوج أحداث 136–180 / 405</div>
+    <div class="snum">ورقة 55</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>الحدث</th><th>ناشرون (id)</th><th>مستمعون (id)</th></tr></thead><tbody><tr><td>learning.model.selection</td><td>365</td><td>366</td></tr><tr><td>learning.model.validated</td><td>364</td><td>365</td></tr><tr><td>learning.outcome.recorded</td><td>360</td><td>361, 368</td></tr><tr><td>learning.sample.ready</td><td>361</td><td>362</td></tr><tr><td>liquidity.absorption.state</td><td>258</td><td>—</td></tr><tr><td>liquidity.buyside.state</td><td>252</td><td>250, 254</td></tr><tr><td>liquidity.cvd.state</td><td>257</td><td>—</td></tr><tr><td>liquidity.cycle.collected</td><td>250</td><td>259</td></tr><tr><td>liquidity.cycle.validated</td><td>259</td><td>260</td></tr><tr><td>liquidity.delta.state</td><td>256</td><td>257, 258</td></tr><tr><td>liquidity.depth.state</td><td>261</td><td>250</td></tr><tr><td>liquidity.fvg.state</td><td>255</td><td>250</td></tr><tr><td>liquidity.microprice.state</td><td>262</td><td>—</td></tr><tr><td>liquidity.ofi.state</td><td>263</td><td>—</td></tr><tr><td>liquidity.pool.state</td><td>251</td><td>250, 252, 253</td></tr><tr><td>liquidity.price_impact.state</td><td>264</td><td>—</td></tr><tr><td>liquidity.section.live</td><td>250</td><td>451, 820, 2820</td></tr><tr><td>liquidity.sellside.state</td><td>253</td><td>250, 254</td></tr><tr><td>liquidity.sweep.state</td><td>254</td><td>250</td></tr><tr><td>liquidity.units.state</td><td>250</td><td>—</td></tr><tr><td>liquidity.validation_failed</td><td>259</td><td>704, 831, 2831</td></tr><tr><td>logs.trades.state</td><td>720, 2720</td><td>—</td></tr><tr><td>market.broker_tick</td><td>613</td><td>—</td></tr><tr><td>market.calendar</td><td>616, 2616</td><td>109, 2109</td></tr><tr><td>market.candle</td><td>2621</td><td>2151, 2152, 2153, 2154, 2155, 2156, 2157, 2158, 2159, 2161, 2170, 2171, 2272, 2274</td></tr><tr><td>market.ctrader.symbol_specs</td><td>622</td><td>513, 518, 708, 2708</td></tr><tr><td>market.depth</td><td>622, 2620, 2621</td><td>106, 2106, 2265</td></tr><tr><td>market.feed.provider_down</td><td>613</td><td>704, 2704</td></tr><tr><td>market.feed.provider_recovered</td><td>613</td><td>704, 2704</td></tr><tr><td>market.feed.source_rejected</td><td>613</td><td>—</td></tr><tr><td>market.funding</td><td>2621</td><td>2171, 2172</td></tr><tr><td>market.liquidity.updated</td><td>260</td><td>451, 718, 2718</td></tr><tr><td>market.news</td><td>615, 616, 2615, 2616</td><td>108, 2108</td></tr><tr><td>market.news.enriched</td><td>615</td><td>411</td></tr><tr><td>market.oi</td><td>2621</td><td>2170, 2171</td></tr><tr><td>market.outcome.realized</td><td>563</td><td>360, 517, 550, 658, 666, 702, 2702</td></tr><tr><td>market.premium</td><td>2621</td><td>2171, 2173</td></tr><tr><td>market.reference</td><td>620, 621</td><td>110, 521, 2110</td></tr><tr><td>market.regime.state</td><td>830</td><td>832, 840</td></tr><tr><td>market.structure.updated</td><td>210</td><td>451, 713, 2713</td></tr><tr><td>market.symbol_specs</td><td>618</td><td>508, 513, 518, 525, 552, 560, 563, 576, 581, 582, 583, 584, 585, 708, 2708</td></tr><tr><td>market.tick</td><td>613, 2620</td><td>112, 115, 2112, 2115</td></tr><tr><td>market.tick.validated</td><td>112, 2112</td><td>101, 102, 103, 105, 113, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 318, 351, 352, 353, 354, 355, 356, 358, 360, 367, 401, 402, 404, 405, 406, 407, 408, 409, 410, 411, 412, 450, 451, 464, 468, 513, 576, 626, 820, 2101, 2102, 2103, 2105, 2113, 2820</td></tr><tr><td>market.time.drift</td><td>111, 2111</td><td>704, 2704</td></tr><tr><td>market.time.synced</td><td>111, 2111</td><td>—</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 55 — كتالوج أحداث 136–180 / 405</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p56">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">كتالوج أحداث 181–225 / 405</div>
+    <div class="snum">ورقة 56</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>الحدث</th><th>ناشرون (id)</th><th>مستمعون (id)</th></tr></thead><tbody><tr><td>market.trade</td><td>2620</td><td>107, 2107, 2266</td></tr><tr><td>market.volume</td><td>613</td><td>104, 2104</td></tr><tr><td>market_data.calendar.state</td><td>109, 2109</td><td>454</td></tr><tr><td>market_data.calendar_event</td><td>109, 2109</td><td>101, 113, 2101, 2113</td></tr><tr><td>market_data.calendar_window</td><td>109, 2109</td><td>704</td></tr><tr><td>market_data.candle_closed</td><td>103, 2103</td><td>101, 113, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 201, 254, 255, 258, 576, 581, 2101, 2113</td></tr><tr><td>market_data.cleaned</td><td>113, 2113</td><td>114, 2114</td></tr><tr><td>market_data.depth_updated</td><td>106, 2106</td><td>101, 113, 261, 262, 263, 264, 2101, 2113</td></tr><tr><td>market_data.feed.state</td><td>116</td><td>454</td></tr><tr><td>market_data.feed_interrupted</td><td>116</td><td>704, 2704</td></tr><tr><td>market_data.feed_recovered</td><td>116</td><td>520, 704, 2704</td></tr><tr><td>market_data.news_received</td><td>108, 2108</td><td>101, 113, 411, 2101, 2113, 2274</td></tr><tr><td>market_data.normalized</td><td>114, 2114</td><td>—</td></tr><tr><td>market_data.price_received</td><td>102, 2102</td><td>101, 113, 701, 2101, 2113, 2701</td></tr><tr><td>market_data.quality.state</td><td>115, 2115</td><td>454</td></tr><tr><td>market_data.quality_alert</td><td>115, 2115</td><td>704, 831, 2831</td></tr><tr><td>market_data.reference_index_updated</td><td>110, 2110</td><td>101, 113, 2101, 2113</td></tr><tr><td>market_data.spread_updated</td><td>105, 2105</td><td>101, 113, 2101, 2113</td></tr><tr><td>market_data.state</td><td>101, 2101</td><td>—</td></tr><tr><td>market_data.trade_tape_updated</td><td>107, 2107</td><td>101, 113, 256, 2101, 2113</td></tr><tr><td>market_data.validation.state</td><td>112, 2112</td><td>704, 2704</td></tr><tr><td>market_data.validation_failed</td><td>112, 2112</td><td>704, 831, 2831</td></tr><tr><td>market_data.volume_received</td><td>104, 2104</td><td>101, 113, 2101, 2113</td></tr><tr><td>measurement.health.state</td><td>820, 2820</td><td>832, 840</td></tr><tr><td>measurement.latency.state</td><td>820, 2820</td><td>832, 840, 860, 2860</td></tr><tr><td>model.persist_requested</td><td>367</td><td>706, 2706</td></tr><tr><td>model.persisted</td><td>706, 2706</td><td>367</td></tr><tr><td>news.trading_window.state</td><td>411</td><td>454</td></tr><tr><td>parameter.approve.command</td><td>901, 2901</td><td>—</td></tr><tr><td>parameter.approved.state</td><td>901, 2901</td><td>—</td></tr><tr><td>perpetual.asset.activate</td><td>901, 2901</td><td>468, 518, 576</td></tr><tr><td>perpetual.asset.deactivate</td><td>579, 901, 2901</td><td>576</td></tr><tr><td>perpetual.entry.rejected</td><td>576</td><td>—</td></tr><tr><td>perpetual.entry.state</td><td>576</td><td>—</td></tr><tr><td>perpetual.owner.escalation</td><td>578</td><td>522</td></tr><tr><td>perpetual.pair.state</td><td>578</td><td>—</td></tr><tr><td>perpetual.plan.state</td><td>571</td><td>577</td></tr><tr><td>perpetual.target.state</td><td>581</td><td>583, 707, 811, 2707</td></tr><tr><td>platform.account.state</td><td>619</td><td>112, 115, 506, 507, 508, 513, 516, 517, 518, 519, 520, 523, 525, 551, 552, 560, 563, 573, 576, 578, 583, 585, 609, 618, 651, 652, 653, 654, 655, 656, 657, 658, 708, 2112, 2115, 2708</td></tr><tr><td>platform.brain_signal.halted</td><td>601</td><td>704, 2704</td></tr><tr><td>platform.brain_signal.write_failed</td><td>601</td><td>550, 560, 578, 707, 2707</td></tr><tr><td>platform.brain_signal.written</td><td>601</td><td>522, 550, 704, 707, 2704, 2707</td></tr><tr><td>platform.position.appeared</td><td>609</td><td>704, 720, 2720</td></tr><tr><td>platform.position.vanished</td><td>609</td><td>570, 720, 2720</td></tr><tr><td>platform.positions.schema_state</td><td>609</td><td>704, 2704</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 56 — كتالوج أحداث 181–225 / 405</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p57">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">كتالوج أحداث 226–270 / 405</div>
+    <div class="snum">ورقة 57</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>الحدث</th><th>ناشرون (id)</th><th>مستمعون (id)</th></tr></thead><tbody><tr><td>platform.positions.state</td><td>609</td><td>463, 508, 516, 518, 520, 572, 573, 574, 576, 577, 578, 579, 581, 658, 659</td></tr><tr><td>platform.terminal_state</td><td>619</td><td>516, 519, 578, 652</td></tr><tr><td>platform.trade_event</td><td>611</td><td>506, 508, 516, 518, 519, 522, 550, 560, 563, 578, 579, 585, 702, 704, 707, 720, 2275, 2702, 2704, 2707, 2720</td></tr><tr><td>platform.trade_event.simulated</td><td>626</td><td>—</td></tr><tr><td>portfolio.account.state</td><td>652</td><td>650</td></tr><tr><td>portfolio.account.tracked</td><td>651</td><td>650</td></tr><tr><td>portfolio.balance.state</td><td>653</td><td>650</td></tr><tr><td>portfolio.capital_distribution.state</td><td>662</td><td>668</td></tr><tr><td>portfolio.comparison.state</td><td>667</td><td>668</td></tr><tr><td>portfolio.components.state</td><td>650</td><td>662, 668</td></tr><tr><td>portfolio.equity.state</td><td>654</td><td>585, 650</td></tr><tr><td>portfolio.free_margin.state</td><td>656</td><td>585, 650</td></tr><tr><td>portfolio.loss_limits.state</td><td>664</td><td>668</td></tr><tr><td>portfolio.margin.state</td><td>655</td><td>650</td></tr><tr><td>portfolio.margin_level.state</td><td>657</td><td>650</td></tr><tr><td>portfolio.open_positions.state</td><td>659</td><td>650</td></tr><tr><td>portfolio.overview.state</td><td>668</td><td>709, 2709</td></tr><tr><td>portfolio.performance.state</td><td>666</td><td>667, 668</td></tr><tr><td>portfolio.pnl.state</td><td>658</td><td>650, 666</td></tr><tr><td>portfolio.profit_limits.state</td><td>665</td><td>668</td></tr><tr><td>portfolio.risk_distribution.state</td><td>663</td><td>668</td></tr><tr><td>portfolio.summary</td><td>650</td><td>709, 2709</td></tr><tr><td>probability.breakout.state</td><td>353</td><td>350, 357, 359</td></tr><tr><td>probability.confidence.state</td><td>359</td><td>350, 451, 460</td></tr><tr><td>probability.cycle.collected</td><td>350</td><td>451</td></tr><tr><td>probability.hurst.state</td><td>358</td><td>350, 357, 359</td></tr><tr><td>probability.merged.state</td><td>357</td><td>350</td></tr><tr><td>probability.momentum.state</td><td>355</td><td>350, 357, 359</td></tr><tr><td>probability.pullback.state</td><td>354</td><td>350, 357, 359</td></tr><tr><td>probability.range.state</td><td>356</td><td>350, 357, 359</td></tr><tr><td>probability.reversal.state</td><td>352</td><td>350, 357, 359</td></tr><tr><td>probability.section.live</td><td>350</td><td>451, 820, 2820</td></tr><tr><td>probability.trend.state</td><td>351</td><td>350, 357, 359</td></tr><tr><td>probability.units.state</td><td>350</td><td>—</td></tr><tr><td>recalibration.applied</td><td>870</td><td>—</td></tr><tr><td>recalibration.proposed</td><td>840</td><td>850, 2850</td></tr><tr><td>reference.health.state</td><td>521</td><td>552, 2704</td></tr><tr><td>replay.session.start</td><td>—</td><td>625</td></tr><tr><td>replay.session.state</td><td>625</td><td>—</td></tr><tr><td>replay.session.stop</td><td>—</td><td>625</td></tr><tr><td>risk.account.state</td><td>516</td><td>500, 2704</td></tr><tr><td>risk.asset.command</td><td>578, 901, 2901</td><td>463, 468, 519</td></tr><tr><td>risk.asset_budget.state</td><td>901, 2901</td><td>518</td></tr><tr><td>risk.asset_ledger.state</td><td>518</td><td>512, 516, 519, 523, 524, 525, 576, 581, 583, 650, 663, 664, 665</td></tr><tr><td>risk.asset_profit.extracted</td><td>524</td><td>518</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 57 — كتالوج أحداث 226–270 / 405</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p58">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">كتالوج أحداث 271–315 / 405</div>
+    <div class="snum">ورقة 58</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>الحدث</th><th>ناشرون (id)</th><th>مستمعون (id)</th></tr></thead><tbody><tr><td>risk.asset_stop.state</td><td>512</td><td>581</td></tr><tr><td>risk.audit.state</td><td>516</td><td>2704</td></tr><tr><td>risk.exposure.state</td><td>508</td><td>500, 552</td></tr><tr><td>risk.halt.requested</td><td>506, 507, 508, 901, 2901</td><td>516</td></tr><tr><td>risk.hard_stop.price</td><td>525</td><td>571</td></tr><tr><td>risk.kill_switch.reset_requested</td><td>516</td><td>506, 507, 519, 550, 552, 575, 576, 578</td></tr><tr><td>risk.loss_reported</td><td>517</td><td>506, 507, 516, 518, 704, 2704</td></tr><tr><td>risk.margin.validation.completed</td><td>585</td><td>516, 552</td></tr><tr><td>risk.position_size.rejected</td><td>513</td><td>551</td></tr><tr><td>risk.position_size.state</td><td>513</td><td>551</td></tr><tr><td>risk.profit_limits.state</td><td>507</td><td>500</td></tr><tr><td>risk.release.requested</td><td>901, 2901</td><td>516</td></tr><tr><td>risk.session_limits.state</td><td>506</td><td>500</td></tr><tr><td>risk.structure_stop.state</td><td>512</td><td>513, 573</td></tr><tr><td>risk.unified.state</td><td>500</td><td>—</td></tr><tr><td>risk.validation.completed</td><td>516</td><td>551, 578, 585</td></tr><tr><td>sense.abnormal.state</td><td>2158</td><td>2274</td></tr><tr><td>sense.aggressor.state</td><td>2266</td><td>2273</td></tr><tr><td>sense.binance_heat.state</td><td>2174</td><td>—</td></tr><tr><td>sense.fuel.state</td><td>2171</td><td>2274</td></tr><tr><td>sense.funding.state</td><td>2172</td><td>—</td></tr><tr><td>sense.htf.state</td><td>2159</td><td>2274</td></tr><tr><td>sense.liquidations.state</td><td>2267</td><td>—</td></tr><tr><td>sense.median_range.state</td><td>2156</td><td>2275</td></tr><tr><td>sense.min1_lens.state</td><td>2161</td><td>2273</td></tr><tr><td>sense.oi.state</td><td>2170</td><td>2273, 2274</td></tr><tr><td>sense.premium.state</td><td>2173</td><td>2273, 2274</td></tr><tr><td>sense.prior_day.state</td><td>2153</td><td>2272, 2277</td></tr><tr><td>sense.round_numbers.state</td><td>2154</td><td>2274</td></tr><tr><td>sense.session_levels.state</td><td>2152</td><td>—</td></tr><tr><td>sense.volume_ma.state</td><td>2157</td><td>2274</td></tr><tr><td>sense.volume_profile.state</td><td>2155</td><td>2271, 2277</td></tr><tr><td>sense.vwap.state</td><td>2151</td><td>2270</td></tr><tr><td>sense.walls.state</td><td>2265</td><td>2273, 2277</td></tr><tr><td>sim.execution.state</td><td>626</td><td>—</td></tr><tr><td>stats.correlation.state</td><td>307</td><td>300</td></tr><tr><td>stats.cv.state</td><td>306</td><td>300</td></tr><tr><td>stats.cycle.collected</td><td>300</td><td>451</td></tr><tr><td>stats.distribution.state</td><td>314</td><td>300</td></tr><tr><td>stats.kurtosis.state</td><td>312</td><td>300</td></tr><tr><td>stats.mean.state</td><td>301</td><td>300</td></tr><tr><td>stats.median.state</td><td>302</td><td>300</td></tr><tr><td>stats.mode.state</td><td>303</td><td>300</td></tr><tr><td>stats.outlier.state</td><td>313</td><td>300</td></tr><tr><td>stats.period_compare.state</td><td>318</td><td>300</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 58 — كتالوج أحداث 271–315 / 405</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p59">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">كتالوج أحداث 316–360 / 405</div>
+    <div class="snum">ورقة 59</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>الحدث</th><th>ناشرون (id)</th><th>مستمعون (id)</th></tr></thead><tbody><tr><td>stats.quality.state</td><td>316</td><td>300, 461</td></tr><tr><td>stats.r_squared.state</td><td>309</td><td>300</td></tr><tr><td>stats.range.state</td><td>315</td><td>300</td></tr><tr><td>stats.regression.state</td><td>308</td><td>300</td></tr><tr><td>stats.section.live</td><td>300</td><td>451, 820, 2820</td></tr><tr><td>stats.skewness.state</td><td>311</td><td>300</td></tr><tr><td>stats.std.state</td><td>304</td><td>300</td></tr><tr><td>stats.units.state</td><td>300</td><td>—</td></tr><tr><td>stats.variance.state</td><td>305</td><td>300</td></tr><tr><td>stats.zscore.state</td><td>310</td><td>300</td></tr><tr><td>storage.analysis_saved</td><td>712, 2712</td><td>—</td></tr><tr><td>storage.archived</td><td>714, 2714</td><td>715, 716, 2715, 2716</td></tr><tr><td>storage.compressed</td><td>715, 2715</td><td>—</td></tr><tr><td>storage.decisions_saved</td><td>707, 2707</td><td>—</td></tr><tr><td>storage.liquidity_saved</td><td>718, 2718</td><td>—</td></tr><tr><td>storage.market_data_saved</td><td>701, 2701</td><td>—</td></tr><tr><td>storage.model_saved_confirmed</td><td>706, 2706</td><td>—</td></tr><tr><td>storage.orders_saved</td><td>703, 2703</td><td>—</td></tr><tr><td>storage.persistence.load_requested</td><td>367</td><td>706, 2706</td></tr><tr><td>storage.persistence.load_response</td><td>706, 2706</td><td>367</td></tr><tr><td>storage.persistence.save_failed</td><td>706, 2706</td><td>831, 2831</td></tr><tr><td>storage.portfolio_saved</td><td>709, 2709</td><td>—</td></tr><tr><td>storage.structure_saved</td><td>713, 2713</td><td>—</td></tr><tr><td>storage.symbol.map.state</td><td>708, 2708</td><td>—</td></tr><tr><td>storage.symbol.resolve_requested</td><td>586</td><td>708, 2708</td></tr><tr><td>storage.symbol.resolved</td><td>708, 2708</td><td>—</td></tr><tr><td>storage.symbol.unmapped</td><td>708, 2708</td><td>831, 2831</td></tr><tr><td>storage.timeline_saved</td><td>704, 2704</td><td>—</td></tr><tr><td>storage.trades_saved</td><td>702, 2702</td><td>—</td></tr><tr><td>storage.trading_data_cleaned</td><td>716, 2716</td><td>717, 2717</td></tr><tr><td>storage.trading_data_integrity_checked</td><td>717, 2717</td><td>—</td></tr><tr><td>strategy.aggregate.state</td><td>413</td><td>400</td></tr><tr><td>strategy.breakout.state</td><td>406</td><td>400, 413</td></tr><tr><td>strategy.cycle.collected</td><td>400</td><td>451</td></tr><tr><td>strategy.entry_quality.state</td><td>401</td><td>400, 413</td></tr><tr><td>strategy.invalidation_quality.state</td><td>402</td><td>400, 413</td></tr><tr><td>strategy.liquidity.state</td><td>410</td><td>400, 413</td></tr><tr><td>strategy.momentum.state</td><td>408</td><td>400, 413</td></tr><tr><td>strategy.news.state</td><td>411</td><td>400, 413</td></tr><tr><td>strategy.pullback.state</td><td>407</td><td>400, 413</td></tr><tr><td>strategy.range.state</td><td>409</td><td>400, 413</td></tr><tr><td>strategy.reversal.state</td><td>405</td><td>400, 413</td></tr><tr><td>strategy.section.live</td><td>400</td><td>451, 820, 2820</td></tr><tr><td>strategy.session.state</td><td>412</td><td>400, 413</td></tr><tr><td>strategy.trend.state</td><td>404</td><td>400, 413</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 59 — كتالوج أحداث 316–360 / 405</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p60">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">كتالوج أحداث 361–405 / 405</div>
+    <div class="snum">ورقة 60</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>الحدث</th><th>ناشرون (id)</th><th>مستمعون (id)</th></tr></thead><tbody><tr><td>strategy.units.state</td><td>400</td><td>—</td></tr><tr><td>structure.bos.state</td><td>204</td><td>200, 206</td></tr><tr><td>structure.choch.state</td><td>205</td><td>200, 206</td></tr><tr><td>structure.cycle.collected</td><td>200</td><td>209</td></tr><tr><td>structure.cycle.validated</td><td>209</td><td>210</td></tr><tr><td>structure.external.state</td><td>202</td><td>200, 204, 205</td></tr><tr><td>structure.internal.state</td><td>203</td><td>200</td></tr><tr><td>structure.mss.state</td><td>206</td><td>200, 207</td></tr><tr><td>structure.phase.state</td><td>208</td><td>200</td></tr><tr><td>structure.section.live</td><td>200</td><td>451, 820, 2820</td></tr><tr><td>structure.swing.state</td><td>201</td><td>200, 202, 203, 251</td></tr><tr><td>structure.trend.state</td><td>207</td><td>200, 208, 830</td></tr><tr><td>structure.units.state</td><td>200</td><td>—</td></tr><tr><td>structure.validation_failed</td><td>209</td><td>704, 831, 2831</td></tr><tr><td>symbol.resolve.orphaned</td><td>586</td><td>704, 2704</td></tr><tr><td>symbol.resolve.requested</td><td>586</td><td>708, 2708</td></tr><tr><td>symbol.resolve.result</td><td>708, 2708</td><td>586</td></tr><tr><td>system.alert</td><td>831, 2831</td><td>—</td></tr><tr><td>system.alert.recovered</td><td>831, 2831</td><td>—</td></tr><tr><td>system.alert.state</td><td>831, 2831</td><td>832</td></tr><tr><td>system.commands.state</td><td>901, 2901</td><td>—</td></tr><tr><td>system.diagnosis.state</td><td>832</td><td>870</td></tr><tr><td>telemetry.batch.closed</td><td>810, 2810</td><td>—</td></tr><tr><td>telemetry.carrier.state</td><td>810, 2810</td><td>—</td></tr><tr><td>tilt.rule.command</td><td>901, 2901</td><td>580</td></tr><tr><td>tilt.rules.state</td><td>580</td><td>—</td></tr><tr><td>tilt.state</td><td>580</td><td>—</td></tr><tr><td>time.clock.divergence</td><td>111, 2111</td><td>831, 2831</td></tr><tr><td>time.clock.quality.state</td><td>3, 2003</td><td>—</td></tr><tr><td>time.ntp.drift</td><td>608</td><td>831, 2831</td></tr><tr><td>time.ntp.samples.state</td><td>608</td><td>3, 2003</td></tr><tr><td>time.utc.drift</td><td>3, 2003</td><td>111, 2111</td></tr><tr><td>time.utc.stale</td><td>608</td><td>831, 2831</td></tr><tr><td>time.utc.synced</td><td>3, 2003</td><td>111, 2111</td></tr><tr><td>tools.backup.completed</td><td>800, 2800</td><td>—</td></tr><tr><td>tools.backup.failed</td><td>800, 2800</td><td>831, 2831</td></tr><tr><td>tools.device_resources.state</td><td>753, 2753</td><td>—</td></tr><tr><td>tools.file_archive.completed</td><td>802, 2802</td><td>—</td></tr><tr><td>tools.file_archive.failed</td><td>802, 2802</td><td>831, 2831</td></tr><tr><td>tools.file_cleanup.completed</td><td>803, 2803</td><td>—</td></tr><tr><td>tools.file_cleanup.failed</td><td>803, 2803</td><td>831, 2831</td></tr><tr><td>tools.integrity.violation</td><td>7, 2007</td><td>831, 2831</td></tr><tr><td>tools.storage.low</td><td>6, 2006</td><td>831, 2831</td></tr><tr><td>tools.storage.recovered</td><td>6, 2006</td><td>—</td></tr><tr><td>trading.final_decision</td><td>552</td><td>360, 522, 550, 560, 563, 601, 626, 707, 2707</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 60 — كتالوج أحداث 361–405 / 405</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p61">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول كل ذرّات الفوركس (مختصر)</div>
+    <div class="snum">ورقة 61</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إقلاع</th><th>قسم</th></tr></thead><tbody><tr><td>1</td><td>NQ</td><td>تلقائي</td><td>قسم 001-050</td></tr><tr><td>3</td><td>Clock</td><td>تلقائي</td><td>قسم 001-050</td></tr><tr><td>6</td><td>Storage Monitor</td><td>تلقائي</td><td>قسم 001-050</td></tr><tr><td>7</td><td>File Integrity Monitor</td><td>تلقائي</td><td>قسم 001-050</td></tr><tr><td>101</td><td>Market Data Manager</td><td>تلقائي</td><td>قسم 101-150</td></tr><tr><td>102</td><td>Price Receiver</td><td>تلقائي</td><td>قسم 101-150</td></tr><tr><td>103</td><td>Candle Builder</td><td>تلقائي</td><td>قسم 101-150</td></tr><tr><td>104</td><td>Volume Receiver</td><td>تلقائي</td><td>قسم 101-150</td></tr><tr><td>105</td><td>Spread Receiver</td><td>تلقائي</td><td>قسم 101-150</td></tr><tr><td>106</td><td>Market Depth Receiver</td><td>تلقائي</td><td>قسم 101-150</td></tr><tr><td>107</td><td>Trade Tape Receiver</td><td>يدوي</td><td>قسم 101-150</td></tr><tr><td>108</td><td>News Receiver</td><td>تلقائي</td><td>قسم 101-150</td></tr><tr><td>109</td><td>Economic Calendar Receiver</td><td>تلقائي</td><td>قسم 101-150</td></tr><tr><td>110</td><td>Reference Indices Receiver</td><td>تلقائي</td><td>قسم 101-150</td></tr><tr><td>111</td><td>Time Bridge</td><td>تلقائي</td><td>قسم 101-150</td></tr><tr><td>112</td><td>Validated Market Tick Gate</td><td>تلقائي</td><td>قسم 101-150</td></tr><tr><td>113</td><td>Side-Path Data Cleaner</td><td>تلقائي</td><td>قسم 101-150</td></tr><tr><td>114</td><td>Data Normalizer</td><td>تلقائي</td><td>قسم 101-150</td></tr><tr><td>115</td><td>Raw Data Quality Monitor</td><td>تلقائي</td><td>قسم 101-150</td></tr><tr><td>116</td><td>Feed Interruption Detector</td><td>تلقائي</td><td>قسم 101-150</td></tr><tr><td>150</td><td>Analysis Manager</td><td>تلقائي</td><td>قسم 101-150</td></tr><tr><td>151</td><td>Trend Analyzer</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>152</td><td>Momentum Analyzer</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>153</td><td>Volatility Analyzer</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>154</td><td>Volume Analyzer</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>155</td><td>Spread Analyzer</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>156</td><td>Candlestick Analyzer</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>157</td><td>Gap Analyzer</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>158</td><td>Session Analyzer</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>159</td><td>Time Effect Analyzer</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>160</td><td>Correlation Analyzer</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>161</td><td>Relative Strength Analyzer</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>162</td><td>Velocity Analyzer</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>163</td><td>Acceleration Analyzer</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>164</td><td>Volume Quality Analyzer</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>165</td><td>Noise Analyzer</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>166</td><td>Analysis Fusion</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>200</td><td>Structure Manager</td><td>تلقائي</td><td>قسم 151-200</td></tr><tr><td>201</td><td>Swing Detection</td><td>تلقائي</td><td>قسم 201-250</td></tr><tr><td>202</td><td>External Structure</td><td>تلقائي</td><td>قسم 201-250</td></tr><tr><td>203</td><td>Internal Structure</td><td>تلقائي</td><td>قسم 201-250</td></tr><tr><td>204</td><td>BOS Detector</td><td>تلقائي</td><td>قسم 201-250</td></tr><tr><td>205</td><td>CHoCH Detector</td><td>تلقائي</td><td>قسم 201-250</td></tr><tr><td>206</td><td>MSS Detector</td><td>تلقائي</td><td>قسم 201-250</td></tr><tr><td>207</td><td>Trend State</td><td>تلقائي</td><td>قسم 201-250</td></tr><tr><td>208</td><td>Market Phase</td><td>تلقائي</td><td>قسم 201-250</td></tr><tr><td>209</td><td>Structure Validator</td><td>تلقائي</td><td>قسم 201-250</td></tr><tr><td>210</td><td>Structure Publisher</td><td>تلقائي</td><td>قسم 201-250</td></tr><tr><td>250</td><td>Liquidity Manager</td><td>تلقائي</td><td>قسم 201-250</td></tr><tr><td>251</td><td>Liquidity Pool Detector</td><td>تلقائي</td><td>قسم 251-300</td></tr><tr><td>252</td><td>Buy Side Liquidity</td><td>تلقائي</td><td>قسم 251-300</td></tr><tr><td>253</td><td>Sell Side Liquidity</td><td>تلقائي</td><td>قسم 251-300</td></tr><tr><td>254</td><td>Liquidity Sweep</td><td>تلقائي</td><td>قسم 251-300</td></tr><tr><td>255</td><td>Imbalance FVG</td><td>تلقائي</td><td>قسم 251-300</td></tr><tr><td>256</td><td>Delta Analyzer</td><td>يدوي</td><td>قسم 251-300</td></tr><tr><td>257</td><td>CVD Analyzer</td><td>يدوي</td><td>قسم 251-300</td></tr><tr><td>258</td><td>Absorption Detector</td><td>يدوي</td><td>قسم 251-300</td></tr><tr><td>259</td><td>Liquidity Validator</td><td>تلقائي</td><td>قسم 251-300</td></tr><tr><td>260</td><td>Liquidity Publisher</td><td>تلقائي</td><td>قسم 251-300</td></tr><tr><td>261</td><td>Depth Analyzer</td><td>تلقائي</td><td>قسم 251-300</td></tr><tr><td>262</td><td>Microprice Analyzer</td><td>تلقائي</td><td>قسم 251-300</td></tr><tr><td>263</td><td>Order Flow Imbalance (OFI)</td><td>تلقائي</td><td>قسم 251-300</td></tr><tr><td>264</td><td>Book Price Impact (Kyle Lambda)</td><td>تلقائي</td><td>قسم 251-300</td></tr><tr><td>300</td><td>Statistics Manager</td><td>تلقائي</td><td>قسم 251-300</td></tr><tr><td>301</td><td>Mean</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>302</td><td>Median</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>303</td><td>Mode</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>304</td><td>Std Dev</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>305</td><td>Variance</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>306</td><td>Coefficient of Variation</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>307</td><td>Statistical Correlation</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>308</td><td>Linear Regression</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>309</td><td>R Squared</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>310</td><td>Z Score</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>311</td><td>Skewness</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>312</td><td>Kurtosis</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>313</td><td>Outlier Detector</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>314</td><td>Distribution Histogram</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>315</td><td>Range Bundle</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>316</td><td>Data Quality Monitor</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>318</td><td>Period Comparison</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>350</td><td>Probability Manager</td><td>تلقائي</td><td>قسم 301-350</td></tr><tr><td>351</td><td>Tick Trend Probability Model</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>352</td><td>Tick Reversal Probability Model</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>353</td><td>Tick Breakout Probability Model</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>354</td><td>Tick Pullback Probability Model</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>355</td><td>Tick Momentum Probability Model</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>356</td><td>Tick Range Probability Model</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>357</td><td>Live Tick Model Merger</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>358</td><td>Tick Hurst Probability Model</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>359</td><td>Live Tick Confidence Aggregator</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>360</td><td>Learning Outcome Collector</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>361</td><td>Learning Dataset Builder</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>362</td><td>Learning Feature Builder</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>363</td><td>Learning Trainer</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>364</td><td>Learning Out Of Sample Validator</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>365</td><td>Learning Model Comparison</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>366</td><td>Learning Model Selection</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>367</td><td>Learning Model Registry</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>368</td><td>Learning Drift And Rollback</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>400</td><td>Strategy Section Manager</td><td>تلقائي</td><td>قسم 351-400</td></tr><tr><td>401</td><td>Strategic Entry Structure Quality</td><td>تلقائي</td><td>قسم 401-450</td></tr><tr><td>402</td><td>Strategic Invalidation Quality</td><td>تلقائي</td><td>قسم 401-450</td></tr><tr><td>404</td><td>Trend Continuation Strategy Opinion</td><td>تلقائي</td><td>قسم 401-450</td></tr><tr><td>405</td><td>Reversal Potential Strategy Opinion</td><td>تلقائي</td><td>قسم 401-450</td></tr><tr><td>406</td><td>Breakout Acceptance Strategy Opinion</td><td>تلقائي</td><td>قسم 401-450</td></tr><tr><td>407</td><td>Pullback Quality Strategy Opinion</td><td>تلقائي</td><td>قسم 401-450</td></tr><tr><td>408</td><td>Momentum Expansion Strategy Opinion</td><td>تلقائي</td><td>قسم 401-450</td></tr><tr><td>409</td><td>Range Rotation Strategy Opinion</td><td>تلقائي</td><td>قسم 401-450</td></tr><tr><td>410</td><td>Liquidity Raid Strategy Opinion</td><td>تلقائي</td><td>قسم 401-450</td></tr><tr><td>411</td><td>News Strategic Regime</td><td>تلقائي</td><td>قسم 401-450</td></tr><tr><td>412</td><td>Session Strategic Regime</td><td>تلقائي</td><td>قسم 401-450</td></tr><tr><td>413</td><td>Weighted Strategy Aggregator</td><td>تلقائي</td><td>قسم 401-450</td></tr><tr><td>450</td><td>Decision Manager</td><td>تلقائي</td><td>قسم 401-450</td></tr><tr><td>451</td><td>Decision Aggregator</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>452</td><td>Signal Evaluation</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>453</td><td>Score Calculator</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>454</td><td>Decision Filter</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>455</td><td>Buy Eligibility Checker</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>456</td><td>Sell Eligibility Checker</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>457</td><td>Wait State Explainer</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>458</td><td>Conflict Resolver</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>460</td><td>Confidence Filter</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>461</td><td>Conditions Filter</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>462</td><td>Timing Filter</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>463</td><td>Position Guard</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>464</td><td>Freshness Filter</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>466</td><td>Decision Approval</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>467</td><td>Decision Dispatch</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>468</td><td>Asset Control Filter</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>500</td><td>Risk Read-Only Aggregator</td><td>تلقائي</td><td>قسم 451-500</td></tr><tr><td>506</td><td>Session Limits</td><td>تلقائي</td><td>قسم 501-550</td></tr><tr><td>507</td><td>Profit Limits</td><td>تلقائي</td><td>قسم 501-550</td></tr><tr><td>508</td><td>Exposure Manager</td><td>تلقائي</td><td>قسم 501-550</td></tr><tr><td>512</td><td>Asset Dollar Stop</td><td>تلقائي</td><td>قسم 501-550</td></tr><tr><td>513</td><td>Position Sizing</td><td>تلقائي</td><td>قسم 501-550</td></tr><tr><td>516</td><td>Per-Account Risk Authority</td><td>تلقائي</td><td>قسم 501-550</td></tr><tr><td>517</td><td>Trade Outcome</td><td>تلقائي</td><td>قسم 501-550</td></tr><tr><td>518</td><td>Asset Risk Ledger</td><td>تلقائي</td><td>قسم 501-550</td></tr><tr><td>519</td><td>Asset Portfolio</td><td>تلقائي</td><td>قسم 501-550</td></tr><tr><td>520</td><td>Position Reconciliation</td><td>تلقائي</td><td>قسم 501-550</td></tr><tr><td>521</td><td>Reference Feed Health</td><td>تلقائي</td><td>قسم 501-550</td></tr><tr><td>522</td><td>Audit Trail</td><td>تلقائي</td><td>قسم 501-550</td></tr><tr><td>523</td><td>Dial Engine</td><td>تلقائي</td><td>قسم 501-550</td></tr><tr><td>524</td><td>Cumulative Gross Profit Extraction</td><td>تلقائي</td><td>قسم 501-550</td></tr><tr><td>525</td><td>Hard Stop Price</td><td>تلقائي</td><td>قسم 501-550</td></tr><tr><td>550</td><td>Truthful Execution Lifecycle</td><td>تلقائي</td><td>قسم 501-550</td></tr><tr><td>551</td><td>Order Builder</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>552</td><td>Order Validator</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>560</td><td>Scoped Execution Quality</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>563</td><td>Durable Execution Confirm</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>570</td><td>Management Coordinator</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>571</td><td>Perpetual Management Plan</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>572</td><td>Breakeven</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>573</td><td>Trailing Stop</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>574</td><td>Partial Close</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>575</td><td>Management Sender</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>576</td><td>Perpetual Engine</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>577</td><td>Stop Maintenance</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>578</td><td>Perpetual Difference And Pair Coordinator</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>579</td><td>Extraction Executor</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>580</td><td>Multi-Level Tilt Engine</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>581</td><td>Position Delta Engine</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>582</td><td>Reference Broker Divergence</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>583</td><td>Execution Snapshot With Completeness</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>584</td><td>Stop Legality</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>585</td><td>Margin Guard</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>586</td><td>Durable Symbol Resolution Gate</td><td>تلقائي</td><td>قسم 551-600</td></tr><tr><td>601</td><td>Brain Bridge Writer</td><td>تلقائي</td><td>قسم 601-650</td></tr><tr><td>608</td><td>Time Sync</td><td>تلقائي</td><td>قسم 601-650</td></tr><tr><td>609</td><td>Position Sync</td><td>تلقائي</td><td>قسم 601-650</td></tr><tr><td>611</td><td>Trade Events Reader</td><td>تلقائي</td><td>قسم 601-650</td></tr><tr><td>613</td><td>Market Feed Hub</td><td>تلقائي</td><td>قسم 601-650</td></tr><tr><td>615</td><td>News Source Bridge</td><td>تلقائي</td><td>قسم 601-650</td></tr><tr><td>616</td><td>News Bridge Reader</td><td>تلقائي</td><td>قسم 601-650</td></tr><tr><td>618</td><td>MT5 Bridge Source</td><td>تلقائي</td><td>قسم 601-650</td></tr><tr><td>619</td><td>Account State Reader</td><td>تلقائي</td><td>قسم 601-650</td></tr><tr><td>620</td><td>Yahoo Finance Source</td><td>تلقائي</td><td>قسم 601-650</td></tr><tr><td>621</td><td>cTrader Reference Bridge</td><td>تلقائي</td><td>قسم 601-650</td></tr><tr><td>622</td><td>cTrader FIX Price Feed</td><td>تلقائي</td><td>قسم 601-650</td></tr><tr><td>625</td><td>Replay Feed Source</td><td>يدوي</td><td>قسم 601-650</td></tr><tr><td>626</td><td>Simulated Execution Bridge</td><td>يدوي</td><td>قسم 601-650</td></tr><tr><td>630</td><td>Replay Source</td><td>يدوي</td><td>قسم 601-650</td></tr><tr><td>650</td><td>Portfolio Manager</td><td>تلقائي</td><td>قسم 601-650</td></tr><tr><td>651</td><td>Portfolio Account Tracker</td><td>تلقائي</td><td>قسم 651-700</td></tr><tr><td>652</td><td>Portfolio Account State</td><td>تلقائي</td><td>قسم 651-700</td></tr><tr><td>653</td><td>Portfolio Balance</td><td>تلقائي</td><td>قسم 651-700</td></tr><tr><td>654</td><td>Portfolio Equity</td><td>تلقائي</td><td>قسم 651-700</td></tr><tr><td>655</td><td>Portfolio Margin</td><td>تلقائي</td><td>قسم 651-700</td></tr><tr><td>656</td><td>Portfolio Free Margin</td><td>تلقائي</td><td>قسم 651-700</td></tr><tr><td>657</td><td>Portfolio Margin Level</td><td>تلقائي</td><td>قسم 651-700</td></tr><tr><td>658</td><td>Portfolio Profit And Loss</td><td>تلقائي</td><td>قسم 651-700</td></tr><tr><td>659</td><td>Portfolio Open Positions</td><td>تلقائي</td><td>قسم 651-700</td></tr><tr><td>662</td><td>Capital Distribution</td><td>تلقائي</td><td>قسم 651-700</td></tr><tr><td>663</td><td>Risk Distribution</td><td>تلقائي</td><td>قسم 651-700</td></tr><tr><td>664</td><td>Portfolio Loss Limits</td><td>تلقائي</td><td>قسم 651-700</td></tr><tr><td>665</td><td>Portfolio Profit Limits</td><td>تلقائي</td><td>قسم 651-700</td></tr><tr><td>666</td><td>Portfolio Performance</td><td>تلقائي</td><td>قسم 651-700</td></tr><tr><td>667</td><td>Portfolio Comparison</td><td>تلقائي</td><td>قسم 651-700</td></tr><tr><td>668</td><td>Portfolio Overview</td><td>تلقائي</td><td>قسم 651-700</td></tr><tr><td>701</td><td>Market Data Store</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>702</td><td>Trade Store</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>703</td><td>Order Store</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>704</td><td>Timeline Store</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>706</td><td>Model Store</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>707</td><td>Execution Lifecycle Store</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>708</td><td>Symbol Registry And Resolution</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>709</td><td>Portfolio Store</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>712</td><td>Analysis Store</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>713</td><td>Structure Store</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>714</td><td>Archive</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>715</td><td>Archive Compression</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>716</td><td>Duplicate Cleanup</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>717</td><td>Trading Data Integrity</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>718</td><td>Liquidity Store</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>719</td><td>Error Log</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>720</td><td>Trades Log</td><td>تلقائي</td><td>قسم 701-750</td></tr><tr><td>753</td><td>Device Resource Monitor</td><td>تلقائي</td><td>قسم 751-800</td></tr><tr><td>800</td><td>Backup Manager</td><td>تلقائي</td><td>قسم 751-800</td></tr><tr><td>802</td><td>File Archive Manager</td><td>تلقائي</td><td>قسم 801-850</td></tr><tr><td>803</td><td>File Cleanup Manager</td><td>تلقائي</td><td>قسم 801-850</td></tr><tr><td>806</td><td>Time Tick</td><td>تلقائي</td><td>قسم 801-850</td></tr><tr><td>810</td><td>Telemetry Carrier</td><td>تلقائي</td><td>قسم 801-850</td></tr><tr><td>811</td><td>Decision Behaviour Meter</td><td>تلقائي</td><td>قسم 801-850</td></tr><tr><td>820</td><td>Measurement Engine</td><td>تلقائي</td><td>قسم 801-850</td></tr><tr><td>830</td><td>Market Regime Engine</td><td>تلقائي</td><td>قسم 801-850</td></tr><tr><td>831</td><td>Alert Aggregator</td><td>تلقائي</td><td>قسم 801-850</td></tr><tr><td>832</td><td>System Diagnostician</td><td>تلقائي</td><td>قسم 801-850</td></tr><tr><td>840</td><td>Drift Engine</td><td>تلقائي</td><td>قسم 801-850</td></tr><tr><td>850</td><td>Change Governor</td><td>تلقائي</td><td>قسم 801-850</td></tr><tr><td>860</td><td>Adaptation Kill Switch</td><td>تلقائي</td><td>قسم 851-900</td></tr><tr><td>870</td><td>Calibration Brain</td><td>تلقائي</td><td>قسم 851-900</td></tr><tr><td>901</td><td>Command Gateway</td><td>تلقائي</td><td>قسم 901-950</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 61 — جدول كل ذرّات الفوركس (مختصر)</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p62">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">جدول كل ذرّات الكريبتو (مختصر)</div>
+    <div class="snum">ورقة 62</div>
+  </header>
+  <div class="sheet-body"><table class="grid small"><thead><tr><th>id</th><th>الاسم</th><th>إقلاع</th><th>قسم</th></tr></thead><tbody><tr><td>1001</td><td>Crypto Asset Universe Manager</td><td>تلقائي</td><td>قسم 1001-1050</td></tr><tr><td>1002</td><td>Crypto Market Feed</td><td>تلقائي</td><td>قسم 1001-1050</td></tr><tr><td>2003</td><td>Clock</td><td>يدوي</td><td>قسم 2001-2050</td></tr><tr><td>2006</td><td>Storage Monitor</td><td>يدوي</td><td>قسم 2001-2050</td></tr><tr><td>2007</td><td>File Integrity Monitor</td><td>يدوي</td><td>قسم 2001-2050</td></tr><tr><td>2101</td><td>Market Data Manager</td><td>يدوي</td><td>قسم 2101-2150</td></tr><tr><td>2102</td><td>Price Receiver</td><td>يدوي</td><td>قسم 2101-2150</td></tr><tr><td>2103</td><td>Candle Builder</td><td>يدوي</td><td>قسم 2101-2150</td></tr><tr><td>2104</td><td>Volume Receiver</td><td>يدوي</td><td>قسم 2101-2150</td></tr><tr><td>2105</td><td>Spread Receiver</td><td>يدوي</td><td>قسم 2101-2150</td></tr><tr><td>2106</td><td>Market Depth Receiver</td><td>يدوي</td><td>قسم 2101-2150</td></tr><tr><td>2107</td><td>Trade Tape Receiver</td><td>يدوي</td><td>قسم 2101-2150</td></tr><tr><td>2108</td><td>News Receiver</td><td>تلقائي</td><td>قسم 2101-2150</td></tr><tr><td>2109</td><td>Economic Calendar Receiver</td><td>يدوي</td><td>قسم 2101-2150</td></tr><tr><td>2110</td><td>Reference Indices Receiver</td><td>يدوي</td><td>قسم 2101-2150</td></tr><tr><td>2111</td><td>Time Bridge</td><td>يدوي</td><td>قسم 2101-2150</td></tr><tr><td>2112</td><td>Validated Market Tick Gate</td><td>يدوي</td><td>قسم 2101-2150</td></tr><tr><td>2113</td><td>Side-Path Data Cleaner</td><td>يدوي</td><td>قسم 2101-2150</td></tr><tr><td>2114</td><td>Data Normalizer</td><td>يدوي</td><td>قسم 2101-2150</td></tr><tr><td>2115</td><td>Raw Data Quality Monitor</td><td>يدوي</td><td>قسم 2101-2150</td></tr><tr><td>2151</td><td>Session VWAP with 1-sigma Bands</td><td>تلقائي</td><td>قسم 2151-2200</td></tr><tr><td>2152</td><td>Session High/Low + Pullback Low</td><td>تلقائي</td><td>قسم 2151-2200</td></tr><tr><td>2153</td><td>Prior Day High/Low/Close (PDH/PDL/PDC)</td><td>تلقائي</td><td>قسم 2151-2200</td></tr><tr><td>2154</td><td>Round Numbers (Psychological Levels)</td><td>تلقائي</td><td>قسم 2151-2200</td></tr><tr><td>2155</td><td>Session Volume Profile (POC/VAH/VAL)</td><td>تلقائي</td><td>قسم 2151-2200</td></tr><tr><td>2156</td><td>Median Candle Range</td><td>تلقائي</td><td>قسم 2151-2200</td></tr><tr><td>2157</td><td>Volume vs MA20</td><td>تلقائي</td><td>قسم 2151-2200</td></tr><tr><td>2158</td><td>Abnormal Volatility Regime Flag</td><td>تلقائي</td><td>قسم 2151-2200</td></tr><tr><td>2159</td><td>Higher-Timeframe Context (4H map + 15m structure)</td><td>تلقائي</td><td>قسم 2151-2200</td></tr><tr><td>2161</td><td>1-Minute Lens (last 15 bars, relative volume)</td><td>تلقائي</td><td>قسم 2151-2200</td></tr><tr><td>2170</td><td>Open Interest (Quadrants)</td><td>تلقائي</td><td>قسم 2151-2200</td></tr><tr><td>2171</td><td>Cascade Fuel Gauge (Bi-directional)</td><td>تلقائي</td><td>قسم 2151-2200</td></tr><tr><td>2172</td><td>Funding Rate (Crowd Poll)</td><td>تلقائي</td><td>قسم 2151-2200</td></tr><tr><td>2173</td><td>Perp Premium (Leverage Thermometer)</td><td>تلقائي</td><td>قسم 2151-2200</td></tr><tr><td>2174</td><td>Binance Global Heat (Structural)</td><td>تلقائي</td><td>قسم 2151-2200</td></tr><tr><td>2265</td><td>Depth Walls (Resting Liquidity)</td><td>تلقائي</td><td>قسم 2251-2300</td></tr><tr><td>2266</td><td>Aggressor Flow (Executors + Absorption)</td><td>تلقائي</td><td>قسم 2251-2300</td></tr><tr><td>2267</td><td>Liquidation Density Map (Structural)</td><td>يدوي</td><td>قسم 2251-2300</td></tr><tr><td>2270</td><td>Direction License Judge (VWAP)</td><td>تلقائي</td><td>قسم 2251-2300</td></tr><tr><td>2271</td><td>Value State Judge (POC/VAH/VAL)</td><td>تلقائي</td><td>قسم 2251-2300</td></tr><tr><td>2272</td><td>Prior-Day Break/Retest Tracker</td><td>تلقائي</td><td>قسم 2251-2300</td></tr><tr><td>2273</td><td>Trigger Court (5-Sense Confirm/Veto Vote)</td><td>تلقائي</td><td>قسم 2251-2300</td></tr><tr><td>2274</td><td>Entry Classifier (Gates + Class ①②③)</td><td>تلقائي</td><td>قسم 2251-2300</td></tr><tr><td>2275</td><td>Risk Engine (Budget + Daily Halt + Competing Ladder)</td><td>تلقائي</td><td>قسم 2251-2300</td></tr><tr><td>2276</td><td>Decision Assembler (Display Only — decision.approved.state)</td><td>تلقائي</td><td>قسم 2251-2300</td></tr><tr><td>2277</td><td>Signal Card v3.1 (Anchor + Ladder + Stop + Targets)</td><td>تلقائي</td><td>قسم 2251-2300</td></tr><tr><td>2615</td><td>News Source Bridge</td><td>تلقائي</td><td>قسم 2601-2650</td></tr><tr><td>2616</td><td>News Bridge Reader</td><td>يدوي</td><td>قسم 2601-2650</td></tr><tr><td>2620</td><td>MEXC Market Source</td><td>تلقائي</td><td>قسم 2601-2650</td></tr><tr><td>2621</td><td>MEXC REST Source (Candles + Positioning)</td><td>تلقائي</td><td>قسم 2601-2650</td></tr><tr><td>2622</td><td>Binance Global Heat Bridge (Funding + OI)</td><td>تلقائي</td><td>قسم 2601-2650</td></tr><tr><td>2701</td><td>Market Data Store</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2702</td><td>Trade Store</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2703</td><td>Order Store</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2704</td><td>Timeline Store</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2706</td><td>Model Store</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2707</td><td>Execution Lifecycle Store</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2708</td><td>Symbol Registry And Resolution</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2709</td><td>Portfolio Store</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2712</td><td>Analysis Store</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2713</td><td>Structure Store</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2714</td><td>Archive</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2715</td><td>Archive Compression</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2716</td><td>Duplicate Cleanup</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2717</td><td>Trading Data Integrity</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2718</td><td>Liquidity Store</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2719</td><td>Error Log</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2720</td><td>Trades Log</td><td>يدوي</td><td>قسم 2701-2750</td></tr><tr><td>2753</td><td>Device Resource Monitor</td><td>يدوي</td><td>قسم 2751-2800</td></tr><tr><td>2800</td><td>Backup Manager</td><td>يدوي</td><td>قسم 2751-2800</td></tr><tr><td>2802</td><td>File Archive Manager</td><td>يدوي</td><td>قسم 2801-2850</td></tr><tr><td>2803</td><td>File Cleanup Manager</td><td>يدوي</td><td>قسم 2801-2850</td></tr><tr><td>2806</td><td>Time Tick</td><td>تلقائي</td><td>قسم 2801-2850</td></tr><tr><td>2810</td><td>Telemetry Carrier</td><td>يدوي</td><td>قسم 2801-2850</td></tr><tr><td>2811</td><td>Decision Behaviour Meter</td><td>يدوي</td><td>قسم 2801-2850</td></tr><tr><td>2820</td><td>Measurement Engine</td><td>يدوي</td><td>قسم 2801-2850</td></tr><tr><td>2831</td><td>Alert Aggregator</td><td>يدوي</td><td>قسم 2801-2850</td></tr><tr><td>2850</td><td>Change Governor</td><td>يدوي</td><td>قسم 2801-2850</td></tr><tr><td>2860</td><td>Adaptation Kill Switch</td><td>يدوي</td><td>قسم 2851-2900</td></tr><tr><td>2901</td><td>Command Gateway</td><td>يدوي</td><td>قسم 2901-2950</td></tr></tbody></table></div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 62 — جدول كل ذرّات الكريبتو (مختصر)</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+<section class="sheet" id="p63">
+  <header class="sheet-head">
+    <div class="proj">QUANT_NQ · مخطط هندسي</div>
+    <div class="stitle">ما ليس في المخطط عن قصد</div>
+    <div class="snum">ورقة 63</div>
+  </header>
+  <div class="sheet-body">
+        <ul>
+          <li>كلمات السر وقيم الخزنة.</li>
+          <li>محتوى var/ التشغيلي وقواعد SQLite الحيّة.</li>
+          <li>منطق كل محلل سطرًا سطرًا — ذلك atom.py؛ الجدول يعطي عقد الحدث.</li>
+        </ul>
+        <p>عدد الأوراق في هذه المجموعة يُقرأ من الفهرس. إن تغيّر مانيفست، أُعيد توليد الملف
+        بـ <code>python tools/build_architecture_atlas.py</code>.</p>
+        </div>
+  <footer class="titleblock">
+    <div><b>المشروع</b> QUANT_NQ</div>
+    <div><b>الورقة</b> 63 — ما ليس في المخطط عن قصد</div>
+    <div><b>التاريخ</b> 2026-09-02</div>
+    <div><b>المصدر</b> manifest.yaml · core/ · mt5/QUANT_NQ.mq5</div>
+    <div class="note"></div>
+  </footer>
+</section>
+
+</body>
+</html>

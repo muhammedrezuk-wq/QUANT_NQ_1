@@ -1,0 +1,56 @@
+id: 165
+name: "Noise Analyzer"
+version: "2.5.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "analysis.noise.state"
+  - "analysis.setting.changed"
+
+subscribes:
+  - "market_data.candle_closed"
+
+  - "market.tick.validated"
+  - "analysis.settings.command"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    window:
+      type: integer
+      minimum: 2
+    noisy_max:
+      type: number
+      minimum: 0
+      maximum: 1
+    efficient_min:
+      type: number
+      minimum: 0
+      maximum: 1
+  required:
+    - window
+    - noisy_max
+    - efficient_min
+  additionalProperties: false
+
+config:
+  window: 16
+  noisy_max: 0.35
+  efficient_min: 0.55
+metadata:
+  max_idle_s: 301

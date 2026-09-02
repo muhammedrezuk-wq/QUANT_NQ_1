@@ -1,0 +1,134 @@
+id: 2007
+name: File Integrity Monitor
+version: 4.2.1
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- tools.integrity.violation
+subscribes:
+- SYS_HOUR
+startup_mode: manual
+health:
+  interval_ms: 300000
+  timeout_ms: 15000
+  failure_threshold: 1
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    watched_files:
+      type: array
+      items:
+        type: string
+    watched_dirs:
+      type: array
+      items:
+        type: string
+    watched_extensions:
+      type: array
+      items:
+        type: string
+    watched_names:
+      type: array
+      items:
+        type: string
+    min_watched_items:
+      type: integer
+      minimum: 1
+    baseline_file:
+      type: string
+      minLength: 1
+    ignored_dir_names:
+      type: array
+      items:
+        type: string
+    ignored_suffixes:
+      type: array
+      items:
+        type: string
+  required:
+  - watched_files
+  - watched_dirs
+  - watched_extensions
+  - watched_names
+  - min_watched_items
+  - baseline_file
+  - ignored_dir_names
+  - ignored_suffixes
+  additionalProperties: false
+config:
+  baseline_file: integrity_baseline.json
+  watched_dirs:
+  - atoms/
+  - transport/
+  - security/
+  - clock/
+  - catchup/
+  - scripts/
+  - tools/
+  - shared/
+  - governance/
+  - config/
+  - mt5/
+  - ctrader/
+  - core/
+  watched_files:
+  - core/CORE.lock
+  - pyproject.toml
+  - requirements.txt
+  - shared/crash_recovery.py
+  - shared/snapshot_state.py
+  - shared/trade_chain.py
+  - shared/financial_scope.py
+  - shared/live_analysis.py
+  - shared/durable_execution_journal.py
+  watched_extensions:
+  - .py
+  - .yaml
+  - .yml
+  - .json
+  - .toml
+  - .mq5
+  - .cs
+  - .bat
+  - .ts
+  - .tsx
+  - .css
+  - .html
+  watched_names:
+  - الشرح.md
+  min_watched_items: 500
+  ignored_dir_names:
+  - var
+  - backups
+  - node_modules
+  - venv
+  - .venv
+  - dist
+  - build
+  - built
+  - asmar_core.egg-info
+  - docs
+  - سياق
+  ignored_suffixes:
+  - .pyc
+  - .pyo
+  - .pyd
+  - .tmp
+  - .log
+  - .db
+  - .db-wal
+  - .db-shm
+  - .sqlite
+  - .sqlite3
+metadata:
+  max_idle_s: 7500
+  market: crypto
+  namespace: crypto_full
+  source_id: 7
+  legacy_source: true
+  phase: full-source

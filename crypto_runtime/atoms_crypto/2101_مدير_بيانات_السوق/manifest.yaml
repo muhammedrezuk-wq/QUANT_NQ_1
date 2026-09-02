@@ -1,0 +1,40 @@
+id: 2101
+name: Market Data Manager
+version: 2.1.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- market_data.state
+subscribes:
+- market.tick.validated
+- market_data.price_received
+- market_data.candle_closed
+- market_data.volume_received
+- market_data.spread_updated
+- market_data.depth_updated
+- market_data.trade_tape_updated
+- market_data.news_received
+- market_data.calendar_event
+- market_data.reference_index_updated
+startup_mode: manual
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties: {}
+  additionalProperties: false
+config: {}
+metadata:
+  max_idle_s: 151
+  market: crypto
+  namespace: crypto_full
+  source_id: 101
+  legacy_source: true
+  phase: full-source

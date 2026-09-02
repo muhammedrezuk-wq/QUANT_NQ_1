@@ -1,0 +1,58 @@
+id: 300
+name: "Statistics Manager"
+version: "1.4.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "stats.cycle.collected"
+  - "stats.section.live"
+  - "stats.units.state"
+
+subscribes:
+  - "SYS_SECOND"
+  - "stats.mean.state"
+  - "stats.median.state"
+  - "stats.mode.state"
+  - "stats.std.state"
+  - "stats.variance.state"
+  - "stats.cv.state"
+  - "stats.correlation.state"
+  - "stats.regression.state"
+  - "stats.r_squared.state"
+  - "stats.zscore.state"
+  - "stats.skewness.state"
+  - "stats.kurtosis.state"
+  - "stats.outlier.state"
+  - "stats.distribution.state"
+  - "stats.range.state"
+  - "stats.quality.state"
+  - "stats.period_compare.state"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    timeout_seconds:
+      type: number
+      minimum: 1
+  required:
+    - timeout_seconds
+  additionalProperties: false
+
+config:
+  timeout_seconds: 5
+metadata:
+  max_idle_s: 301

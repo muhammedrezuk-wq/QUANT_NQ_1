@@ -1,0 +1,70 @@
+id: 2275
+name: Risk Engine (Budget + Daily Halt + Competing Ladder)
+version: 1.6.1
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- crypto.decision.sized_entry.state
+subscribes:
+- crypto.decision.entry_candidate.state
+- platform.trade_event
+- crypto.universe.snapshot.state
+- sense.median_range.state
+startup_mode: auto
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    reference_equity_usd:
+      type: number
+      minimum: 0
+    risk_pct_per_trade:
+      type: number
+      minimum: 0
+      maximum: 100
+    daily_loss_halt_pct:
+      type: number
+      minimum: 0
+      maximum: 100
+    max_consecutive_losses:
+      type: integer
+      minimum: 1
+    competing_window_s:
+      type: number
+      minimum: 1
+    cost_bps:
+      type: number
+      minimum: 0
+    gate_block_below:
+      type: number
+      minimum: 0
+    gate_borderline_below:
+      type: number
+      minimum: 0
+    max_age_s:
+      type: number
+      minimum: 1
+  additionalProperties: false
+config:
+  reference_equity_usd: 300.0
+  risk_pct_per_trade: 0.5
+  daily_loss_halt_pct: 2.0
+  max_consecutive_losses: 3
+  competing_window_s: 60.0
+  cost_bps: 3.0
+  gate_block_below: 2.0
+  gate_borderline_below: 3.0
+  max_age_s: 90
+metadata:
+  max_idle_s: 120
+  market: crypto
+  namespace: crypto_strategy
+  source_id: 275

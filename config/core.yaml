@@ -1,0 +1,28 @@
+# إعداد Core العام فقط — لا يحتوي أي إعداد خاص بذرة بعينها (المادة 8/95).
+# المسار العام للتشغيل محلي فقط. التشغيل المنشور للفوركس/الكريبتو يستخدم
+# core_forex.yaml / core_crypto.yaml مع فحص شبكة مغلق عند الفشل.
+log_level: INFO
+log_json: true
+atoms_root: atoms
+
+event_bus:
+  payload_mode: shared_readonly
+  worker_count: 4
+  partitioned_ownership: true
+  mailbox_max_events: 1024
+
+journal:
+  path: var/journal.jsonl
+
+discovery:
+  rescan_interval_s: 5.0
+
+api:
+  enable_api: true
+  host: 127.0.0.1
+  port: 8010
+
+secrets:
+  enabled: true
+  allow_prompt: false
+  dpapi_blob: runtime/device.key

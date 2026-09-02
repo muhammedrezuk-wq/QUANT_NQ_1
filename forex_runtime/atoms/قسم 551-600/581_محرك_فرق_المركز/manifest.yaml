@@ -1,0 +1,97 @@
+id: 581
+name: "Position Delta Engine"
+version: "3.4.1"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "perpetual.target.state"
+  - "decision.settings.state"
+
+subscribes:
+  - "decision.gate.passed"
+  - "decision.gate.blocked"
+  - "decision.gate.recorded"
+  - "decision.resolved.state"
+  - "decision.approved.state"
+  - "risk.asset_ledger.state"
+  - "asset.portfolio.state"
+  - "dial.profile.state"
+  - "market.symbol_specs"
+  - "feed.mt5.tick"
+  - "market_data.candle_closed"
+  - "platform.positions.state"
+  - "risk.asset_stop.state"
+  - "decision.settings.command"
+
+startup_mode: auto
+
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    bands:
+      type: object
+    hedge_bands:
+      type: object
+    s_enter:
+      type: number
+      minimum: 0
+      maximum: 1
+    s_exit:
+      type: number
+      minimum: 0
+      maximum: 1
+    max_target_volume:
+      type: number
+      minimum: 0
+    max_step_volume:
+      type: number
+      minimum: 0
+    min_volume:
+      type: number
+      minimum: 0
+    hedge_cost_per_volume:
+      type: number
+      minimum: 0
+  required:
+    - bands
+    - hedge_bands
+    - s_enter
+    - s_exit
+    - max_target_volume
+    - max_step_volume
+    - min_volume
+  additionalProperties: false
+
+config:
+  bands:
+    "0.0": 0.0
+    "0.2": 0.1
+    "0.4": 0.25
+    "0.6": 0.5
+
+  hedge_bands:
+    "0.0": 1.0
+    "0.2": 0.7
+    "0.4": 0.4
+    "0.6": 0.2
+
+  s_enter: 0.20
+  s_exit: 0.15
+  max_target_volume: 20
+  max_step_volume: 1
+  min_volume: 0.01
+  hedge_cost_per_volume: 0.0
+metadata:
+  max_idle_s: 300

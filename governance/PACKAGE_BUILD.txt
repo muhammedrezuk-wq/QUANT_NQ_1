@@ -1,0 +1,25 @@
+QUANT_NQ_FULL_212
+Build date: 2026-08-11
+Core: 1.8.0
+Package purpose: full owner continuous per-asset center/state project
+RELEASE STATUS: BLOCKED_UNTIL_EXECUTION_SAFETY_REMEDIATION
+
+This is the complete project layout, not the stripped delivery layout.
+Included:
+- all 212 atoms and their contract tests
+- full root project files, docs, tests, tools, and compatibility launchers
+- governance dashboard, governance scripts, governance checks, and built UI
+- MT5 source expert and the existing compiled expert kept under `mt5/archived` (not runnable)
+- cTrader feed source
+- security package and secret-vault checker
+- 360 learning outcome recovery, deduplicated decision sources, and unmatched-outcome audit
+- 901 dashboard asset-control buttons
+- 575 management sender is disabled fail-closed while 552 and execution safety are blocked
+- test runner uses pytest asyncio auto mode without forcing a duplicate plugin load
+
+578 now contains a rebuilt v2.1.0 flood guard from the documented rule:
+`resend_hold_s` plus comparison of the actual broker snapshot using ticket,
+side, and volume only; market price is deliberately excluded. This is not a
+byte-for-byte recovery of the deleted file. The runtime remains fail-closed
+until stop-buffer, symbol-map, and MT5 bridge identity/account-scope issues are
+fixed. No secret values or runtime database files are included.

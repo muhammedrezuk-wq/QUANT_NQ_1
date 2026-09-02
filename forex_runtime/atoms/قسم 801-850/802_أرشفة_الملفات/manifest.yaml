@@ -1,0 +1,55 @@
+id: 802
+name: "File Archive Manager"
+version: "2.2.1"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "tools.file_archive.completed"
+  - "tools.file_archive.failed"
+
+subscribes:
+  - "SYS_DAY"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 3600000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 5000
+
+config_schema:
+  type: object
+  properties:
+    archive_dir:
+      type: string
+    source_dirs:
+      type: array
+      items:
+        type: string
+    older_than_days:
+      type: integer
+      minimum: 1
+    interval_days:
+      type: integer
+      minimum: 1
+  required: [archive_dir, source_dirs, older_than_days, interval_days]
+  additionalProperties: false
+
+config:
+  archive_dir: 'var/file_archive'
+  source_dirs:
+    - 'var/journal.jsonl'
+    - 'var/snapshots'
+    - 'C:\Users\NQ\Documents\cTrader\User Files\quant_nq_bridge'
+  older_than_days: 30
+  interval_days: 7
+metadata:
+  max_idle_s: 60

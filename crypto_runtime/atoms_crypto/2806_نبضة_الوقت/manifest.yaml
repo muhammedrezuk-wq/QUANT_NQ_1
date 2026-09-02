@@ -1,0 +1,34 @@
+id: 2806
+name: Time Tick
+version: 3.0.2
+core_version: '>=1.0.0,<2.0.0'
+critical: true
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- SYS_SECOND
+- SYS_5MIN
+- SYS_15MIN
+- SYS_HOUR
+- SYS_DAY
+subscribes: []
+startup_mode: manual
+health:
+  interval_ms: 5000
+  timeout_ms: 2000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 5
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties: {}
+  additionalProperties: false
+config: {}
+metadata:
+  max_idle_s: 64
+  market: crypto
+  namespace: crypto_full
+  source_id: 806
+  legacy_source: true
+  phase: full-source

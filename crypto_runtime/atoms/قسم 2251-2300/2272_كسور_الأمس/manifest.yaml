@@ -1,0 +1,41 @@
+id: 2272
+name: Prior-Day Break/Retest Tracker
+version: 1.0.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- crypto.decision.breaks.state
+subscribes:
+- sense.prior_day.state
+- market.candle
+startup_mode: auto
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    timeframe:
+      type: string
+    touch_tolerance_pct:
+      type: number
+      minimum: 0
+    max_age_s:
+      type: number
+      minimum: 1
+  additionalProperties: false
+config:
+  timeframe: 5m
+  touch_tolerance_pct: 0.05
+  max_age_s: 600
+metadata:
+  max_idle_s: 120
+  market: crypto
+  namespace: crypto_strategy
+  source_id: 272

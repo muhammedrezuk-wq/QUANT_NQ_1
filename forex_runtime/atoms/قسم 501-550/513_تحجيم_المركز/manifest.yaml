@@ -1,0 +1,70 @@
+id: 513
+name: "Position Sizing"
+version: "4.3.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "risk.position_size.state"
+  - "risk.position_size.rejected"
+
+subscribes:
+  - "market.tick.validated"
+  - "platform.account.state"
+  - "market.symbol_specs"
+  - "market.ctrader.symbol_specs"
+  - "risk.structure_stop.state"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    risk_per_trade_pct:
+      type: number
+      exclusiveMinimum: 0
+      maximum: 5
+    default_stop_pct:
+      type: number
+      minimum: 0
+    min_lot:
+      type: number
+      minimum: 0
+    max_lot:
+      type: number
+      minimum: 0
+    lot_step:
+      type: number
+      minimum: 0
+    specs_max_age_s:
+      type: number
+      minimum: 1
+  required:
+    - risk_per_trade_pct
+    - default_stop_pct
+    - min_lot
+    - max_lot
+    - lot_step
+    - specs_max_age_s
+  additionalProperties: false
+
+config:
+  risk_per_trade_pct: 0.5
+  default_stop_pct: 0.5
+  min_lot: 0.01
+  max_lot: 20.0
+  lot_step: 0.01
+  specs_max_age_s: 600.0
+metadata:
+  max_idle_s: 60

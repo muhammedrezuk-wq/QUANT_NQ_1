@@ -1,0 +1,20 @@
+# أسرار — لا تُرفع أبدًا
+.env
+*.env
+!.env.example
+
+# بيئة بايثون
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# بيانات تشغيل وسجلات
+logs/
+data/
+db/
+*.db
+*.db-shm
+*.db-wal
+*.log
+*.jsonl

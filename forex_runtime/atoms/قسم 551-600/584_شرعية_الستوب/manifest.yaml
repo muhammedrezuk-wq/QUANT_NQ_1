@@ -1,0 +1,51 @@
+id: 584
+name: "Stop Legality"
+version: "1.5.2"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "execution.order.legal"
+  - "execution.order.rejected"
+
+subscribes:
+  - "execution.order.built"
+  - "market.symbol_specs"
+
+startup_mode: auto
+
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    stop_buffer:
+      type: number
+      minimum: 0
+    reward_risk:
+      type: number
+      minimum: 0
+    hard_floor_points:
+      type: number
+      minimum: 0
+  required:
+    - stop_buffer
+    - reward_risk
+    - hard_floor_points
+  additionalProperties: false
+
+config:
+  stop_buffer: 20.0
+  reward_risk: 2.0
+  hard_floor_points: 200.0
+metadata:
+  max_idle_s: 3600

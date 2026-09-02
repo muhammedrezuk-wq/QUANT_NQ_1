@@ -1,0 +1,66 @@
+# قفل الحزم — نسخ مثبّتة بالضبط، لا حدود دنيا.
+#
+# ٢٠٢٦-٠٩-٠١ (أمر المالك: «لازم نثبّت مكتباتنا محدّد مشان ما تتحدّث مكتبات
+# فيفشل»). `requirements.txt` يستعمل `>=`، ومعناه أن كل تنصيب جديد يسحب
+# **أحدث** نسخة من كل حزمة: جهازان يُنصَّبان بيومين مختلفين يحصلان على
+# مكتبتين مختلفتين، وتحديثٌ في مكتبة طرف ثالث يكسر النظام بلا أن يتغيّر
+# سطر واحد من شيفرتنا.
+#
+# هذا الملفّ مولَّد من البيئة العاملة المُثبَتة (`pip freeze`)، ويشمل
+# الاعتماديّات غير المباشرة أيضًا — فالنسخة المتنقّلة تُنصَّب **متطابقة**
+# أينما فُتحت. لا يُحرَّر بيد؛ يُعاد توليده بعد أي ترقية مقصودة:
+#     venv\Scripts\python.exe -m pip freeze --all
+#
+# و`requirements.txt` يبقى كما هو: يقول *ماذا* يحتاج المشروع، وهذا يقول
+# *أيّ نسخة بالضبط* اختُبرت.
+
+annotated-doc==0.0.5
+annotated-types==0.8.0
+anyio==4.14.2
+argon2-cffi-bindings==26.1.0
+argon2-cffi==25.1.0
+attrs==26.1.0
+beautifulsoup4==4.15.0
+bottle==0.13.4
+certifi==2026.7.22
+cffi==2.1.1
+charset-normalizer==3.5.1
+click==8.5.0
+clr_loader==0.3.1
+colorama==0.4.6
+cryptography==50.0.1
+deep-translator==1.11.4
+fastapi==0.141.1
+h11==0.16.0
+httptools==0.8.0
+idna==3.19
+iniconfig==2.3.0
+jsonschema-specifications==2025.9.1
+jsonschema==4.26.0
+metatrader5==5.0.6147
+numpy==2.5.2
+packaging==26.3
+pluggy==1.6.0
+proxy_tools==0.1.0
+psutil==7.2.2
+pycparser==3.0
+pydantic==2.13.5
+pydantic_core==2.46.5
+Pygments==2.21.0
+pytest-asyncio==1.4.0
+pytest==9.1.1
+python-dotenv==1.2.3
+pythonnet==3.1.0
+pywebview==6.2.1
+PyYAML==6.0.3
+referencing==0.37.0
+requests==2.34.2
+rpds-py==2026.6.3
+soupsieve==2.9.2
+starlette==1.6.0
+typing-inspection==0.4.4
+typing_extensions==4.16.0
+urllib3==2.7.0
+uvicorn==0.52.4
+watchfiles==1.2.0
+websockets==17.1

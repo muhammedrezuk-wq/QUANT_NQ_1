@@ -1,0 +1,15 @@
+{
+  "build_id": "QUANT_NQ_COMPLETE_FULL",
+  "status": "approved",
+  "approved_at": "2026-08-27",
+  "legacy_build_ids": [
+    "QUANT_NQ_FULL_212"
+  ],
+  "roots": {
+    "forex": "atoms",
+    "crypto": "atoms_crypto",
+    "shared": "shared",
+    "governance": "governance"
+  },
+  "decision": "owner-approved-release-contract"
+}

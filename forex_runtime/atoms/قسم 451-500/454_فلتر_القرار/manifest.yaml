@@ -1,0 +1,50 @@
+id: 454
+name: Decision Filter
+version: 2.5.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- decision.filtered.state
+- decision.settings.state
+subscribes:
+- decision.resolved.state
+- decision.settings.command
+- decision.filter.confidence.state
+- decision.filter.conditions.state
+- decision.filter.timing.state
+- decision.filter.position.state
+- decision.filter.freshness.state
+- decision.filter.asset.state
+- market_data.calendar.state
+- market_data.quality.state
+- market_data.feed.state
+- news.trading_window.state
+startup_mode: auto
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    min_score:
+      type: integer
+      minimum: 0
+      maximum: 100
+    filter_ttl_s:
+      type: number
+      minimum: 0.1
+      maximum: 3600
+  required:
+  - min_score
+  additionalProperties: false
+config:
+  min_score: 0
+  filter_ttl_s: 30.0
+metadata:
+  max_idle_s: 301

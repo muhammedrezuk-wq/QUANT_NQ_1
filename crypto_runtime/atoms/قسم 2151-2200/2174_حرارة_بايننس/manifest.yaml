@@ -1,0 +1,48 @@
+id: 2174
+name: Binance Global Heat (Structural)
+version: 1.1.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- sense.binance_heat.state
+subscribes:
+- feed.binance.oi
+- feed.binance.premium
+startup_mode: auto
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    window_s:
+      type: number
+      minimum: 60
+    oi_flat_pct:
+      type: number
+      minimum: 0
+    max_age_s:
+      type: number
+      minimum: 1
+    max_log_rows:
+      type: integer
+      minimum: 10
+  additionalProperties: false
+config:
+  window_s: 1800
+  oi_flat_pct: 0.05
+  max_age_s: 300
+  max_log_rows: 2000
+metadata:
+  max_idle_s: 600
+  market: crypto
+  namespace: crypto_full
+  source_id: 174
+  legacy_source: true
+  phase: full-source

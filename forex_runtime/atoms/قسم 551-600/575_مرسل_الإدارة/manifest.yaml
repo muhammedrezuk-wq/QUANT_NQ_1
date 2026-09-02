@@ -1,0 +1,52 @@
+id: 575
+name: "Management Sender"
+version: "2.3.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "execution.manage.written"
+  - "execution.command.failed"
+
+subscribes:
+  - "execution.manage.command"
+  - "execution.gate.command"
+  - "emergency.halt"
+  - "risk.kill_switch.reset_requested"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    enabled:
+      type: boolean
+    db_path:
+      type: string
+    magic:
+      type: integer
+      minimum: 1
+  required:
+    - enabled
+    - db_path
+    - magic
+  additionalProperties: false
+
+config:
+  enabled: true
+  magic: 20260801
+  db_path: 'C:\Users\NQ\AppData\Roaming\MetaQuotes\Terminal\Common\Files\nq_brain.db'
+metadata:
+  max_idle_s: 60

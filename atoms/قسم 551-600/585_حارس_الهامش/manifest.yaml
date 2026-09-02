@@ -1,0 +1,48 @@
+id: 585
+name: "Margin Guard"
+version: "1.3.3"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "risk.margin.validation.completed"
+  - "financial.truth.shortage"
+
+subscribes:
+  - "execution.order.resolved"
+  - "platform.account.state"
+  - "market.symbol_specs"
+  - "risk.validation.completed"
+  - "execution.order.rejected"
+  - "execution.command.failed"
+  - "platform.trade_event"
+  - "portfolio.equity.state"
+  - "portfolio.free_margin.state"
+
+startup_mode: auto
+
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    margin_buffer_pct:
+      type: number
+      minimum: 0
+  required:
+    - margin_buffer_pct
+  additionalProperties: false
+
+config:
+  margin_buffer_pct: 0.1
+metadata:
+  max_idle_s: 3600

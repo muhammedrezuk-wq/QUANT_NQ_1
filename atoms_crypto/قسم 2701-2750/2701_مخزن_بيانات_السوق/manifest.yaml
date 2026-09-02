@@ -1,0 +1,64 @@
+id: 2701
+name: Market Data Store
+version: 2.2.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- storage.market_data_saved
+subscribes:
+- market_data.price_received
+- SYS_DAY
+- SYS_SECOND
+startup_mode: manual
+health:
+  interval_ms: 60000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 5
+  restart_backoff_ms: 3000
+config_schema:
+  type: object
+  properties:
+    db_path:
+      type: string
+    flush_size:
+      type: integer
+      minimum: 1
+      maximum: 10000
+    retention_days:
+      type: integer
+      minimum: 0
+    flush_interval_s:
+      type: number
+      minimum: 0.1
+    max_rows:
+      type: integer
+      minimum: 1
+    max_db_bytes:
+      type: integer
+      minimum: 1
+  required:
+  - db_path
+  - flush_size
+  - retention_days
+  - flush_interval_s
+  - max_rows
+  - max_db_bytes
+  additionalProperties: false
+config:
+  db_path: var/store\market_data.db
+  flush_size: 200
+  flush_interval_s: 30
+  max_rows: 5000000
+  max_db_bytes: 2000000000
+  retention_days: 30
+metadata:
+  max_idle_s: 301
+  market: crypto
+  namespace: crypto_full
+  source_id: 701
+  legacy_source: true
+  phase: full-source

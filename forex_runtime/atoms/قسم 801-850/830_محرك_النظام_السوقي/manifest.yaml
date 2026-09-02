@@ -1,0 +1,55 @@
+id: 830
+name: "Market Regime Engine"
+version: "1.0.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "market.regime.state"
+
+subscribes:
+  - "structure.trend.state"
+  - "analysis.volatility.state"
+
+startup_mode: auto
+health:
+  interval_ms: 30000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 3000
+
+config_schema:
+  type: object
+  properties:
+      entry_threshold:
+        type: number
+        minimum: 0
+      exit_threshold:
+        type: number
+        minimum: 0
+      confirmation_window:
+        type: integer
+        minimum: 0
+      min_duration_s:
+        type: number
+        minimum: 0
+      volatility_high:
+        type: number
+        minimum: 0
+  additionalProperties: false
+
+config:
+  entry_threshold: 70
+  exit_threshold: 45
+  confirmation_window: 5
+  min_duration_s: 60
+  volatility_high: 75
+
+metadata:
+  max_idle_s: 300
+  note: "ناقل حالة لا إشارة تداول: متجه النظام + حسميات (عتبتا دخول/خروج + نافذة تأكيد + حدّ أدنى للبقاء + حالة انتقال) — صفر صلاحية على الأوزان والمعاملات."

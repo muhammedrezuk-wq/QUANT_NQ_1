@@ -1,0 +1,115 @@
+id: 704
+name: "Timeline Store"
+version: "5.1.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "storage.timeline_saved"
+
+subscribes:
+  - "platform.trade_event"
+  - "execution.order.rejected"
+  - "emergency.halt"
+  - "market.time.drift"
+  - "market.feed.provider_down"
+  - "market.feed.provider_recovered"
+  - "market_data.feed_interrupted"
+  - "market_data.feed_recovered"
+  - "market_data.validation.state"
+  - "symbol.resolve.orphaned"
+  - "execution.confirmation.rejected"
+  - "platform.brain_signal.written"
+  - "platform.brain_signal.halted"
+  - "risk.loss_reported"
+  - "asset.extraction.failed"
+  - "platform.positions.schema_state"
+  - "platform.position.appeared"
+  - "market_data.validation_failed"
+  - "market_data.quality_alert"
+  - "structure.validation_failed"
+  - "liquidity.validation_failed"
+  - "market_data.calendar_window"
+  - "SYS_DAY"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 5
+  restart_backoff_ms: 3000
+
+config_schema:
+  type: object
+  properties:
+    db_path:
+      type: string
+    watch_events:
+      type: array
+      items:
+        type: string
+      minItems: 1
+    flush_size:
+      type: integer
+      minimum: 1
+      maximum: 10000
+    retention_days:
+      type: number
+      minimum: 0
+    flush_interval_s: {type: number, minimum: 0.1}
+    immediate_events:
+      type: array
+      items: {type: string}
+    max_rows: {type: integer, minimum: 1}
+    max_db_bytes: {type: integer, minimum: 1}
+  required:
+    - db_path
+    - watch_events
+    - flush_size
+    - retention_days
+    - flush_interval_s
+    - immediate_events
+    - max_rows
+    - max_db_bytes
+  additionalProperties: false
+
+config:
+  db_path: 'var/store\timeline.db'
+  watch_events:
+    - "platform.trade_event"
+    - "execution.order.rejected"
+    - "emergency.halt"
+    - "market.time.drift"
+    - "market.feed.provider_down"
+    - "market.feed.provider_recovered"
+    - "market_data.feed_interrupted"
+    - "market_data.feed_recovered"
+    - "market_data.validation.state"
+    - "symbol.resolve.orphaned"
+    - "execution.confirmation.rejected"
+    - "platform.brain_signal.written"
+    - "platform.brain_signal.halted"
+    - "risk.loss_reported"
+    - "asset.extraction.failed"
+    - "platform.positions.schema_state"
+    - "platform.position.appeared"
+    - "market_data.validation_failed"
+    - "market_data.quality_alert"
+    - "structure.validation_failed"
+    - "liquidity.validation_failed"
+    - "market_data.calendar_window"
+  flush_size: 50
+  flush_interval_s: 5
+  immediate_events: ["platform.trade_event", "execution.order.rejected", "emergency.halt", "asset.extraction.failed"]
+  max_rows: 50000000
+  max_db_bytes: 20000000000
+  retention_days: 0
+metadata:
+  max_idle_s: 60

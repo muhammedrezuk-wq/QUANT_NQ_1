@@ -1,0 +1,71 @@
+id: 3
+name: Clock
+version: 3.0.3
+core_version: '>=1.0.0,<2.0.0'
+critical: true
+entrypoint: atom:Atom
+dependencies:
+- id: 608
+  version: '>=2.3.0,<3.0.0'
+publishes:
+- time.utc.synced
+- time.utc.drift
+- time.clock.quality.state
+- kernel.clock.sys_tick
+- kernel.clock.heartbeat
+- kernel.clock.minute_elapsed
+subscribes:
+- time.ntp.samples.state
+startup_mode: auto
+health:
+  interval_ms: 2000
+  timeout_ms: 1000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 5
+  restart_backoff_ms: 500
+config_schema:
+  type: object
+  properties:
+    sys_tick_interval_s:
+      type: number
+      minimum: 0.01
+    heartbeat_interval_s:
+      type: number
+      minimum: 0.1
+    drift_alert_s:
+      type: number
+      minimum: 0
+    max_accepted_offset_s:
+      type: number
+      minimum: 0.01
+      maximum: 300
+    max_sample_age_s:
+      type: number
+      minimum: 1
+    stale_after_s:
+      type: number
+      minimum: 1
+    max_slew_per_second:
+      type: number
+      minimum: 0.001
+      maximum: 1
+  required:
+  - sys_tick_interval_s
+  - heartbeat_interval_s
+  - drift_alert_s
+  - max_accepted_offset_s
+  - max_sample_age_s
+  - stale_after_s
+  - max_slew_per_second
+  additionalProperties: false
+config:
+  sys_tick_interval_s: 0.1
+  heartbeat_interval_s: 1.0
+  drift_alert_s: 1.0
+  max_accepted_offset_s: 5.0
+  max_sample_age_s: 30
+  stale_after_s: 900
+  max_slew_per_second: 0.05
+metadata:
+  max_idle_s: 50

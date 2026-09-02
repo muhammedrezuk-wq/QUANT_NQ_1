@@ -1,0 +1,49 @@
+id: 318
+name: "Period Comparison"
+version: "1.2.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "stats.period_compare.state"
+
+subscribes:
+  - "market.tick.validated"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    window_size:
+      type: integer
+      minimum: 4
+    drift_band:
+      type: number
+      minimum: 0
+    vol_band:
+      type: number
+      minimum: 0
+  required:
+    - window_size
+    - drift_band
+    - vol_band
+  additionalProperties: false
+
+config:
+  window_size: 20
+  drift_band: 0.001
+  vol_band: 0.1
+metadata:
+  max_idle_s: 301

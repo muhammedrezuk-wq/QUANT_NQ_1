@@ -1,0 +1,43 @@
+id: 520
+name: "Position Reconciliation"
+version: "3.5.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "execution.reconcile.state"
+
+subscribes:
+  - "execution.desired.state"
+  - "platform.positions.state"
+  - "execution.command.ack"
+  - "execution.reconcile.requested"
+  - "market_data.feed_recovered"
+  - "platform.account.state"
+
+startup_mode: auto
+
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 2000
+
+config_schema:
+  type: object
+  properties:
+    state_path:
+      type: string
+  required:
+    - state_path
+  additionalProperties: false
+
+config:
+  state_path: "var/reconciliation/desired.json"
+metadata:
+  max_idle_s: 3600

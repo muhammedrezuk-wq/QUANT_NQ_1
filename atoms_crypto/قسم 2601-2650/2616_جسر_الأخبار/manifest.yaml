@@ -1,0 +1,48 @@
+id: 2616
+name: News Bridge Reader
+version: 1.3.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- market.news
+- market.calendar
+subscribes:
+- SYS_SECOND
+startup_mode: manual
+health:
+  interval_ms: 60000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 5
+  restart_backoff_ms: 3000
+config_schema:
+  type: object
+  properties:
+    db_path:
+      type: string
+    poll_interval_s:
+      type: number
+      minimum: 1
+    batch_limit:
+      type: integer
+      minimum: 1
+      maximum: 1000
+  required:
+  - db_path
+  - poll_interval_s
+  - batch_limit
+  additionalProperties: false
+config:
+  db_path: C:\Users\NQ\AppData\Roaming\MetaQuotes\Terminal\Common\Files\nq_brain.db
+  poll_interval_s: 30
+  batch_limit: 500
+metadata:
+  max_idle_s: 60
+  market: crypto
+  namespace: crypto_full
+  source_id: 616
+  legacy_source: true
+  phase: full-source

@@ -1,0 +1,56 @@
+id: 161
+name: "Relative Strength Analyzer"
+version: "2.5.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "analysis.relative_strength.state"
+  - "analysis.setting.changed"
+
+subscribes:
+  - "market_data.candle_closed"
+
+  - "market.tick.validated"
+  - "analysis.settings.command"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    window:
+      type: integer
+      minimum: 2
+    strong_pct:
+      type: number
+      minimum: 0
+      maximum: 1
+    weak_pct:
+      type: number
+      minimum: 0
+      maximum: 1
+  required:
+    - window
+    - strong_pct
+    - weak_pct
+  additionalProperties: false
+
+config:
+  window: 20
+  strong_pct: 0.66
+  weak_pct: 0.33
+metadata:
+  max_idle_s: 301

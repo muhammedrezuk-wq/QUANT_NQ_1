@@ -1,0 +1,33 @@
+id: 365
+name: "Learning Model Comparison"
+version: "1.0.4"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+publishes:
+  - "learning.model.selection"
+subscribes:
+  - "learning.model.validated"
+  - "learning.model.active.state"
+startup_mode: auto
+health:
+  interval_ms: 10000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    min_improvement:
+      type: number
+      minimum: 0
+  additionalProperties: false
+config:
+  min_improvement: 0.0
+metadata:
+  name_ar: "مقارنة نماذج التعلّم"
+  max_idle_s: 3600

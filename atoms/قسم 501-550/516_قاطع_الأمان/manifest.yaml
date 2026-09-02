@@ -1,0 +1,54 @@
+id: 516
+name: "Per-Account Risk Authority"
+version: "5.3.0"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+dependencies: []
+publishes:
+- risk.validation.completed
+- emergency.halt
+- risk.kill_switch.reset_requested
+- risk.account.state
+- risk.audit.state
+subscribes:
+- risk.margin.validation.completed
+- risk.loss_reported
+- SYS_DAY
+- SYS_SECOND
+- risk.halt.requested
+- risk.release.requested
+- platform.positions.state
+- platform.account.state
+- platform.terminal_state
+- risk.asset_ledger.state
+- execution.order.rejected
+- platform.trade_event
+startup_mode: auto
+health:
+  interval_ms: 5000
+  timeout_ms: 2000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties:
+    max_daily_loss_pct: {type: number, minimum: 0}
+    max_consecutive_losses: {type: integer, minimum: 1}
+    max_daily_trades: {type: integer, minimum: 1}
+    max_open_trades: {type: integer, minimum: 1}
+    max_reserved_risk_pct: {type: number, exclusiveMinimum: 0, maximum: 100}
+    consumer_db_path: {type: string}
+  required: [max_daily_loss_pct, max_consecutive_losses, max_daily_trades, max_open_trades]
+  additionalProperties: false
+config:
+  max_daily_loss_pct: 5.0
+  max_consecutive_losses: 10
+  max_daily_trades: 200
+  max_open_trades: 20
+  max_reserved_risk_pct: 100.0
+  consumer_db_path: "var/store/risk_guard_consumer_516.db"
+metadata:
+  max_idle_s: 60

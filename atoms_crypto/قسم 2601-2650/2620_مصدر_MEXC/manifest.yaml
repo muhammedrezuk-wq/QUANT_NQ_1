@@ -1,0 +1,95 @@
+id: 2620
+name: MEXC Market Source
+version: 1.2.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- market.tick
+- market.depth
+- market.trade
+- feed.mexc.state
+subscribes:
+- crypto.universe.membership.state
+startup_mode: auto
+health:
+  interval_ms: 15000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 10
+  restart_backoff_ms: 3000
+config_schema:
+  type: object
+  properties:
+    market_type:
+      type: string
+      enum:
+      - futures
+      - spot
+    symbols:
+      type: array
+      items:
+        type: string
+    depth_levels:
+      type: integer
+      minimum: 1
+      maximum: 100
+    max_symbols_per_conn:
+      type: integer
+      minimum: 1
+      maximum: 200
+    ping_interval_s:
+      type: number
+      minimum: 1
+      maximum: 55
+    max_age_s:
+      type: number
+      minimum: 1
+    subscribe_ticker:
+      type: boolean
+    subscribe_depth:
+      type: boolean
+    subscribe_deal:
+      type: boolean
+  required:
+  - market_type
+  - symbols
+  additionalProperties: false
+config:
+  market_type: futures
+  symbols:
+  - BTC_USDT
+  - ETH_USDT
+  - SOL_USDT
+  - XRP_USDT
+  - HYPE_USDT
+  - PEPE_USDT
+  - DOGE_USDT
+  - SUI_USDT
+  - LINK_USDT
+  - ENA_USDT
+  - WLD_USDT
+  - ADA_USDT
+  - PUMPFUN_USDT
+  - AAVE_USDT
+  - TRUMPOFFICIAL_USDT
+  - ONDO_USDT
+  - AVAX_USDT
+  - UNI_USDT
+  - ZRO_USDT
+  depth_levels: 100
+  max_symbols_per_conn: 40
+  ping_interval_s: 15
+  max_age_s: 30
+  subscribe_ticker: true
+  subscribe_depth: true
+  subscribe_deal: true
+metadata:
+  max_idle_s: 60
+  market: crypto
+  namespace: crypto_full
+  source_id: 620
+  legacy_source: true
+  phase: full-source

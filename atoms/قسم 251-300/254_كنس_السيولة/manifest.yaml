@@ -1,0 +1,35 @@
+id: 254
+name: "Liquidity Sweep"
+version: "1.2.1"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "liquidity.sweep.state"
+
+subscribes:
+  - "liquidity.buyside.state"
+  - "liquidity.sellside.state"
+  - "market_data.candle_closed"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties: {}
+  additionalProperties: false
+
+config: {}
+metadata:
+  max_idle_s: 301

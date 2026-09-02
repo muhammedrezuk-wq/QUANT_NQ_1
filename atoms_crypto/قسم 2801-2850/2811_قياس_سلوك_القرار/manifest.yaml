@@ -1,0 +1,32 @@
+id: 2811
+name: Decision Behaviour Meter
+version: 1.0.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- decision.behaviour.telemetry
+subscribes:
+- decision.scored.state
+startup_mode: manual
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+config_schema:
+  type: object
+  properties: {}
+  additionalProperties: false
+config: {}
+metadata:
+  name_ar: قياس سلوك القرار
+  max_idle_s: 300
+  market: crypto
+  namespace: crypto_full
+  source_id: 811
+  legacy_source: true
+  phase: full-source

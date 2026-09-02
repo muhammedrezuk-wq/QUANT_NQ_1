@@ -1,0 +1,73 @@
+id: 831
+name: "Alert Aggregator"
+version: "1.0.2"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "system.alert"
+  - "system.alert.state"
+  - "system.alert.recovered"
+
+subscribes:
+  - "SYS_5MIN"
+  - "storage.persistence.save_failed"
+  - "tools.integrity.violation"
+  - "tools.backup.failed"
+  - "tools.file_archive.failed"
+  - "tools.file_cleanup.failed"
+  - "market_data.validation_failed"
+  - "structure.validation_failed"
+  - "liquidity.validation_failed"
+  - "time.utc.stale"
+  - "time.ntp.drift"
+  - "financial.truth.shortage"
+  - "core.integrity.alert"
+  - "tools.storage.low"
+  - "market_data.quality_alert"
+  - "time.clock.divergence"
+  - "storage.symbol.unmapped"
+
+startup_mode: auto
+
+health:
+  interval_ms: 60000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    cooldown_seconds:
+      type: number
+      minimum: 0
+    expiry_seconds:
+      type: number
+      minimum: 60
+    state_file:
+      type: string
+      minLength: 1
+    severity_overrides:
+      type: object
+      additionalProperties:
+        type: string
+        enum: ["critical", "warning", "info"]
+  required:
+    - cooldown_seconds
+    - state_file
+  additionalProperties: false
+
+config:
+  cooldown_seconds: 300
+  expiry_seconds: 3600
+  state_file: "var/alerts/system_alerts.json"
+  severity_overrides: {}
+
+metadata:
+  max_idle_s: 3600

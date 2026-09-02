@@ -1,0 +1,46 @@
+id: 870
+name: "Calibration Brain"
+version: "1.0.1"
+core_version: ">=1.0.0,<2.0.0"
+critical: false
+entrypoint: "atom:Atom"
+
+dependencies: []
+
+publishes:
+  - "ai.brain.state"
+  - "recalibration.applied"
+
+subscribes:
+  - "experiment.state"
+  - "drift.vector.state"
+  - "system.diagnosis.state"
+  - "adaptation.kill_switch.state"
+  - "SYS_SECOND"
+
+startup_mode: auto
+
+health:
+  interval_ms: 30000
+  timeout_ms: 5000
+  failure_threshold: 3
+  restart_on_failure: false
+  max_restarts: 3
+  restart_backoff_ms: 1000
+
+config_schema:
+  type: object
+  properties:
+    db_path: {type: string}
+    eval_window_s: {type: integer, minimum: 5}
+    verify_window_s: {type: integer, minimum: 5}
+  additionalProperties: false
+
+config:
+  db_path: 'var/store/ai_journal_870.db'
+  eval_window_s: 600
+  verify_window_s: 300
+
+metadata:
+  name_ar: "عقل المعايرة"
+  max_idle_s: 300

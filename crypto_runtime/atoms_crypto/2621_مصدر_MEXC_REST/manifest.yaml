@@ -1,0 +1,98 @@
+id: 2621
+name: MEXC REST Source (Candles + Positioning)
+version: 1.4.0
+core_version: '>=1.0.0,<2.0.0'
+critical: false
+entrypoint: atom:Atom
+dependencies: []
+publishes:
+- market.candle
+- market.oi
+- market.funding
+- market.premium
+- market.depth
+- feed.mexc_rest.state
+subscribes:
+- crypto.universe.membership.state
+startup_mode: auto
+health:
+  interval_ms: 30000
+  timeout_ms: 10000
+  failure_threshold: 3
+  restart_on_failure: true
+  max_restarts: 10
+  restart_backoff_ms: 5000
+config_schema:
+  type: object
+  properties:
+    symbols:
+      type: array
+      items:
+        type: string
+    timeframes:
+      type: array
+      items:
+        type: string
+    kline_poll_s:
+      type: number
+      minimum: 2
+    ticker_poll_s:
+      type: number
+      minimum: 2
+    depth_poll_s:
+      type: number
+      minimum: 2
+    depth_limit:
+      type: integer
+      minimum: 5
+      maximum: 100
+    warmup_bars:
+      type: integer
+      minimum: 1
+      maximum: 2000
+    max_age_s:
+      type: number
+      minimum: 1
+  required:
+  - symbols
+  - timeframes
+  additionalProperties: false
+config:
+  symbols:
+  - BTC_USDT
+  - ETH_USDT
+  - SOL_USDT
+  - XRP_USDT
+  - HYPE_USDT
+  - PEPE_USDT
+  - DOGE_USDT
+  - SUI_USDT
+  - LINK_USDT
+  - ENA_USDT
+  - WLD_USDT
+  - ADA_USDT
+  - PUMPFUN_USDT
+  - AAVE_USDT
+  - TRUMPOFFICIAL_USDT
+  - ONDO_USDT
+  - AVAX_USDT
+  - UNI_USDT
+  - ZRO_USDT
+  timeframes:
+  - Min1
+  - Min5
+  - Min15
+  - Hour4
+  kline_poll_s: 10
+  ticker_poll_s: 5
+  depth_poll_s: 5
+  depth_limit: 100
+  warmup_bars: 200
+  max_age_s: 60
+metadata:
+  max_idle_s: 120
+  market: crypto
+  namespace: crypto_full
+  source_id: 621
+  legacy_source: true
+  phase: full-source
